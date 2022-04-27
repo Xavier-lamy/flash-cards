@@ -7,7 +7,7 @@ Inspiration principale: les flash card de l'appli [PlecoDictionnary](https://www
 
 Autres inspirations utiles: 
 - [Brainscape](https://www.brainscape.com/) -> notamment pour ses explications sur l'apprentissage espacé, et comment ils ont mis ça en place dans leur appli
-## 1. Définition brute du projet
+## Définition brute du projet
 appli flash card + culture generale
 Actions (version mobile):
 - tap affiche une card
@@ -36,7 +36,11 @@ Soit:
 
 + on peut créer des catégories de cartes (ex: mandarin, formules mathématiques,..)
 
-+ En plus des cartes qu'on peut créer pour la communauté on peut créer des decks/collections de cartes, qui pourront aussi etre notés par la communauté ou triés par popularité, ainsi si on ne veut pas créer soit meme une collection de cartes culture générale, on peut prendre une collection
++ En plus des cartes qu'on peut créer pour la communauté on peut créer des decks/collections de cartes, qui pourront aussi etre notés par la communauté ou triés par popularité, ainsi si on ne veut pas créer soit meme une collection de cartes culture générale, on peut prendre une collection, les collections pourraient etre nommés et contenr des sous collections, permettant ainsi d'avoir des séries (par exemple collection: ``apprendre l'arabe``, sous collection ``1.1 - Les bases``, ``1.2 - L'écriture``, ...)
+
++ Pour les collections, indiquer la progression par des graphs (rang de la carte, taux de réussite)
+
++ Quand on crée une carte on peut choisir de mettre plusieurs éléments sur un seul coté, (exemple prononciation + caractère), et il faut choisir quels éléments sont choisis par défaut (tous ceux ajoutés ?, seulement une partie)
 
 + Possibilité de choisir une priorité d'apprentissage: quand c'est la première fois qu'on passe sur une carte le système pourrait ne pas la reproposer avant longtemps ou la reproposer dans peu de temps, mais peut etre que l'utilisateur pourrait estimer que ça il sait mieux que la carte précédente (qu'il connait aussi mais estime moins la connaitre), il faudrait peut etre avoir un système qui permet à l'utilisateur de déterminer la priorité d'apprendtissage de la carte (entre deux cartes réussies au cours d'une session, laquelle il connait le mieux, entre deux échouées laquelle il connait le moins bien), cela pourrait consister à ajouter un niveau de priorité (lié à la difficulté): plusieurs possibilités:
     - Inspiré de brainscape: une jauge, qui permet à l'utilsateur de définir à quel point il pense connaitre ou non la réponse
@@ -46,7 +50,7 @@ Soit:
         - une simple option prioritaire à cocher/sélectionner, ensuit en fonction du sens dans lequel on swipe cela rend: soit la carte plus prioritaire si on l'a échouée, soit moins importante si on a réussi
         - Une option choix multiples haute priorité/basse priorité, avant de swiper pour valider
         - Une jauge sur 3 ou 5 niveaux d'assurance
-        - Utiliser le sytème des rangs, cela permettrait de passer la carte au rang supérieur, cela ne gère qu'en parti la priorité automatique de la carte, mais permet quand même à l'utilisateur de choisir à quel niveau il pense connaitre cette carte, (si elle est à un niveau élevé c'est qu'il la connait bien, et donc dans le cas ou il fait une session générale sans rang particulier cette carte pourrait apparaitre moins ? ou le simple faite qu'elle ai un rang permet à l'utilisateur de choisir lui meme quelle rang de carte il veut lors de l'apprentissage)
+        - Utiliser le sytème des rangs, cela permettrait de passer la carte au rang supérieur, cela ne gère qu'en parti la priorité automatique de la carte, mais permet quand même à l'utilisateur de choisir à quel niveau il pense connaitre cette carte, (si elle est à un niveau élevé c'est qu'il la connait bien, et donc dans le cas ou il fait une session générale sans rang particulier cette carte pourrait apparaitre moins ? ou le simple faite qu'elle ai un rang permet à l'utilisateur de choisir lui meme quelle rang de carte il veut lors de l'apprentissage) -> **idée: A coté de l'indication du rang actuel, un plus et un moins pour augmenter le rang ou  le réduire si besoin**, à la création des cartes on peut leur attribuer un rang déjà élevé si on estime déjà les connaitre bien
 
 + ¨Possibilité de sauvegarder les cartes hors ligne pour la version appli mobile ? -> qu'est ce que ça implique pour la bdd ? , il faut donc que cela soit stocké sur l'appareil de l'utilisateur
 + Possibilité d'importer des cartes en JSON ou autre format, à voir en terme de sécurité ? 
@@ -55,7 +59,7 @@ Soit:
 + Dans les options il faut pouvoir customiser l'aspect visuel des cartes (couleurs de font, police, couleur du texte, disposition des éléments de réponses)
 
 + Créer un système de réclamation et de signalement, si on s'aperçoit que des cartes ont un problème (infos erronées, insultantes, pas dans la bonne catégorie...), on peut en premier lieu contacter l'auteur de la carte s'il est toujoours présent sur le site, pour signaler l'erreur; si ce n'est plus possible on peut les signaler les cartes signalées pourraient:
-    - etre gérées directement par la communauté (lorsqu'une carte est signalée, la communauté peut voter pour déterminer si la carte pose en effet problème ou non, on peut alors choisir d'exclure totalemnt la carte, ou d'y ajouter un avertissement) -> problème, s'il n'y a pas assez d'utilisaeur, soit le système est inutilisable soit il est dangereux (avec des signalements rendus possibles par une minorité capable de nuire au système, exemple virer des cartes  juste pour le fun, si beaucoup de personnes, rien n'empêche techniquement un raid organisé (peu probable, mais à prendre en compte tout de même)
+    - etre gérées directement par la communauté (lorsqu'une carte est signalée, la communauté peut voter pour déterminer si la carte pose en effet problème ou non, on peut alors choisir d'exclure totalemnt la carte, ou d'y ajouter un avertissement) -> problème, s'il n'y a pas assez d'utilisaeur, soit le système est inutilisable soit il est dangereux (avec des signalements rendus possibles par une minorité capable de nuire au système, exemple virer des cartes  juste pour le fun; si beaucoup de personnes, rien n'empêche techniquement un raid organisé (peu probable, mais à prendre en compte tout de même)
     - etre gérée par des modérateurs -> problèmes: nécessite une équipe, fiabilité de l'équipe ?
 
 + Créer un systèm de notes, on peut noter les cartes de la communauté :soit note globale sur 10 points/5 demi étoiles, soit notes divisées: justesse de la carte (l'info est elle vraie ?), efficacité de la carte (est elle bien rédigé, pas d'infos superflu, on peut la lire rapidement), on pourrait aussi utiliser la popularité des cartes (combien d'utilisateurs les utilisent dans leur "deck", ou combien de fois elles ont été utilisés dans des sessions d'apprentissage)
@@ -67,7 +71,7 @@ Soit:
         - cela est déterminé par les réglages, on peut ajouter un niveau de difficulté au cartes, et déterminer un réglage de temps e fonction de ce niveau:
         - exemple une carte niveau facile si elle est sue une première fois ne réapparaitra que au bout de 20 jours la toute première fois, au bout de 20 jours si on réussi encore, la carte obtient alors un taux de réussite qui est de 100% (il faut minimum deux passages sur une carte pour qu'elle commence a avoir un taux de réussite ), avec ce taux elle sera alors représentée dans 30jours (créer une formule qui prend en compte le temps en fonction du niveau de difficulté et du taux de réussite)
 
-+ Créer un système de *rang* (nom à changer ?), en plus des catégories/sous-catégories et niveaux de difficultés on peut choisir au sein d'une meme catégorie des rangs, les rangs permettent de se laisser de la souplesse sur la valdation des réponses par exemple rang 1 on peut ne connaitre qu'une partie de la réponse alors qu'un rang 5 nécessite la réponse exacte (laissée à l'appréciation de l'utilisateur), , par exmple pour du mandarin on pourrait avoir un rang de base ``mot anglais`` <-> ``mot mandarin écrit/prononciation/Tons``, les cartes lorsqu'elles sont rangées au rang 1, peuvent etre considérées valides juste si on a le bon mot, peu mporte le ton et l'écriture, au rang 2 il faudrait en plus etre capable de connaitre le ton des mots, puis finalement de savoir l'écirre, cela permettrait sur des notions avancées, d'avoir une progression, la personne pourrait choir de déjà maitrisé les traductions, avant de se soucier des prononciations puis de l'écriture/orthographe correcte (puiqu'il faudrait qu'il sache en premier comment dire ce mot, avant de se soucier de la prnonciation exacte ou de l'ortographe), dans les options on peut choisir au bout de combien de fois, un mot réussi dans un rang doit automatiquement passer au rang supérieur (laisser une possibilité de le mettre manuellement ?), exemple quand l'utilisateur a réussi (voir entre nombre de réussie d'affilés-> préférable dans ce cas afin de voir plutot en fonction de sa progression récente plutot que de la réussie globale, ou en fonction du taux de réussite ?) 3 fois de suite ou a un taux de réussite de 75% sur une carte alors celle ci peut passer au rang supérieur
++ Créer un système de *rang* (nom à changer ?), en plus des catégories/sous-catégories et niveaux de difficultés on peut choisir au sein d'une meme catégorie des rangs, les rangs permettent de se laisser de la souplesse sur la valdation des réponses par exemple rang 1 on peut ne connaitre qu'une partie de la réponse alors qu'un rang 5 nécessite la réponse exacte (laissée à l'appréciation de l'utilisateur), , par exmple pour du mandarin on pourrait avoir un rang de base ``mot anglais`` <-> ``mot mandarin écrit/prononciation/Tons``, les cartes lorsqu'elles sont rangées au rang 1, peuvent etre considérées valides juste si on a le bon mot, peu mporte le ton et l'écriture, au rang 2 il faudrait en plus etre capable de connaitre le ton des mots, puis finalement de savoir l'écirre, cela permettrait sur des notions avancées, d'avoir une progression, la personne pourrait choisir de déjà maitriser les traductions, avant de se soucier des prononciations puis de l'écriture/orthographe correcte (puiqu'il faudrait qu'il sache en premier comment dire ce mot, avant de se soucier de la prnonciation exacte ou de l'ortographe), dans les options on peut choisir au bout de combien de fois, un mot réussi dans un rang doit automatiquement passer au rang supérieur (laisser une possibilité de le mettre manuellement ?), exemple quand l'utilisateur a réussi (voir entre nombre de carte réussies d'affilés-> préférable dans ce cas afin de voir plutot en fonction de sa progression récente plutot que de la réussie globale, ou en fonction du taux de réussite ?) 3 fois de suite ou a un taux de réussite de 75% sur une carte alors celle ci peut passer au rang supérieur -> l'idée des rangs pourrait etre abandonnée s'il n'y a pas assez de cas dans lesquels cela pourrait etre utile( en géographie on pourrait avoir le nom d'un pays et au verso, la population, langue parlée, superficie,..., ainsi l'utilisateur pourrait avoir un rang quand il connait la langue parlée, un autre quand il connait la supericie et la langue parlée, un dernier quand il connait tous les éléments)
 + Les rangs sont nomable et pourraient soit etre pratiqués individuellement exemple: session de cartes rangs 3, soit mélangées quelquesoit le rang et dans ce cas avoir le rang marqué au dessus de la réponse pour indique à l'utilisateur quel sévérité il peut utiliser pour valider ou on la carte), le rang pourrait etre changeable en cours de validation, exempleune fois la réponse affichée, si la carte est en rang 1 (ex:juste définition) et qu'on estime que on sait aussi la prononciation et l'écrit alors on peut la passer au rang supérieur (select ? / Jauge ?)
 
 + Les familles de cartes sont au dessus des catégories et sous catégories, elles sont définies par le site et sont les grands groupes d'apprentissage: langue, géographie, histoire, culture générale,...
@@ -89,7 +93,7 @@ Soit:
     - Notes (quand on utilise des cartes de la communauté on peut les filtrer en fonction de leur note/popularité)
     - quelle partie de la carte on montre (recto ou verso, si un des côtés possèdent plusieurs infos, laquelle montrer ? juste la prononciation, prononciation et écriture ?....)
 
-+ Recto et verso peuvent avoir plusieurs éléments -> voir au niveau bdd si du coup on stock le contenu recto et verso ou si on stock plutot des types de réponses (définition, description, prononciation, formule, image, qcm, schéma,...) et on choisit ensuite ce que l'on souhaite afficher sur la carte ? à voir car ce ne serait pas la meme chose si on prend des cartes communautaires ou perso -> problème si on a des cartes communautaires avec les types description et image, et d'autres schéma et formule , comment on choisit ça dans les paramètres de session ?
++ Recto et verso peuvent avoir plusieurs éléments -> voir au niveau bdd si du coup on stock le contenu recto et verso ou si on stock plutot des types de réponses (définition, description, prononciation, formule, image, qcm, schéma,...) et on choisit ensuite ce que l'on souhaite afficher sur la carte ? à voir car ce ne serait pas la meme chose si on prend des cartes communautaires ou perso -> problème si on a des cartes communautaires avec les types description et image, et d'autres schéma et formule , comment on choisit ça dans les paramètres de session ?, il faudrait que l'option pour changer ce qu'on affiche sur les cartes ne soit dispoque pour les cartes d'un meme type, le mieux serait donc  que par défaut on a juste question sur recto/ réponse sur verso, ensuite on peut créer des types de cartes avancées (certains patterns déjà tout fait existeront par exemple pour les langues ou la géographie), sur lesquels on choisit les différents éléments (ex: nom du pays, drapeau, population, langue), toutes les cartes suivant ce modèle ne peuvent que etre mélangés avec des cartes suivant le meme modèle (collection de carte), ou alors des cartes génériques mais à ce moment là on ne peut ps sélectionner les éléments affichables ou non (on pourra ainsi tout de meme utiliser nos cartes dans une collection générique, et afficher toutes les infos)
 
 + Faire un systme de succès pour encourager les gens à apprendre des cartes
 
@@ -123,17 +127,49 @@ Soit:
     - une page de presentation de ce que sont les falshcard et pourquoi on peut les utiliser (peut servir pour le référencement)
     - un tuto simplifié la première fois qu'on utilise (on peut sauter le tuto), ne pas faire un tuto frustrant avec une fenetre qui pop toutes les deux secondes, mais plutot quelque chose d'épuré et de très simple(ex: swipe à droite pour une carte acceptée, ...)
     - commencer par la version mobile
+    - Menu à gauche
+    - Fair un schéma des différentes parties et interactions possibles, afin de voir par exmeple en combien de clics on arrive au menu, aux options, on lance une session,...
+    - Possibilité de se connecter avec un compte (genre réseau social, google,...) ?
+    - Idées logo:
+        - Cartes stylisées, logo double sens flash (la forme des cartes peut éoquer à la fois des cartes ou un éclair)
 
 utiliser un linter ?
 
 
-stimulus
+stimulus si on fait avec laravel
 vue/react -> pas obligatirmenet de bdd
 
-projet webpack en cdn sur le gitlab
+pour le projet vue en front ? , node en back ? voir Strapi ?
 
 export -> electron (desktop)/capacitor (mobile)
 
-faire une todo en test 
+faire une todo en test pour tester vue front
 
-rajouter les liens site inspiration
+____________________
+## Définition recadrée du projet
+### 1.1 Compétences du référentiel validées par le projet:
+REAC:
+Front: Développer la partie front-end d’une application web ou web mobile en intégrant les recommandations de sécurité:
+1. ✔️Maquetter une application ``obligatoire`` 
+2. ✔️Réaliser une interface utilisateur web statique et adaptable ``choix dev``
+3. ✔️Développer une interface utilisateur web dynamique ``choix dev``
+4. ❌Réaliser une interface utilisateur avec une solution de gestion de contenu ou e-commerce ``choix CMS`` -> Non 
+
+Back: Développer la partie back-end d’une application web ou web mobile en intégrant les recommandations de sécurité: 
+1. ✔️Créer une base de données 
+2. ✔️Développer les composants d’accès aux données ``obligatoire``
+3. ✔️Développer la partie back-end d’une application web ou web mobile ``choix dev``
+4. ❌Elaborer et mettre en oeuvre des composants dans une application de gestion de contenu ou e-commerce ``choix CMS``
+
+### UX Design
+#### Cas utilisateurs
+#### UI
+
+### Propositions de tests
+
+### Fonctionnement de la BDD
+faire des schémas
+
+### Technologies utilisées
+
+
