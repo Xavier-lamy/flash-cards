@@ -153,7 +153,7 @@ Front: Développer la partie front-end d’une application web ou web mobile en 
 1. ✔️Maquetter une application ``obligatoire`` 
 2. ✔️Réaliser une interface utilisateur web statique et adaptable ``choix dev``
 3. ✔️Développer une interface utilisateur web dynamique ``choix dev``
-4. ❌Réaliser une interface utilisateur avec une solution de gestion de contenu ou e-commerce ``choix CMS`` -> Non 
+4. ❌Réaliser une interface utilisateur avec une solution de gestion de contenu ou e-commerce ``choix CMS``
 
 Back: Développer la partie back-end d’une application web ou web mobile en intégrant les recommandations de sécurité: 
 1. ✔️Créer une base de données 
@@ -163,6 +163,7 @@ Back: Développer la partie back-end d’une application web ou web mobile en in
 
 ### UX Design
 #### Cas utilisateurs
+Personnas: un qui ne connait pas les flashcards, un autre qui connait, un étudiant qui ne fait qu'apprendre, un travailleur qui n'a pas beaucoup de temps pour apprendre, ...
 #### UI
 
 ### Propositions de tests
