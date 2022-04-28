@@ -161,6 +161,12 @@ export -> electron (desktop)/capacitor (mobile)
 
 faire une todo en test pour tester vue front
 
+docker:
+1. outiller le projet : bdd avec docker par exemple
+2. utiliser docker compose meme sur un projet unique
+3. mariaDB adminer
+En dernier tenter carrément de run le projet sur docker
+
 ---
 
 ## Définition recadrée du projet
