@@ -16,13 +16,14 @@ appli flash card + culture generale
 Actions (version mobile):
 
 - tap affiche une card
-- swipe haut ?
+- swipe haut : affiche le menu de la carte ?
 - swipe bas si ne sait pas, tap again affiche la reponse,
 - swipe left false,
 - swipe right true
 - menu sur la gauche en desktop
   Soit:
 - utiliser ses propres flashcard et déterminer soi même si on a bon ou pas,
+- Pour des raisons d'accessibilité attention avec les swaps, ils doivent pouvoir etre utilisé par un controle à la voix ? si ça marche comme ça ? à voir
 - soi utiliser des flashcards prefaites et devoir taper la réponse (validation avec des mots clés), ou qcm,
   - permettrait de faire des classements d'utiliser des flashcards faites par la communauté
   - idée de classement ou de carte avec validation automatique des réponses abandonnée -> cela inciterais à penser un système de validation des cartes, alors qu'il est plus intellignet et rapide de laisser l'utilisateur valider lui meme la carte,, pour l'utilisateur cela lui permet de juste swiper sans avoir a taper de reponses, ce qui est mieux quand il est sur son mobile (cas principal d'utilisation, et qu'il n'a pas beaucoup de temps-> il est dans le bus par exmple, ou entre deux rendez-vous,...), en ce qui concerne d'éventuels compétitions (qui nécessiterais forcément de valider les reponses par l'appli, pour que tout le mond esoit a égalité et que personnne ne puisse tricher,) cela poserait problème dans le sens ou cela casse une parti de l'objectif des flashcards, qui sont normalement des outils pour apprendre , personnelement et chacun à son rythme, créer des concours semble etre typiquement une mauvaise idée créant inutilement un esprit de compétition qui n'a pas lieu d'etre, brainscape utilise un système de compétition intéressant, puisqu'ils mettent en compétition le nombre de cartes jouées et non le taux de réussite, ce qui incite les gens à tenter de faire plsu de cartes, sans se mettre la pressionen se disant qu'ils sont moins bon que les autres -> idée de compétition à éviter: l'objectif est vraiment d'avoir une app utilisable pour n'importe quel type de flashcard , et donc laisser un maximum d'amplitude à l'utilisateur, s'il est en effet moins efficace de faire des applis trop génériques, et qu'il vaut généralemnent mieux se concentrer sur un type en particulier, ici le but est d'avoir justement une app qui fonctionne dans la grande majorité des cas, de façon à ce qu'un utilisateur qui souhaite créer des cartes différentes dans le style (du genre langages, etcartes géographiques), puisse le faire sans avoir besoin de deux applis différentes. L'outil doit donc etre suffisamment maléable pour laissser les utilisateurs créer des cartes de styles très différents (un peu comme pour des mods pour un jeu vidéo où les devs créent un outil de base solide, et les moddeurs peuvent alors créer toute sorte de mods très différents en focntion de ce qu'ils veulent)-> _mdr gé pa lu_
