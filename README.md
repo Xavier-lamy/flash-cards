@@ -39,6 +39,7 @@ Actions (version mobile):
   - **advanced**: audio (ex: mot de langue étrangère) <-> prononciation phonétique/description/traduction (ex: d'un coté un mot audio, de l'autre sa version écrite, afin de travailler sa prononciation)
 
 * Ajouter une option de dessin ? permettrait à ceux qui apprennent des langues dans un autre alphabet que le leur de répondre en dessinant le caractère puis de comparer leur dessin avec la réponse, leur évitant d'avoir une feuille à coté, (pratique quand on est dns le bus)-> pourrait etre une option avancé, puisque ce système serait légèrement différent, en effet dans tous les autres cas la réponse de l'utilisateur a juste besoin d'etre dans sa tête, là il y aurait un dessin , donc pour la réponse il faut prévoir un espace pour la réponse et un espace pour le dessin/ecriture de l'utilisateur (mais faisable avec des outils de canvas comme celui utilisé sur skribbl par exemple)
+- l'espace de dessin peut etre sur la carte en entier (un peu à la façon des flashcards pleco)
 
 * Pour la création des flashcards on pourrait avoir des templates en fonction du type de flashcard ou de la famille de flash cards (exemple les cartes de langues pourraient avoir mot <-> définition/prononciation )
 
