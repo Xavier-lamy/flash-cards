@@ -10,7 +10,7 @@ Autres inspirations utiles:
 
 - [Brainscape](https://www.brainscape.com/) -> notamment pour ses explications sur l'apprentissage espacé, et comment ils ont mis ça en place dans leur appli
 
-## Définition brute du projet
+## Définition brute du projet et brainstorming d'idées
 
 appli flash card + culture generale
 Actions (version mobile):
@@ -28,7 +28,7 @@ Actions (version mobile):
   - permettrait de faire des classements d'utiliser des flashcards faites par la communauté
   - idée de classement ou de carte avec validation automatique des réponses abandonnée -> cela inciterais à penser un système de validation des cartes, alors qu'il est plus intellignet et rapide de laisser l'utilisateur valider lui meme la carte,, pour l'utilisateur cela lui permet de juste swiper sans avoir a taper de reponses, ce qui est mieux quand il est sur son mobile (cas principal d'utilisation, et qu'il n'a pas beaucoup de temps-> il est dans le bus par exmple, ou entre deux rendez-vous,...), en ce qui concerne d'éventuels compétitions (qui nécessiterais forcément de valider les reponses par l'appli, pour que tout le mond esoit a égalité et que personnne ne puisse tricher,) cela poserait problème dans le sens ou cela casse une parti de l'objectif des flashcards, qui sont normalement des outils pour apprendre , personnelement et chacun à son rythme, créer des concours semble etre typiquement une mauvaise idée créant inutilement un esprit de compétition qui n'a pas lieu d'etre, brainscape utilise un système de compétition intéressant, puisqu'ils mettent en compétition le nombre de cartes jouées et non le taux de réussite, ce qui incite les gens à tenter de faire plsu de cartes, sans se mettre la pressionen se disant qu'ils sont moins bon que les autres -> idée de compétition à éviter: l'objectif est vraiment d'avoir une app utilisable pour n'importe quel type de flashcard , et donc laisser un maximum d'amplitude à l'utilisateur, s'il est en effet moins efficace de faire des applis trop génériques, et qu'il vaut généralemnent mieux se concentrer sur un type en particulier, ici le but est d'avoir justement une app qui fonctionne dans la grande majorité des cas, de façon à ce qu'un utilisateur qui souhaite créer des cartes différentes dans le style (du genre langages, etcartes géographiques), puisse le faire sans avoir besoin de deux applis différentes. L'outil doit donc etre suffisamment maléable pour laissser les utilisateurs créer des cartes de styles très différents (un peu comme pour des mods pour un jeu vidéo où les devs créent un outil de base solide, et les moddeurs peuvent alors créer toute sorte de mods très différents en focntion de ce qu'ils veulent)-> _mdr gé pa lu_
 
-* possibilité d'utiliser les cartes de la communauté sans compte, si on veut créer, ou avoir des stats il faut un compte, sans compte on peut juste tester des cartes de manière random sans que l'appli ne retienne no scores
+* possibilité d'utiliser les cartes de la communauté sans compte, si on veut créer, ou avoir des stats il faut un compte, sans compte on peut juste tester des cartes de manière random sans que l'appli ne retienne nos scores
 
 * types de flashcards:
 
@@ -180,6 +180,7 @@ En dernier tenter carrément de run le projet sur docker
 ---
 
 ## Définition recadrée du projet
+Les parties avec un ``??`` sont en attente d'être complétées
 
 ### 1.1 Compétences du référentiel validées par le projet:
 
@@ -198,18 +199,49 @@ Back: Développer la partie back-end d’une application web ou web mobile en in
 3. ✔️Développer la partie back-end d’une application web ou web mobile `choix dev`
 4. ❌Elaborer et mettre en oeuvre des composants dans une application de gestion de contenu ou e-commerce `choix CMS`
 
-### UX Design
+### 2. UX Design
 
-#### Cas utilisateurs
+#### 2.1 Objectifs généraux
++ L'objectif est de réaliser une application de flashcards maléable.
++ Les utilisateurs doivent pouvoir:
+  - Créer leur propres flash cards
+  - S'entrainer en utilisant leur flashcards ou celles de la communauté
+  - Il doit donc y avoir possibilité d'envoyer ses cartes en visibilité publique
+  - Avoir un aperçu de leur progression
+#### 2.2 Cas utilisateurs
+On crée 3 personnas:
+##### 2.2.1 Bob
+Bob a 16ans, son professeur d'anglais lui a recommandé les flashcards pour apprendre du nouveau vocabulaire, il a regardé très rapidement le concept des flashcards mais n'est pas sûr de comprendre comment les utiliser.
++ Quelles sont ses attentes ?:
++ Quelles sont ses freins potentielles ?:
 
-Personnas: un qui ne connait pas les flashcards, un autre qui connait, un étudiant qui ne fait qu'apprendre, un travailleur qui n'a pas beaucoup de temps pour apprendre, ...
+##### 2.2.2 Phillipe-Adalbert Germain Du Plessix de l'Escarrère 
+PA a 24 ans il est professeur et souhaiterait inciter ses élève à utiliser les flashcards, il voudrait pouvoir les créer lui même sous forme de cours progressifs.
 
-#### UI
+##### 2.2.3 Gertrude
+Gertrude a 37ans, elle ne cesse jamais d'apprendre, et est toujours à la recherche de nouveaux éléments à découvrir, néanmoins son emploi de chef dans un palace ne lui laisse que très peu de temps pour apprendre, elle connaît bien le principe des flashcards, récemment elle s'est mis à apprendre l'arabe
 
-### Propositions de tests
+#### 2.3 UI
++ Réaliser un wireframe afin de déterminer la forme général du site en mobile puis en desktop, et définir les cheminements de l'utilisateur
++ Définir la charte graphique et l'identité du site:
+  - Les couleurs: ``??``
+  - Nom du site: ``??``
+  - Slogan : ``??`` 
+  - Le logo: Deux cartes se chevauchant, à leur jonction un changement de couleur symbolise un éclair
+  - Les formes: ``??``
++ Réaliser la maquette
+
+### 3. Propositions de tests
 
 ### Fonctionnement de la BDD
 
 faire des schémas
 
-### Technologies utilisées
+### Technologies et outils utilisées
+- Figma pour le wireframe, et la maquette
+- Gimp et Inkscape pour le logo et la retouche d'images
+- Front: Vue.js
+- Back: 
+  - Express.js pour le routing
+  - Sequelize pour l'Object Relational Mapper (ORM)
+  - ``??`` pour la base de donnée
