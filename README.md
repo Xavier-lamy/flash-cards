@@ -11,8 +11,10 @@ Autres inspirations utiles:
 - [Brainscape](https://www.brainscape.com/) -> notamment pour ses explications sur l'apprentissage espacé, et comment ils ont mis ça en place dans leur appli
 
 ## Définition brute du projet et brainstorming d'idées
++ Les éléments ensuite renotés dans la définition au propre du projet ou abandonnés seront rayés
++ Les éléments abandonnés seront si nécessaire suivi d'une explication de la raison de leur abandon
 
-appli flash card + culture generale
+~~appli flash card + culture generale~~
 Actions (version mobile):
 
 - tap affiche une card
@@ -21,12 +23,12 @@ Actions (version mobile):
 - swipe left false,
 - swipe right true
 - menu sur la gauche en desktop
-  Soit:
-- utiliser ses propres flashcard et déterminer soi même si on a bon ou pas,
 - Pour des raisons d'accessibilité attention avec les swaps, ils doivent pouvoir etre utilisé par un controle à la voix ? si ça marche comme ça ? à voir
-- soi utiliser des flashcards prefaites et devoir taper la réponse (validation avec des mots clés), ou qcm,
-  - permettrait de faire des classements d'utiliser des flashcards faites par la communauté
-  - idée de classement ou de carte avec validation automatique des réponses abandonnée -> cela inciterais à penser un système de validation des cartes, alors qu'il est plus intellignet et rapide de laisser l'utilisateur valider lui meme la carte,, pour l'utilisateur cela lui permet de juste swiper sans avoir a taper de reponses, ce qui est mieux quand il est sur son mobile (cas principal d'utilisation, et qu'il n'a pas beaucoup de temps-> il est dans le bus par exmple, ou entre deux rendez-vous,...), en ce qui concerne d'éventuels compétitions (qui nécessiterais forcément de valider les reponses par l'appli, pour que tout le mond esoit a égalité et que personnne ne puisse tricher,) cela poserait problème dans le sens ou cela casse une parti de l'objectif des flashcards, qui sont normalement des outils pour apprendre , personnelement et chacun à son rythme, créer des concours semble etre typiquement une mauvaise idée créant inutilement un esprit de compétition qui n'a pas lieu d'etre, brainscape utilise un système de compétition intéressant, puisqu'ils mettent en compétition le nombre de cartes jouées et non le taux de réussite, ce qui incite les gens à tenter de faire plsu de cartes, sans se mettre la pressionen se disant qu'ils sont moins bon que les autres -> idée de compétition à éviter: l'objectif est vraiment d'avoir une app utilisable pour n'importe quel type de flashcard , et donc laisser un maximum d'amplitude à l'utilisateur, s'il est en effet moins efficace de faire des applis trop génériques, et qu'il vaut généralemnent mieux se concentrer sur un type en particulier, ici le but est d'avoir justement une app qui fonctionne dans la grande majorité des cas, de façon à ce qu'un utilisateur qui souhaite créer des cartes différentes dans le style (du genre langages, etcartes géographiques), puisse le faire sans avoir besoin de deux applis différentes. L'outil doit donc etre suffisamment maléable pour laissser les utilisateurs créer des cartes de styles très différents (un peu comme pour des mods pour un jeu vidéo où les devs créent un outil de base solide, et les moddeurs peuvent alors créer toute sorte de mods très différents en focntion de ce qu'ils veulent)-> _mdr gé pa lu_
+  Soit:
+- ~~utiliser ses propres flashcard et déterminer soi même si on a bon ou pas,~~
+- ~~soi utiliser des flashcards prefaites et devoir taper la réponse (validation avec des mots clés), ou qcm,~~
+  - ~~permettrait de faire des classements d'utiliser des flashcards faites par la communauté~~
+  - ~~idée de classement ou de carte avec validation automatique des réponses abandonnée -> cela inciterais à penser un système de validation des cartes, alors qu'il est plus intellignet et rapide de laisser l'utilisateur valider lui meme la carte,, pour l'utilisateur cela lui permet de juste swiper sans avoir a taper de reponses, ce qui est mieux quand il est sur son mobile (cas principal d'utilisation, et qu'il n'a pas beaucoup de temps-> il est dans le bus par exmple, ou entre deux rendez-vous,...), en ce qui concerne d'éventuels compétitions (qui nécessiterais forcément de valider les reponses par l'appli, pour que tout le mond esoit a égalité et que personnne ne puisse tricher,) cela poserait problème dans le sens ou cela casse une parti de l'objectif des flashcards, qui sont normalement des outils pour apprendre , personnelement et chacun à son rythme, créer des concours semble etre typiquement une mauvaise idée créant inutilement un esprit de compétition qui n'a pas lieu d'etre, brainscape utilise un système de compétition intéressant, puisqu'ils mettent en compétition le nombre de cartes jouées et non le taux de réussite, ce qui incite les gens à tenter de faire plsu de cartes, sans se mettre la pressionen se disant qu'ils sont moins bon que les autres -> idée de compétition à éviter qaund même: l'objectif est vraiment d'avoir une app utilisable pour n'importe quel type de flashcard , et donc laisser un maximum d'amplitude à l'utilisateur, s'il est en effet moins efficace de faire des applis trop génériques, et qu'il vaut généralemnent mieux se concentrer sur un type en particulier, ici le but est d'avoir justement une app qui fonctionne dans la grande majorité des cas, de façon à ce qu'un utilisateur qui souhaite créer des cartes différentes dans le style (du genre langages, etcartes géographiques), puisse le faire sans avoir besoin de deux applis différentes. L'outil doit donc etre suffisamment maléable pour laissser les utilisateurs créer des cartes de styles très différents (un peu comme pour des mods pour un jeu vidéo où les devs créent un outil de base solide, et les moddeurs peuvent alors créer toute sorte de mods très différents en focntion de ce qu'ils veulent)-> _mdr gé pa lu_~~
 
 * possibilité d'utiliser les cartes de la communauté sans compte, si on veut créer, ou avoir des stats il faut un compte, sans compte on peut juste tester des cartes de manière random sans que l'appli ne retienne nos scores
 
@@ -38,18 +40,20 @@ Actions (version mobile):
   - QCM -> réponse (pas vraiment d'intéret à laisser l'utilisateur choisir le sens d'apprentissage)
   - **advanced**: audio (ex: mot de langue étrangère) <-> prononciation phonétique/description/traduction (ex: d'un coté un mot audio, de l'autre sa version écrite, afin de travailler sa prononciation)
 
-* Ajouter une option de dessin ? permettrait à ceux qui apprennent des langues dans un autre alphabet que le leur de répondre en dessinant le caractère puis de comparer leur dessin avec la réponse, leur évitant d'avoir une feuille à coté, (pratique quand on est dns le bus)-> pourrait etre une option avancé, puisque ce système serait légèrement différent, en effet dans tous les autres cas la réponse de l'utilisateur a juste besoin d'etre dans sa tête, là il y aurait un dessin , donc pour la réponse il faut prévoir un espace pour la réponse et un espace pour le dessin/ecriture de l'utilisateur (mais faisable avec des outils de canvas comme celui utilisé sur skribbl par exemple)
+* Ajouter une option de dessin ?  permettrait à ceux qui apprennent des langues dans un autre alphabet que le leur de répondre en dessinant le caractère puis de comparer leur dessin avec la réponse, leur évitant d'avoir une feuille à coté, (pratique quand on est dns le bus)-> pourrait etre une option avancé, puisque ce système serait légèrement différent, en effet dans tous les autres cas la réponse de l'utilisateur a juste besoin d'etre dans sa tête, là il y aurait un dessin , donc pour la réponse il faut prévoir un espace pour la réponse et un espace pour le dessin/ecriture de l'utilisateur (mais faisable avec des outils de canvas comme celui utilisé sur skribbl par exemple), s'il y a option de dessin il faudrait que ça désactive le swipe des cartes ?
 - l'espace de dessin peut etre sur la carte en entier (un peu à la façon des flashcards pleco)
 
 * Pour la création des flashcards on pourrait avoir des templates en fonction du type de flashcard ou de la famille de flash cards (exemple les cartes de langues pourraient avoir mot <-> définition/prononciation )
 
 * on peut créer des catégories de cartes (ex: mandarin, formules mathématiques,..)
 
-* En plus des cartes qu'on peut créer pour la communauté on peut créer des decks/collections de cartes, qui pourront aussi etre notés par la communauté ou triés par popularité, ainsi si on ne veut pas créer soit meme une collection de cartes culture générale, on peut prendre une collection, les collections pourraient etre nommés et contenr des sous collections, permettant ainsi d'avoir des séries (par exemple collection: `apprendre l'arabe`, sous collection `1.1 - Les bases`, `1.2 - L'écriture`, ...)
+* En plus des cartes qu'on peut créer pour la communauté on peut créer des decks/collections de cartes, qui pourront aussi etre notés par la communauté ou triés par popularité, ainsi si on ne veut pas créer soit meme une collection de cartes culture générale, on peut prendre une collection, les collections pourraient etre nommés et contenr des sous collections, permettant ainsi d'avoir des séries (par exemple collection: `apprendre l'arabe`, sous collection `1.1 - Les bases`, `1.2 - L'écriture`, ...), les collections doivent de base avoir le meme genre de cartes (puisqu'il s'agit des groupes utilisables pour une session d'apprentissage) autrement on ne pourrait pas choisir quoi montrer si par exemple on a une carte qui a ``prononciation+signification <=> caractère`` et une autre ``signification <=> règle de grammaire``, on ne pourrait alors pas choisir dans les paramètres ce qui est affiché sur les cartes, si on souhaite faire des collections génériques (qui peuvent donc cumuler toutes les cartes qu'on veut, c'est possible mais il faut alors garder l'affichage par défaut de la carte, on ne peut alors choiir que d'affciher le recto ou le verso lors de la session et pas les options qu'on met dessus)
 
 * Pour les collections, indiquer la progression par des graphs (rang de la carte, taux de réussite)
 
 * Quand on crée une carte on peut choisir de mettre plusieurs éléments sur un seul coté, (exemple prononciation + caractère), et il faut choisir quels éléments sont choisis par défaut (tous ceux ajoutés ?, seulement une partie)
+
++ Pour les éléments sur les cartes peut etre utilisé un système de checksum par exemple si dans la bdd pour une carte on a 2items au recto 3 au verso elle a une checksum qui dépend de ces items, une autre carte meme si elle a le meme nombre d'items (2 et 3) pourrait ne pas avoir la meme checksum car cela dépendra du nom des items (exemple peut etre quelque chose du genre traduction_prononciation) => problème: qu'arrive-t-il si l'utilisateur ne rentre pas a chaque fois els élements dans le meme ordre ? exemple un coup ol met prononciation puis trduction et l'autre coup il inverse, solution => utiliser l'ordre alphabétique, ainsi peut importe l'ordre dans lequel il met il y aura toujours le meme ordre (ici prononciation_traduction) pour la checksum, pour contrecarrer les problème d'utilisateur qui n'écrivent pas les items de la meme façon à chaque fois on pourrait avoir un select qui permettrait de choisir les types d'items déjà utilisé (exemple "traduction", "caractère"), pour les collections il pourrait aussi y avoir la possibilité de créer des cartes au sein d'une collection, ainsi le template de carets nous afficherait toutes les options présentes  sur ce type de carte, ne marcherait pas pour les collections génériques du coup ? 
 
 * Possibilité de choisir une priorité d'apprentissage: quand c'est la première fois qu'on passe sur une carte le système pourrait ne pas la reproposer avant longtemps ou la reproposer dans peu de temps, mais peut etre que l'utilisateur pourrait estimer que ça il sait mieux que la carte précédente (qu'il connait aussi mais estime moins la connaitre), il faudrait peut etre avoir un système qui permet à l'utilisateur de déterminer la priorité d'apprendtissage de la carte (entre deux cartes réussies au cours d'une session, laquelle il connait le mieux, entre deux échouées laquelle il connait le moins bien), cela pourrait consister à ajouter un niveau de priorité (lié à la difficulté): plusieurs possibilités:
 
@@ -68,7 +72,7 @@ Actions (version mobile):
 
 * Dans les options il faut pouvoir customiser l'aspect visuel des cartes (couleurs de font, police, couleur du texte, disposition des éléments de réponses)
 
-* Créer un système de réclamation et de signalement, si on s'aperçoit que des cartes ont un problème (infos erronées, insultantes, pas dans la bonne catégorie...), on peut en premier lieu contacter l'auteur de la carte s'il est toujoours présent sur le site, pour signaler l'erreur; si ce n'est plus possible on peut les signaler les cartes signalées pourraient:
+* Créer un système de réclamation et de signalement, si on s'aperçoit que des cartes ont un problème (infos erronées, insultantes, pas dans la bonne catégorie, du genre astrologie dans la famille science lol, (ou géologie), on peut en premier lieu contacter l'auteur de la carte s'il est toujoours présent sur le site, pour signaler l'erreur; si ce n'est plus possible on peut les signaler les cartes signalées pourraient:
 
   - etre gérées directement par la communauté (lorsqu'une carte est signalée, la communauté peut voter pour déterminer si la carte pose en effet problème ou non, on peut alors choisir d'exclure totalemnt la carte, ou d'y ajouter un avertissement) -> problème, s'il n'y a pas assez d'utilisaeur, soit le système est inutilisable soit il est dangereux (avec des signalements rendus possibles par une minorité capable de nuire au système, exemple virer des cartes juste pour le fun; si beaucoup de personnes, rien n'empêche techniquement un raid organisé (peu probable, mais à prendre en compte tout de même)
   - etre gérée par des modérateurs -> problèmes: nécessite une équipe, fiabilité de l'équipe ?
@@ -79,7 +83,9 @@ Actions (version mobile):
 
 * dans les paramètres on peut choisir la fréquence des cartes:
 
-  - quand une carte est sue (quand on a swipé pour la valider), un timer lui est ajouté pour déterminer dans combien de temps l'appli nous représentera la carte, également en fonction du niveau de succès de la carte:
+  - quand une carte est sue (quand on a swipé pour la valider), un timer lui est ajouté pour déterminer dans combien de temps l'appli nous représentera la carte, ce time pourrait fonctionner de la manière suivante:
+    - On notifie quel est la position de la carte (exemple c'est la 536eme carte qu'on apprend), le "timer" définit dans combien de cartes on pourra la reproposer, au lancement d'une session si il y assez de cartes, l'appli ne choisira pas cette carte si on a pas encore atteint le "time" (ex: c'était la 536eme carte, le timer avait définit qu'on ne devait pas la revoir avant 40 cartes, donc si on en est actuellement à la 556eme carte il ne devrait pas la reproposer car il faut qu'il attende la 576eme carte, je pense qu'il est mieux de ne pas se soucier du nombre de cartes qu'il y aura dans la session, par exemple si on avait une session de 100 cartes techiniquement on atteindrait cette 576eme carte au bout de la 20eme denotre session dans cet exemple néanmoins cela complexifierais le calcul inutilement et poserais problème , en effet vu que les cartes sont définis aléatoirement avant la session, celle ci risquerait d'apparaitre avant le temps imparti, ce qui pourrait ne pas etre un problème mais pourrait aussi le devenir dans le cas ou l'utilsiateur a souvent tendance à ne jamais finir ses sessions)
+  - ce time est également imapcté en fonction du niveau de succès de la carte:
     - cela est déterminé par les réglages, on peut ajouter un niveau de difficulté au cartes, et déterminer un réglage de temps e fonction de ce niveau:
     - exemple une carte niveau facile si elle est sue une première fois ne réapparaitra que au bout de 20 jours la toute première fois, au bout de 20 jours si on réussi encore, la carte obtient alors un taux de réussite qui est de 100% (il faut minimum deux passages sur une carte pour qu'elle commence a avoir un taux de réussite ), avec ce taux elle sera alors représentée dans 30jours (créer une formule qui prend en compte le temps en fonction du niveau de difficulté et du taux de réussite)
 
@@ -89,7 +95,7 @@ Actions (version mobile):
 * Ajouter une option pour rétrogader ou promouvoir automatiquement une carte après un certain nombre (réglable) d'échecs ou de réussite, en plus de laisser l'utilisdateur le faire manuellement
 * Les rangs sont nomable et pourraient soit etre pratiqués individuellement exemple: session de cartes rangs 3, soit mélangées quelquesoit le rang et dans ce cas avoir le rang marqué au dessus de la réponse pour indique à l'utilisateur quel sévérité il peut utiliser pour valider ou on la carte), le rang pourrait etre changeable en cours de validation, exempleune fois la réponse affichée, si la carte est en rang 1 (ex:juste définition) et qu'on estime que on sait aussi la prononciation et l'écrit alors on peut la passer au rang supérieur (select ? / Jauge ?)
 
-* Les familles de cartes sont au dessus des catégories et sous catégories, elles sont définies par le site et sont les grands groupes d'apprentissage: langue, géographie, histoire, culture générale,...
+* ~~Les familles de cartes sont au dessus des catégories et sous catégories, elles sont définies par le site et sont les grands groupes d'apprentissage: langue, géographie, histoire, culture générale,...~~
 
 * niveaux de difficultés:
 
@@ -146,43 +152,44 @@ Actions (version mobile):
     - Options de base préparamétrées, l'utilisateur n'a plus qu'à choisir une catégorie/famille et il peut lancer,
     - quand il a lancé une fois, cela garde ses paramètres en mémoire donc quand il lance l'app ou le site il peut en un clic relancer sa session en cours ou en lancer une nouvelle (un peu commme un bouton continuer la partie), un autre bouton peut lui permettre de changer les réglages avant d elancer une nouvelle série
   - une page de presentation de ce que sont les falshcard et pourquoi on peut les utiliser (peut servir pour le référencement)
-  - un tuto simplifié la première fois qu'on utilise (on peut sauter le tuto), ne pas faire un tuto frustrant avec une fenetre qui pop toutes les deux secondes, mais plutot quelque chose d'épuré et de très simple(ex: swipe à droite pour une carte acceptée, ...)
+  - un tuto simplifié la première fois qu'on utilise (on peut sauter le tuto), ne pas faire un tuto frustrant avec une fenetre qui pop toutes les deux secondes, mais plutot quelque chose d'épuré et de très simple(ex: swipe à droite pour une carte acceptée, ...), par exemple cela pourrait être une session de flashcards avec les tutos à la place des cartes ?
   - commencer par la version mobile
   - Menu à gauche
   - Fair un schéma des différentes parties et interactions possibles, afin de voir par exmeple en combien de clics on arrive au menu, aux options, on lance une session,...
   - Possibilité de se connecter avec un compte (genre réseau social, google,...) ?
-  - Idées logo:
-    - Cartes stylisées, logo double sens flash (la forme des cartes peut éoquer à la fois des cartes ou un éclair)
+  - ~~Idées logo:~~
+    - ~~Cartes stylisées, logo double sens flash (la forme des cartes peut éoquer à la fois des cartes ou un éclair)~~
 
 - penser à l'internationalisation: faire site en anglais, mettre une version francaise au moins ?
   - i18n ?
 
-utiliser un linter ?
+~~utiliser un linter ?~~
 
-express.js pour node en mode web
-sequelize pour l'ORM
+~~express.js pour node en mode web~~
+~~sequelize pour l'ORM~~
 
-stimulus si on fait avec laravel
-vue/react -> pas obligatirmenet de bdd
+~~stimulus si on fait avec laravel~~
+~~vue/react -> pas obligatirmenet de bdd~~
 
-pour le projet vue en front ? , node en back ? voir Strapi ?
+~~pour le projet vue en front ? , node en back ? voir Strapi ?~~
 
-export -> electron (desktop)/capacitor (mobile)
+~~export -> electron (desktop)/capacitor (mobile)~~
 
-faire une todo en test pour tester vue front
+~~faire une todo en test pour tester vue front~~
 
-docker:
-1. outiller le projet : bdd avec docker par exemple
-2. utiliser docker compose meme sur un projet unique
-3. mariaDB adminer
-En dernier tenter carrément de run le projet sur docker
+~~docker:~~
+1. ~~outiller le projet : bdd avec docker par exemple~~
+2. ~~utiliser docker compose meme sur un projet unique~~
+3. ~~mariaDB adminer~~
+~~En dernier tenter carrément de run le projet sur docker~~
 
----
+---------------------------------------------------------------
 
 ## Définition recadrée du projet
-Les parties avec un ``??`` sont en attente d'être complétées
++ Les parties avec un ``??`` sont en attente d'être complétées
++ Les termes en gras correspondent aux termes officiels qui seront utilisés par l'application et devront donc être traduits également en anglais pour servir de références dans les BDD notamment
 
-### 1.1 Compétences du référentiel validées par le projet:
+### 1. Compétences du référentiel validées par le projet:
 
 REAC:
 Front: Développer la partie front-end d’une application web ou web mobile en intégrant les recommandations de sécurité:
@@ -206,28 +213,170 @@ Back: Développer la partie back-end d’une application web ou web mobile en in
 + Les utilisateurs doivent pouvoir:
   - Créer leur propres flash cards
   - S'entrainer en utilisant leur flashcards ou celles de la communauté
-  - Il doit donc y avoir possibilité d'envoyer ses cartes en visibilité publique
+  - Il doit donc y avoir possibilité de partager ses cartes avec la communauté
   - Avoir un aperçu de leur progression
 #### 2.2 Cas utilisateurs
 On crée 3 personnas:
 ##### 2.2.1 Bob
 Bob a 16ans, son professeur d'anglais lui a recommandé les flashcards pour apprendre du nouveau vocabulaire, il a regardé très rapidement le concept des flashcards mais n'est pas sûr de comprendre comment les utiliser.
-+ Quelles sont ses attentes ?:
++ Quelles sont ses attentes ?: 
+  - Apprendre à utiliser les flashcards
+  - Pouvoir les utiliser rapidement et simplement
 + Quelles sont ses freins potentielles ?:
+  - L'utilisation des flashcards ne vient pas de son propre chef, il pourrait donc être plus rapidement frustré ou avoir envie d'abandonner
+  - ``??``
 
 ##### 2.2.2 Phillipe-Adalbert Germain Du Plessix de l'Escarrère 
 PA a 24 ans il est professeur et souhaiterait inciter ses élève à utiliser les flashcards, il voudrait pouvoir les créer lui même sous forme de cours progressifs.
++ Quelles sont ses attentes ?:
+  - Pouvoir créer rapidement et facilement des flashcards
+  - Pouvoir créer des collections de cartes organisées, avec des progressions différentes en fonction du niveau de ses élèves
+  - Pouvoir partager les cartes créés avec ses classes 
+  - Pouvoir créer les cartes autant depuis son pc de bureau que depuis son portable afin de pouvoir progresser autant depuis chez lui que dans les transports en commun en allant au travail
++ Quelles sont ses freins potentielles ?:
+  - Si l'expérience utilisateur est trop différente entre son pc et son portable, il pourrait ne pas vouloir créer des cartes sur l'une des deux plateformes et donc avoir moins de temps pour préparer les flashcards pour ses élèves
+
 
 ##### 2.2.3 Gertrude
 Gertrude a 37ans, elle ne cesse jamais d'apprendre, et est toujours à la recherche de nouveaux éléments à découvrir, néanmoins son emploi de chef dans un palace ne lui laisse que très peu de temps pour apprendre, elle connaît bien le principe des flashcards, récemment elle s'est mis à apprendre l'arabe.
++ Quelles sont ses attentes ?:
+  - Pouvoir récupérer des collections de cartes préfaites pour les langages
+  - Pouvoir créer ses propres cartes qu'elle pourra intégrer aux collections préfaites (par exemple pour des expressions locales ou d'argot qu'elle ne trouve pas dans les collections de la communauté)
++ Quelles sont ses freins potentielles ?:
+  - Elle n'a que très peu de temps pour apprendre (quelques minutes pendant les repas)
+  - Elle n'a donc pas vraiment de temps pour créer des cartes
+  - Malgré son envie d'apprendre; le manque de temps et la difficulté d'apprendre une nouvelle langue pourrait la décourager, elle pourrait en effet assez rapidement croire qu'elle ne progresse pas
 
-#### 2.3 UI
+
+#### 2.3 Conclusions de la recherche utilisateurs et réponses aux problèmes de base
+En conclusion on cherche à:
+  - Pouvoir créer des cartes de genres variés afin de s'adapter aux différents profils utilisateurs
+  - Pouvoir comprendre le fonctionnement sans risque de se décourager, limiter au maximum la frustration
+  - Pouvoir utiliser les cartes de manière rapide sans avoir des centaines de réglages à paramétrer au début et pouvoir ainsi lancer des sessions d'apprentissage n'importe où, n'importe quand
+  - Pouvoir disposer quand même d'une certaine flexibilité quand aux utilisations qu'on pourra faire de ce site (cela doit donc faire partie de réglages additionnels qui ne doivent pas intérférer avec l'utilisation classique) 
+  - Rendre le site ludique, pour inciter les utilisateurs qui n'ont de base pas de volonté d'apprendre de cette manière, mais y sont contraints par leur environnement, ou ceux qui manquent de temps et pourraient se décourager, à poursuivre leur apprentissage, pour cela on pourrait mettre en place un système de succès en plus des statistiques de cartes, les succès étant probablement plus amusants et entrainants que des stats brutes (puisqu'il est nécessaire d'aller voir nos stats et de les comprendres, alors qu'un succès montre rapidement et dans la continuité de l'utilisation classique qu'on a progressé dans un domaine) 
+
+#### 2.4 Mise en place des solutions et concepts généraux du site
++ [Fonctionnement des flashcards](#241-fonctionnement-des-flashcards)
++ Les familles
++ Les catégories et sous-catégories
++ Les collections
++ Les rangs de cartes
++ La difficulté des cartes
++ Les notes
++ Les succès
++ Les statistiques
++ Les éléments de flashcards
+  - Images, schéma, dessin
+  - QCM
+  - Texte
+  - Audio (enregistrable sur l'appli ?)
+  - Dessin (réalisable sur l'appli ?)
++ Les paramètres généraux
++ Les paramètres de session
++ Fonctionnement de la création de carte
++ Fonctionnement d'une session d'apprentissage
+##### 2.4.1 Fonctionnement des flashcards
++ Les flashcards possèdent un recto et un verso
++ Sur chaque côté plusieurs éléments peuvent être affichés (ex: ``traduction + prononciation <=> mot étranger``)
++ Chaque carte doit avoir un affichage par défaut (c'est à dire spécifier ce qui s'affiche par défaut au recto et au verso)
+
+##### 2.4.2 Les familles
+Les **familles** d'apprentissage correspondent à la taxonomie la plus élevée du site
++ Il s'agit des grandes familles de connaissances qu'il peut y avoir
++ Elle sont créées au lancement du site
++ Elle ne peuvent pas être crées par la communauté
++ Des familles pourronts être rajoutées en fonction des retours
++ Une carte ne peut appartenir qu'à une seule famille
++ Les familles sont:
+  - Culture générale
+  - Histoire & Géographie
+  - Langues
+  - Sciences
+  - Politique, Justice & Economie
+  - Santé & Sport
+  - Arts & Cultures
+  - ``??``
+
+##### Les catégories et sous-catégories
+Les **catégories**  correspondent à la taxonomie la plus élevée du site
++ Certaines sont crées dès le lancement du site
++ Les catégories et sous-catégories peuvent être ajoutées par les utilisateurs pour leurs propres collections
++ Il peut y avoir techniquement une infinité de sous-catégories néanmoins il faudra tenter de limiter à 2 générations de sous-catégories, l'objectif n'est pas de faire une classification réelle du savoir, mais d'avoir une classification générale afin de faciliter la navigation sur le site.
++ Par exemple, tenter de classer toutes les cartes liées aux langues en fonction des familles linguistiques, serait suicidaire; voir les [langues par famille sur Wikipédia](https://fr.wikipedia.org/wiki/Langues_par_famille)
++ De plus classer de manière trop scientifique, bien que plus exacte, risquerait d'être juste incompréhensible pour la majorité des gens, si on souhaite savoir ce qu'est la famille des langues Finno-Ougriennes alors il est plus pertinent d'apprendre une série de cartes sur les familles de langues, plutôt que d'observer les catégories
++ L'ajout de catégories et sous-catégories en version publique, devra faire l'objet d'une demande validée
++ Une carte ou une collection peut techniquement appartenir à plusieurs catégories, mais il est recommandé d'en utiliser qu'une seule
++ Les catégories (liste non exhaustive) avec des exemples de sous catégories:
+  - Culture générale
+  - Histoire
+    - Moyen-Age Européen
+    - Renaissance Italienne
+    - Histoire des peuples Méso-américains
+    - ...
+  - Géographie
+  - Langues
+    - Linguistique
+    - Français
+    - Anglais
+    - Japonais
+    - Arabe
+    - ...
+  - Sciences
+    - Mathématiques
+    - Biologie
+    - Chimie
+    - ...
+  - Politique
+  - Justice & Droit
+  - Economie
+  - Santé
+  - Sport
+    - Sports collectifs
+    - Sports individuels
+  - Arts & Cultures
+    - Musique
+    - Littérature
+    - Cinéma
+    - Jeux-vidéos
+    - Peinture
+    - Sculpture
+
+##### Les collections
+
+##### Fonctionnement général d'une session d'apprentissage
++ L'utilisateur lance une session, des paramètres de base lui sont proposés:
+  - basés sur les paramètres de base de l'application si c'est la première fois
+  - ou basés sur ses précédents paramètres s'il en a
++ Il peux choisir de changer le type de cartes qui est proposé:
+  - **générique** (DEFAUT): toutes les cartes qu'il a en stock, ne permet pas de choisir l'affichage 
+  - une **collection**
+  - une **catégorie** ou **sous-catégorie**
+  - toutes les cartes d'un **rang**
++ L'utilisateur valide lui même sa réponse, c'est à lui d'estimer si sa réponse est correct ou non, ce choix est fait par rapport à une validation par l'application pour:
+  - Eviter à l'utilisateur d'avoir à taper chacune de ses réponses, ce qui lui ferait perdre du temps et créerait de la frustration, ainsi il a juste à choisir la validité de ses réponses
+  - Eviter les frustrations liées à une réponse que l'appli juge invalide, mais que l'utilisateur considère comme assez maitrisée pour être considérée correcte
+  - Suite à l'abandon de l'idée de compétition entre les utilisateurs (avec un tableau de score), cette validation par l'application n'est en réalité plus nécessaire
+
+##### Les succès
+Idées de succès:
+- Créer 1, 5, 10, 25, 50, 100, 1000 cartes
+- Lire 1, 5, 10, 25, 50, 100, 1000, 5000, 100 000 cartes
+- Maitriser 1, 5, 10, 25, 50, 100, 1000, 5000, 100 000 cartes (les cartes ont atteint le rang max)
+- Partager 1, 5, 10, 25, 50, 100, 1000 cartes
+
+#### Le cheminement de l'utilisateur
+
+
+#### 
+
+#### 2.5 UI
 + Réaliser un wireframe afin de déterminer la forme général du site en mobile puis en desktop, et définir les cheminements de l'utilisateur
 + Définir la charte graphique et l'identité du site:
   - Les couleurs: ``??``
   - Nom du site: ``??``
   - Slogan : ``??`` 
-  - Le logo: Deux cartes se chevauchant, à leur jonction un changement de couleur symbolise un éclair
+  - Le logo: Deux cartes se chevauchant, à leur jonction un changement de couleur symbolise en double sens la séparation entre les cartes ou un éclair
   - Les formes: ``??``
 + Réaliser la maquette
 
@@ -238,10 +387,16 @@ Gertrude a 37ans, elle ne cesse jamais d'apprendre, et est toujours à la recher
 faire des schémas
 
 ### Technologies et outils utilisées
-- Figma pour le wireframe, et la maquette
-- Gimp et Inkscape pour le logo et la retouche d'images
-- Front: Vue.js
+- ***Figma*** pour le wireframe, et la maquette
+- ***Gimp*** et ***Inkscape*** pour le logo et la retouche d'images
+- ***Docker*** pour la conteneurisation
+- ***i18n*** pour l'internationalisation
+- Front: ***Vue.js***
 - Back: 
-  - Express.js pour le routing
-  - Sequelize pour l'Object Relational Mapper (ORM)
+  - ***Express.js*** pour le routing
+  - ***Sequelize*** pour l'Object Relational Mapper (ORM)
   - ``??`` pour la base de donnée
+
+### Les idées abandonnées et explications de leur abandon
+#### Les familles
+
