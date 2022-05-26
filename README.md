@@ -11,7 +11,7 @@
 ## Définition brute du projet et brainstorming d'idées
 + Les éléments ensuite renotés dans la définition au propre du projet ou abandonnés seront rayés
 + Les raisons de l'abandon d'éléments seront expliquées en fin de document
-Voir l'annexe: [Archives des idées du Brainstorming](#archives-des-idées-du-brainstorming), pour la totalité des idées au lancement du projet.
++ Voir l'annexe: [Archives des idées du Brainstorming](#archives-des-idées-du-brainstorming), pour la totalité des idées au lancement du projet.
 
 
 + Pour les éléments sur les cartes peut etre utilisé un système de checksum par exemple si dans la bdd pour une carte on a 2items au recto 3 au verso elle a une checksum qui dépend de ces items, une autre carte meme si elle a le meme nombre d'items (2 et 3) pourrait ne pas avoir la meme checksum car cela dépendra du nom des items (exemple peut etre quelque chose du genre traduction_prononciation) => problème: qu'arrive-t-il si l'utilisateur ne rentre pas a chaque fois els élements dans le meme ordre ? exemple un coup ol met prononciation puis trduction et l'autre coup il inverse, solution => utiliser l'ordre alphabétique, ainsi peut importe l'ordre dans lequel il met il y aura toujours le meme ordre (ici prononciation_traduction) pour la checksum, pour contrecarrer les problème d'utilisateur qui n'écrivent pas les items de la meme façon à chaque fois on pourrait avoir un select qui permettrait de choisir les types d'items déjà utilisé (exemple "traduction", "caractère"), pour les collections il pourrait aussi y avoir la possibilité de créer des cartes au sein d'une collection, ainsi le template de cartes nous afficherait toutes les options présentes  sur ce type de carte, ne marcherait pas pour les collections génériques du coup ? 
@@ -33,25 +33,16 @@ Voir l'annexe: [Archives des idées du Brainstorming](#archives-des-idées-du-br
 * Pour les infos que l'utilisateur doit avoir, tâcher d'etre le plus efficace possible, phrases courtes et efficaces, avec si besoin un lien vers une aide plus détaillée, plutot qu'un pavé de texte directment
 
 * dans les paramètres on peut choisir la fréquence des cartes:
-
   - quand une carte est sue (quand on a swipé pour la valider), un timer lui est ajouté pour déterminer dans combien de temps l'appli nous représentera la carte, ce time pourrait fonctionner de la manière suivante:
     - On notifie quel est la position de la carte (exemple c'est la 536eme carte qu'on apprend), le "timer" définit dans combien de cartes on pourra la reproposer, au lancement d'une session si il y assez de cartes, l'appli ne choisira pas cette carte si on a pas encore atteint le "time" (ex: c'était la 536eme carte, le timer avait définit qu'on ne devait pas la revoir avant 40 cartes, donc si on en est actuellement à la 556eme carte il ne devrait pas la reproposer car il faut qu'il attende la 576eme carte, je pense qu'il est mieux de ne pas se soucier du nombre de cartes qu'il y aura dans la session, par exemple si on avait une session de 100 cartes techiniquement on atteindrait cette 576eme carte au bout de la 20eme denotre session dans cet exemple néanmoins cela complexifierais le calcul inutilement et poserais problème , en effet vu que les cartes sont définis aléatoirement avant la session, celle ci risquerait d'apparaitre avant le temps imparti, ce qui pourrait ne pas etre un problème mais pourrait aussi le devenir dans le cas ou l'utilsiateur a souvent tendance à ne jamais finir ses sessions)
-  - ce time est également imapcté en fonction du niveau de succès de la carte:
+  - ce timer est également imapcté en fonction du niveau de succès de la carte:
     - cela est déterminé par les réglages, on peut ajouter un niveau de difficulté au cartes, et déterminer un réglage de temps e fonction de ce niveau:
     - exemple une carte niveau facile si elle est sue une première fois ne réapparaitra que au bout de 20 jours la toute première fois, au bout de 20 jours si on réussi encore, la carte obtient alors un taux de réussite qui est de 100% (il faut minimum deux passages sur une carte pour qu'elle commence a avoir un taux de réussite ), avec ce taux elle sera alors représentée dans 30jours (créer une formule qui prend en compte le temps en fonction du niveau de difficulté et du taux de réussite)
-
-* Possibilité de planifier des sessions d'apprentissage (exemple tous les mercredis à 13h avoir une notif de rappel pour une séance de cartes)
+  - Le timer pourrait aussi fonctionner avec un temps Unix
 
 * Créer un système de _rang_ (nom à changer ?), en plus des catégories/sous-catégories et niveaux de difficultés on peut choisir au sein d'une meme catégorie des rangs, les rangs permettent de se laisser de la souplesse sur la valdation des réponses par exemple rang 1 on peut ne connaitre qu'une partie de la réponse alors qu'un rang 5 nécessite la réponse exacte (laissée à l'appréciation de l'utilisateur), , par exmple pour du mandarin on pourrait avoir un rang de base `mot anglais` <-> `mot mandarin écrit/prononciation/Tons`, les cartes lorsqu'elles sont rangées au rang 1, peuvent etre considérées valides juste si on a le bon mot, peu mporte le ton et l'écriture, au rang 2 il faudrait en plus etre capable de connaitre le ton des mots, puis finalement de savoir l'écirre, cela permettrait sur des notions avancées, d'avoir une progression, la personne pourrait choisir de déjà maitriser les traductions, avant de se soucier des prononciations puis de l'écriture/orthographe correcte (puiqu'il faudrait qu'il sache en premier comment dire ce mot, avant de se soucier de la prnonciation exacte ou de l'ortographe), dans les options on peut choisir au bout de combien de fois, un mot réussi dans un rang doit automatiquement passer au rang supérieur (laisser une possibilité de le mettre manuellement ?), exemple quand l'utilisateur a réussi (voir entre nombre de carte réussies d'affilés-> préférable dans ce cas afin de voir plutot en fonction de sa progression récente plutot que de la réussie globale, ou en fonction du taux de réussite ?) 3 fois de suite ou a un taux de réussite de 75% sur une carte alors celle ci peut passer au rang supérieur -> l'idée des rangs pourrait etre abandonnée s'il n'y a pas assez de cas dans lesquels cela pourrait etre utile( en géographie on pourrait avoir le nom d'un pays et au verso, la population, langue parlée, superficie,..., ainsi l'utilisateur pourrait avoir un rang quand il connait la langue parlée, un autre quand il connait la superficie et la langue parlée, un dernier quand il connait tous les éléments)
 * Ajouter une option pour rétrogader ou promouvoir automatiquement une carte après un certain nombre (réglable) d'échecs ou de réussite, en plus de laisser l'utilisdateur le faire manuellement
 * Les rangs sont nomable et pourraient soit etre pratiqués individuellement exemple: session de cartes rangs 3, soit mélangées quelquesoit le rang et dans ce cas avoir le rang marqué au dessus de la réponse pour indique à l'utilisateur quel sévérité il peut utiliser pour valider ou on la carte), le rang pourrait etre changeable en cours de validation, exempleune fois la réponse affichée, si la carte est en rang 1 (ex:juste définition) et qu'on estime que on sait aussi la prononciation et l'écrit alors on peut la passer au rang supérieur (select ? / Jauge ?)
-
-* niveaux de difficultés:
-  - facile
-  - moyen
-  - difficile
-  - custom (non disponible pour les cartes qu'on crée pour la communauté, ou alors il faudrait ajouter en plus du nom de la difficulté une estimation de la position de cette difficulté par rapport aux autres)
-  - Il pourrait etre déterminé: soit par l'auteur, soit automatiquement en fonction de notre taux de réussite par rapport au nombre d'essai (exempple une carte qu'on a faite 20 fois avec seulement 30% de taux de réussite, est clairement une carte difficile en revanche une carte faite uniquement 3 fois, si elle a un taux de réussite de 33%, cela signifie simplement qu'on l'a réussi une fois et échoué deux fois, mais elle n'a pas été faite beaucoup de fois, donc peut etre que seulement deux essais de plus porterait son score à 80% dans ce cas la le taux de réussite seul , n'est pas un bon indicateur de la difficulté, à voir donc comment prendre en compte les deux éléments)
 
 * Paramètres d'une session d'apprentissage:
   - famille de carte
@@ -186,21 +177,17 @@ En conclusion on cherche à:
 + [Les collections](#243-les-collections)
 + [Les notes](#244-les-notes)
 + Les rangs de cartes
-+ La difficulté des cartes
-+ Les succès
-+ Les statistiques
-+ La progression de l'utilisateur
++ Les niveaux de difficulté des cartes
++ La difficulté estimée des collections
 + Les éléments de flashcards
-  - Images, schéma, dessin
-  - QCM
-  - Texte
-  - Audio (enregistrable sur l'appli ?)
-  - Dessin (réalisable sur l'appli ?)
-+ Signalement et réclamation
-+ Les paramètres généraux
-+ Les paramètres de session
 + Fonctionnement de la création de carte
++ Les statistiques
++ Les succès
++ La progression de l'utilisateur
 + Fonctionnement d'une session d'apprentissage
++ Les paramètres de session
++ Les paramètres généraux
++ Signalement et réclamation
 ##### 2.4.1 Fonctionnement des flashcards
 + Les flashcards possèdent un recto et un verso
 + Sur chaque côté plusieurs éléments peuvent être affichés (ex: ``traduction + prononciation <=> mot étranger``)
@@ -263,11 +250,12 @@ Les collections sont des groupes de cartes généralement liées à une même th
     - qui peut accepter les ajouts d'auteurs secondaires
   - Des auteurs secondaires
 + Elle est définie par:
-    - Un nom
-    - une description
-    - des éventuelles sous-collections (exemple pour une collection *Apprendre l'Arabe*, on pourrait avoir *1.1 Les bases*, *1.2 L'écriture*, ... )
-    - Une popularité définie par le nombre de personnes qui ont choisi de l'utiliser
-    - Une note globale définie par la moyenne des notes utilisateurs
+    - Un **nom**
+    - une **description**
+    - des éventuelles **sous-collections** (exemple pour une collection *Apprendre l'Arabe*, on pourrait avoir *1.1 Les bases*, *1.2 L'écriture*, ... )
+    - Une **popularité** définie par le nombre de personnes qui ont choisi de l'utiliser
+    - Une **note globale** définie par la moyenne des **notes** utilisateurs
+    - Une **difficulté estimée** fixée par l'auteur principal
 + Lorsqu'on utilise une collection on peut choisir:
   - De l'utiliser telle quelle: on ne peut pas la modifier, mais si des cartes sont modifiées ou ajoutées par le créateur elles s'ajouteront à notre instance de la collection
   - De la privatiser: dans ce cas les cartes deviennent comme une de nos collections privée, on peut les modifier, les supprimer en ajouter, mais cela n'impacte pas la collection publique et on ne bénéficie pas des modifications de cette dernière
@@ -297,6 +285,21 @@ Les collections sont des groupes de cartes généralement liées à une même th
   - ★★★★★ Complètement d'accord
 + Ensuite une moyenne des 3 notes est réalisée pour déterminer la note sur 5 des cet utilisateur, les notes de tous les utilisateurs sont réunies pour déterminer la note globale de la collection
 
+##### 2.4.5 Les rangs
+
+##### Les niveaux de difficultés
++ Le **niveau de difficulté** est un indicateur explicite du **taux de réussite** d'une carte, il sert à classer les cartes selon 3 niveaux de difficulté (sujet à rééquilibrage):
+  - **facile**: de 100% à 75% de taux de réussite (100% >= x >= 75%)
+  - **moyen**: en dessous de 75% jusqu'à 25% non inclus de taux de réussite (75% > x > 25%)
+  - **difficile**: de 0% à 25% de taux de réussite (25% >= x >= 0%) 
++ Toutes les cartes commencent avec un niveau de difficulté **moyen** par défaut
++ Dès qu'on s'auto-évalue pour la deuxième fois sur une carte, le niveau de difficulté est alors ré-établi en fonction du taux de réussite, puis le niveau de difficulté est ensuite recalculé à chaque auto-évaluation:
+  - en effet si on a qu'un seul passage sur une carte, il n'y aurait donc que deux possibilités de taux de réussite (0% ou 100%), tandis qu'au bout de deux passage on aurrait alors 3 possibilités (0%, 50%, 100%), permettant alors d'établir un niveau de difficulté
++ Le niveau de difficulté d'une carte est bien entendu de plus en plus pertinent à mesure que l'utilisateur pratique (une carte faite 20 fois avec seulement 30% de taux de réussite, est clairement une carte difficile en revanche une carte faite uniquement 3 fois avec un taux de réussite de 33%, cela signifie simplement qu'on l'a réussi une fois et échoué deux fois, mais elle n'a pas été faite beaucoup de fois, donc peut etre que seulement deux essais de plus porterait son score à 80%) 
++ Si on fait une session de cartes de difficultés variées, c'est à dire quand on ne fait pas une session de carte basée sur une difficulté particulière, alors le niveau de diffculté doit s'afficher sur la carte
+
+#####  La difficulté estimée des collections
+La difficulté estimée d'une collection est fixée par son **créateur**/**auteur principal**, il s'agit d'une valeur arbitraire, il doit être précisé sur le site, que ce niveau de difficulté peut ne pas être représentatif de la difficulté réelle pour chaque personne
 ##### Les éléments de flashcards
 + Une flashcard peut avoir différents **éléments** sur son recto et son verso (elle n'est pas limitée à un élément de chaque côté), ces éléments peuvent être de différents **types**:
   - Mot
@@ -321,13 +324,22 @@ Les collections sont des groupes de cartes généralement liées à une même th
     - Quand on lance une partie (ou l'ensemble) de ces cartes mélangées à des cartes non compatibles (ex:``Recto:Grammaire <=> Verso:Explication``), dans ce cas on ne pourra pas choisir quelles éléments on affiche sur quel côté, mais on aura tous les **recto** en question et les **verso** en réponse, ce qui permet de mélanger des cartes variées
   - L'ensemble des éléments sans emplacement particulier (``Caractère/Mot; Traduction; Prononciation``), ce qui permettra de sélectionner quels éléments on veut au **recto** et lesquels au **verso** tant qu'on utilise que des cartes du même **format**
 
-##### Paramètre généraux
-+ Dans les options il faut pouvoir:
-  - customiser l'aspect visuel des cartes:
-    - couleurs d'arrière plan,
-    - Taille de police,
-    - couleur du texte,
-    - disposition des éléments de réponses
+##### Fonctionnement de la création de cartes
+
+##### Les statistiques
+- Taux de réussite de la carte
+
+##### Les succès
++ Peuvent être affichés sur notre profil ``??``
+Idées de succès:
+- Créer 1, 5, 10, 25, 50, 100, 1000 cartes
+- Lire 1, 5, 10, 25, 50, 100, 1000, 5000, 100 000 cartes
+- Maitriser 1, 5, 10, 25, 50, 100, 1000, 5000, 100 000 cartes (les cartes ont atteint le rang max)
+- Partager 1, 5, 10, 25, 50, 100, 1000 cartes
+
+##### La progression de l'utilisateur
+La progression de l'utilisateur sera indiqué par des graphiques basées sur les statistiques des cartes (rang de la carte, taux de réussite)
+
 ##### Fonctionnement général d'une session d'apprentissage
 + L'utilisateur lance une session, des paramètres de base lui sont proposés:
   - basés sur les paramètres de base de l'application si c'est la première fois
@@ -341,20 +353,17 @@ Les collections sont des groupes de cartes généralement liées à une même th
   - Eviter à l'utilisateur d'avoir à taper chacune de ses réponses, ce qui lui ferait perdre du temps et créerait de la frustration, ainsi il a juste à choisir la validité de ses réponses
   - Eviter les frustrations liées à une réponse que l'appli juge invalide, mais que l'utilisateur considère comme assez maitrisée pour être considérée correcte
   - Suite à l'abandon de l'idée de compétition entre les utilisateurs (avec un tableau de score), cette validation par l'application n'est en réalité plus nécessaire
++ Il est possible de planifier des sessions d'apprentissage (exemple tous les mercredis à 13h avoir une notif de rappel pour une séance de cartes)
 
-##### Les succès
-+ Peuvent être affichés sur notre profil ``??``
-Idées de succès:
-- Créer 1, 5, 10, 25, 50, 100, 1000 cartes
-- Lire 1, 5, 10, 25, 50, 100, 1000, 5000, 100 000 cartes
-- Maitriser 1, 5, 10, 25, 50, 100, 1000, 5000, 100 000 cartes (les cartes ont atteint le rang max)
-- Partager 1, 5, 10, 25, 50, 100, 1000 cartes
+##### Paramètres de session
 
-##### Les statistiques
-
-
-##### La progression de l'utilisateur
-La progression de l'utilisateur sera indiqué par des graphiques basées sur les statistiques des cartes (rang de la carte, taux de réussite)
+##### Paramètre généraux
++ Dans les options il faut pouvoir:
+  - customiser l'aspect visuel des cartes:
+    - couleurs d'arrière plan,
+    - Taille de police,
+    - couleur du texte,
+    - disposition des éléments de réponses
 
 ##### Signalement et réclamation
 Créer un système de réclamation et de signalement:
@@ -391,7 +400,7 @@ Certaines options ne verront le jour qu'après qu'une version déjà pleinement 
 + l'ajout de fichiers audio (ex: mot de langue étrangère), afin de créer des cartes de type ``audio <=> prononciation phonétique/description/traduction`` (ex: d'un coté un mot audio, de l'autre sa version écrite, afin de travailler sa prononciation)
 
 
-#### 2.5 UI
+#### 2.5 UI et charte graphique
 + Réaliser un wireframe afin de déterminer la forme général du site en mobile puis en desktop, et définir les cheminements de l'utilisateur
 + Définir la charte graphique et l'identité du site:
   - Les couleurs: ``??``
@@ -400,6 +409,7 @@ Certaines options ne verront le jour qu'après qu'une version déjà pleinement 
   - Le logo: Deux cartes se chevauchant, à leur jonction un changement de couleur symbolise en double sens la séparation entre les cartes ou un éclair
   - Les formes: ``??``
 + Réaliser la maquette
++ Pour les niveaux de difficultés: Quel logo ? Les étoiles étant déjà prises par les notes, des crânes ? Symbolique peut être trop jeu vidéo``??``
 
 ### 3. Propositions de tests
 
@@ -544,3 +554,12 @@ Les options de swipe qui étaient prévues au début du projet, bien qu'intéres
 2. ~~utiliser docker compose meme sur un projet unique~~
 3. ~~mariaDB adminer~~
 ~~En dernier tenter carrément de run le projet sur docker~~
+
+* ~~Possibilité de planifier des sessions d'apprentissage (exemple tous les mercredis à 13h avoir une notif de rappel pour une séance de cartes)~~
+
+* ~~niveaux de difficultés:~~
+  - ~~facile~~
+  - ~~moyen~~
+  - ~~difficile~~
+  - ~~custom (non disponible pour les cartes qu'on crée pour la communauté, ou alors il faudrait ajouter en plus du nom de la difficulté une estimation de la position de cette difficulté par rapport aux autres)~~
+  - ~~Il pourrait etre déterminé: soit par l'auteur, soit automatiquement en fonction de notre taux de réussite par rapport au nombre d'essai (exempple une carte qu'on a faite 20 fois avec seulement 30% de taux de réussite, est clairement une carte difficile en revanche une carte faite uniquement 3 fois, si elle a un taux de réussite de 33%, cela signifie simplement qu'on l'a réussi une fois et échoué deux fois, mais elle n'a pas été faite beaucoup de fois, donc peut etre que seulement deux essais de plus porterait son score à 80% dans ce cas la le taux de réussite seul , n'est pas un bon indicateur de la difficulté, à voir donc comment prendre en compte les deux éléments)~~
