@@ -3,12 +3,12 @@
 + Les termes en gras correspondent aux termes officiels qui seront utilisés par l'application et devront donc être traduits également en anglais pour servir de références dans les BDD notamment
 
 ## Sommaire
-1. Compétences du référentiel validées par le projet
-2. UX Design
-3. Propositions de tests
-4. Fonctionnement de la BDD
-5. Technologies et outils utilisés
-6. Idées abandonnées et raisons de leur abandon
+1. [Compétences du référentiel validées par le projet](#1-compétences-du-référentiel-validées-par-le-projet)
+2. [UX Design](#2-ux-design)
+3. [Propositions de tests](#3-propositions-de-tests)
+4. [Fonctionnement de la BDD](#4-fonctionnement-de-la-bdd)
+5. [Technologies et outils utilisés](#5-technologies-et-outils-utilisés)
+6. [Idées abandonnées et raisons de leur abandon](#6-les-idées-abandonnées-et-raisons-de-leur-abandon)
 
 ## 1. Compétences du référentiel validées par le projet:
 REAC:  
@@ -79,18 +79,18 @@ En conclusion on cherche à:
 + [Les catégories et sous-catégories](#242-les-catégories-et-sous-catégories)
 + [Les collections](#243-les-collections)
 + [Les notes](#244-les-notes)
-+ Les rangs de cartes
-+ Les niveaux de difficulté des cartes
-+ La difficulté estimée des collections
-+ Les éléments de flashcards
-+ Fonctionnement de la création/modification de carte
-+ Les statistiques
-+ Les succès
-+ La progression de l'utilisateur
-+ Fonctionnement d'une session d'apprentissage
-+ Les paramètres de session
-+ Les paramètres généraux
-+ Signalement et réclamation
++ [Les rangs de cartes](#245-les-rangs)
++ [Les niveaux de difficulté des cartes](#246-les-niveaux-de-difficultés)
++ [La difficulté estimée des collections](#247-la-difficulté-estimée-des-collections)
++ [Les éléments de flashcards](#248-les-éléments-de-flashcards)
++ [Fonctionnement de la création/modification de carte](#249-fonctionnement-de-la-créationmodification-de-cartes)
++ [Les statistiques](#2410-les-statistiques-et-informations)
++ [Les succès](#2411-les-succès)
++ [La progression de l'utilisateur](#2412-la-progression-de-lutilisateur)
++ [Fonctionnement d'une session d'apprentissage](#2413-fonctionnement-général-dune-session-dapprentissage)
++ [Les paramètres de session](#2414-paramètres-de-session)
++ [Les paramètres généraux](#2415-paramètre-généraux)
++ [Signalement et réclamation](#2416-signalement-et-réclamation)
 #### 2.4.1 Fonctionnement des flashcards
 + Les flashcards possèdent un recto et un verso
 + Sur chaque côté plusieurs éléments peuvent être affichés (ex: ``traduction + prononciation <=> mot étranger``)
@@ -209,7 +209,7 @@ Les collections sont des groupes de cartes généralement liées à une même th
   - 4: ``??``
   - 5: Maitrisée
 
-#### Les niveaux de difficultés
+#### 2.4.6 Les niveaux de difficultés
 + Le **niveau de difficulté** est un indicateur explicite du **taux de réussite global** d'une carte, il sert à classer les cartes selon 3 niveaux de difficulté (sujet à rééquilibrage):
   - **facile**: de 100% à 75% de taux de réussite (100% >= x >= 75%)
   - **moyen**: en dessous de 75% jusqu'à 25% non inclus de taux de réussite (75% > x > 25%)
@@ -220,9 +220,10 @@ Les collections sont des groupes de cartes généralement liées à une même th
 + Le niveau de difficulté d'une carte est bien entendu de plus en plus pertinent à mesure que l'utilisateur pratique (une carte faite 20 fois avec seulement 30% de taux de réussite, est clairement une carte difficile en revanche une carte faite uniquement 3 fois avec un taux de réussite de 33%, cela signifie simplement qu'on l'a réussi une fois et échoué deux fois, mais elle n'a pas été faite beaucoup de fois, donc peut etre que seulement deux essais de plus porterait son score à 80%) 
 + Si on fait une session de cartes de difficultés variées, c'est à dire quand on ne fait pas une session de carte basée sur une difficulté particulière, alors le niveau de diffculté doit s'afficher sur la carte
 
-####  La difficulté estimée des collections
+#### 2.4.7 La difficulté estimée des collections
 La difficulté estimée d'une collection est fixée par son **créateur**/**auteur principal**, il s'agit d'une valeur arbitraire, il doit être précisé sur le site, que ce niveau de difficulté peut ne pas être représentatif de la difficulté réelle pour chaque personne
-#### Les éléments de flashcards
+
+#### 2.4.8 Les éléments de flashcards
 + Une flashcard peut avoir différents **éléments** sur son recto et son verso (elle n'est pas limitée à un élément de chaque côté), ces éléments peuvent être de différents **types**:
   - Mot
   - Chaîne de caractères
@@ -246,7 +247,7 @@ La difficulté estimée d'une collection est fixée par son **créateur**/**aute
     - Quand on lance une partie (ou l'ensemble) de ces cartes mélangées à des cartes non compatibles (ex:``Recto:Grammaire <=> Verso:Explication``), dans ce cas on ne pourra pas choisir quelles éléments on affiche sur quel côté, mais on aura tous les **recto** en question et les **verso** en réponse, ce qui permet de mélanger des cartes variées
   - L'ensemble des éléments sans emplacement particulier (``Caractère/Mot; Traduction; Prononciation``), ce qui permettra de sélectionner quels éléments on veut au **recto** et lesquels au **verso** tant qu'on utilise que des cartes du même **format**
 
-#### Fonctionnement de la création/modification de cartes
+#### 2.4.9 Fonctionnement de la création/modification de cartes
 ###### Création rapide
 + Si on crée des collections avec la **création rapide**:
   - On choisit le libellé de l'élément au **recto**
@@ -272,7 +273,7 @@ La difficulté estimée d'une collection est fixée par son **créateur**/**aute
   - ``??``
 + Pour le reste on peut aller voir les cartes dans la liste de cartes et les modifier (ou cliquer sur éditer après la validation d'une carte dans une session)
 
-#### Les statistiques et informations
+#### 2.4.10 Les statistiques et informations
 Les cartes ont un ensemble de statistiques qui leur est propre (sauvegardé individuellement pour un utilisateur)
 - **Taux de réussite global** de la carte (sur tous les passages)
 - **Résultats des validations** qui permet de savoir le nombre de fois ou une carte est réussie d'affilé (ex: 00111110111: la carte a été échoué deux fois, avant d'être réussie 5 fois, puis un échec et 3 réussites )
@@ -284,7 +285,7 @@ Les cartes ont un ensemble de statistiques qui leur est propre (sauvegardé indi
 - La **priorité d'apprentissage** de la carte
 
 
-#### Les succès
+#### 2.4.11 Les succès
 + Peuvent être affichés sur notre profil ``??``
 Idées de succès:
 - Créer 1, 5, 10, 25, 50, 100, 1000 cartes
@@ -292,14 +293,14 @@ Idées de succès:
 - Maitriser 1, 5, 10, 25, 50, 100, 1000, 5000, 100 000 cartes (les cartes ont atteint le rang max)
 - Partager 1, 5, 10, 25, 50, 100, 1000 cartes
 
-#### La progression de l'utilisateur
+#### 2.4.12 La progression de l'utilisateur
 La progression de l'utilisateur sera indiqué par des graphiques basées sur les statistiques des cartes (rang de la carte, taux de réussite)
 + L'utilsateur a des statistiques globales:
   - **Taux de réussite moyen** de toutes les cartes (calculé à partir du taux de réussite global de chaque carte)
   - nombre total de cartes pratiquées
   - nombre de cartes pratiquées par jour
 
-#### Fonctionnement général d'une session d'apprentissage
+#### 2.4.13 Fonctionnement général d'une session d'apprentissage
 + L'utilisateur lance une session, des paramètres de base lui sont proposés:
   - basés sur les paramètres de base de l'application si c'est la première fois
   - ou basés sur ses précédents paramètres s'il en a
@@ -323,7 +324,7 @@ La progression de l'utilisateur sera indiqué par des graphiques basées sur les
    - si une carte à un taux de réussite élevé, un rang élevé (indiquant que l'utilisateur ne la maitrise correctement) et un nombre de passage élevé, alors le taux de priorité sera faible, 
    - à l'inverse si la carte est souvent échouée , n'a que peu de fois été réalisée et si son rang est faible indiquant que l'utilisateur n'estime pas la maitriser correctement alors le taux de priorité sera élevé.
 
-#### Paramètres de session
+#### 2.4.14 Paramètres de session
 Pour les paramètres de lancement d'une session:
 + On commence par déterminer quelle collection sera utilisée:
   - Si la session n'est pas éligible au changement d'affichage on n'aura pas la possibilité de choisir quels éléments s'affichent sur quel côté et la configuration par défaut sera choisie pour toutes les cartes
@@ -336,7 +337,7 @@ Pour les paramètres de lancement d'une session:
   - le nombre de cartes
   - le côté de la carte à afficher (recto ou verso), si la collection est éligible au changement d'affichage on peut alors choisir quels éléments doivent être montrés au recto et lesquels au verso
 
-#### Paramètre généraux
+#### 2.4.15 Paramètre généraux
 + Dans les options il faut pouvoir:
   - customiser l'aspect visuel des cartes:
     - couleurs d'arrière plan,
@@ -361,7 +362,7 @@ Pour les paramètres de lancement d'une session:
   - On peut désactiver le **classement automatique des rangs**
   - Même quand le **classement automatique des rangs** est activée on peut modifier le rang manuellement pour chaque carte grâce à la jauge
 
-#### Signalement et réclamation
+#### 2.4.16 Signalement et réclamation
 Créer un système de réclamation et de signalement:
 + si on s'aperçoit que des cartes ont un problème:
   - infos erronées, 
@@ -378,7 +379,6 @@ Créer un système de réclamation et de signalement:
 + Si un utilisateur n'est pas connecté (**anonyme**) il peut:
   - Créer un compte
   - Observer les collections publiques
-  - Tester les collections publiques, mais sa progression ne sera pas sauvegardée, donc il n'aura pas accès au rangs, difficultés,... Il pourra simplement tester ses connaissances sans évaluation
 + Les **utilisateurs** peuvent:
 + Les **modérateurs** peuvent:
   - Avoir les mêmes droits que les utilisateurs
@@ -387,6 +387,22 @@ Créer un système de réclamation et de signalement:
   - Chaque décision de modérateur sera vérifiée par deux autres modérateurs afin de limiter les décisions injustes
 + L'**administrateur** peut:
 + Chaque utilisateur pourrait avoir la possibilité de créer un nombre limité (quand même assez élevé) de cartes, afin d'éviter de surcharger le serveur
+
+#### Schéma explicatif du cheminement
+```mermaid
+flowchart TD
+    A[User is connected] --> |Yes| B[Show connected view]
+    A --> |No| C[Show connection view:]
+    C -- can --> D((Create an account))
+    C --> E[See a landing page with introduction]
+    C -- can --> F((can see public collections))
+    C -- can --> G((can connect))
+    B --> H[has access to dashboard]
+    B -- is first time ? --> J[Show tutorial]
+```
+La vue de connection est la landing page, il y a:
+- la page d'explication du concept
+- une possibilité de créer un compte ou de se connecter
 
 
 ### Options avancées de l'application
@@ -405,6 +421,11 @@ Certaines options ne verront le jour qu'après qu'une version déjà pleinement 
 ### 2.5 UI
 + Réaliser un wireframe afin de déterminer la forme général du site en mobile puis en desktop, et définir les cheminements de l'utilisateur
 + Réaliser la maquette
++ Sommaire:
+  - [2.5.1 Charte graphique](#251-charte-graphique)
+  - [2.5.2 Liste des termes pour internationalisation](#252-liste-des-termes-en-anglais-et-français)
+  - [2.5.3 Tutoriels et conseils d'utilisation](#253-tutoriels-et-conseils-dutilisation)
+  - [2.5.4 Affichage d'une carte](#254-affichage-dune-carte)
 #### 2.5.1 Charte graphique
 + Définir la charte graphique et l'identité du site:
   - Les couleurs: ``??``
@@ -430,8 +451,6 @@ Certaines options ne verront le jour qu'après qu'une version déjà pleinement 
   - Demander à l'utilisateur s'il souhaite réaliser le tutoriel, et préciser qu'il pourra être réalisé plus tard en allant dans les menus
   - Être simple et explicite (pas de fenêtre qui pop toutes les deux secondes), du genre un pas à pas qui prend en compte les grandes lignes, fait créer à l'utilisateur une petite collection de cartes, et lui fait ensuite utiliser
 + Pour la réalisation de la maquette on commmence par la partie mobile et on voit comment on peut l'adapter pour du desktop
-
-
 
 #### 2.5.2 Liste des termes en Anglais et Français
 
