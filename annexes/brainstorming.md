@@ -155,17 +155,17 @@
     - ~~Cartes pratiquées par jour~~
     - ~~difficulté globale des cartes réussi (créer un score en fonction de la difficulté et du taux de réussite ?)~~
 
-* Pour le design du site
-  - on épure au maximum
-  - Il faut que les sessions soit le plus accessible possible:
-    - Options de base préparamétrées, l'utilisateur n'a plus qu'à choisir une catégorie/famille et il peut lancer,
-    - quand il a lancé une fois, cela garde ses paramètres en mémoire donc quand il lance l'app ou le site il peut en un clic relancer sa session en cours ou en lancer une nouvelle (un peu commme un bouton continuer la partie), un autre bouton peut lui permettre de changer les réglages avant d elancer une nouvelle série
-  - une page de presentation de ce que sont les falshcard et pourquoi on peut les utiliser (peut servir pour le référencement)
-  - un tuto simplifié la première fois qu'on utilise (on peut sauter le tuto), ne pas faire un tuto frustrant avec une fenetre qui pop toutes les deux secondes, mais plutot quelque chose d'épuré et de très simple(ex: swipe à droite pour une carte acceptée, ...), par exemple cela pourrait être une session de flashcards avec les tutos à la place des cartes ?
-  - commencer par la version mobile
-  - Menu à gauche
-  - Fair un schéma des différentes parties et interactions possibles, afin de voir par exmeple en combien de clics on arrive au menu, aux options, on lance une session,...
-  - Possibilité de se connecter avec un compte (genre réseau social, google,...) ?
+* ~~Pour le design du site~~
+  - ~~on épure au maximum~~
+  - ~~Il faut que les sessions soit le plus accessible possible:~~
+    - ~~Options de base préparamétrées, l'utilisateur n'a plus qu'à choisir une catégorie/famille et il peut lancer,~~
+    - ~~quand il a lancé une fois, cela garde ses paramètres en mémoire donc quand il lance l'app ou le site il peut en un clic relancer sa session en cours ou en lancer une nouvelle (un peu commme un bouton continuer la partie), un autre bouton peut lui permettre de changer les réglages avant d elancer une nouvelle série~~
+  - ~~une page de presentation de ce que sont les falshcard et pourquoi on peut les utiliser (peut servir pour le référencement)~~
+  - ~~un tuto simplifié la première fois qu'on utilise (on peut sauter le tuto), ne pas faire un tuto frustrant avec une fenetre qui pop toutes les deux secondes, mais plutot quelque chose d'épuré et de très simple(ex: swipe à droite pour une carte acceptée, ...), par exemple cela pourrait être une session de flashcards avec les tutos à la place des cartes ?~~
+  - ~~commencer par la version mobile~~
+  - ~~Menu à gauche~~
+  - Faire un schéma des différentes parties et interactions possibles, afin de voir par exmeple en combien de clics on arrive au menu, aux options, on lance une session,...
+  - ~~Possibilité de se connecter avec un compte (genre réseau social, google,...) ?~~
 
 + Nom: Flexcards ? sans doute que non, c'est déjà le nom d'une société portuguaise qui n'a pas vraiment de rapport, ils impriment juste des cartes genre cartes de visite
 

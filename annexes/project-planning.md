@@ -273,7 +273,7 @@ La difficulté estimée d'une collection est fixée par son **créateur**/**aute
 + Pour le reste on peut aller voir les cartes dans la liste de cartes et les modifier (ou cliquer sur éditer après la validation d'une carte dans une session)
 
 #### Les statistiques et informations
-Les cartes ont un ensemble de statistique qui leur est propre (sauvegardé individuellement pour un utilisateur)
+Les cartes ont un ensemble de statistiques qui leur est propre (sauvegardé individuellement pour un utilisateur)
 - **Taux de réussite global** de la carte (sur tous les passages)
 - **Résultats des validations** qui permet de savoir le nombre de fois ou une carte est réussie d'affilé (ex: 00111110111: la carte a été échoué deux fois, avant d'être réussie 5 fois, puis un échec et 3 réussites )
 - **Taux de réussite récent**: observe les 5 derniers résultats (identique au taux de réussite global si 5 passages ou moins)
@@ -399,10 +399,12 @@ Certaines options ne verront le jour qu'après qu'une version déjà pleinement 
 + La possibilité d'imprimer nos flashcards en version papier
 + La possibilité d'importer un fichier JSON pour ajouter en masse des cartes, pour éviter les risques liés aux performances, cela pourrait uniquement être disponible à certaines personnes (compte payant ``??``), et/ou avec une limite au nombre ajoutable
 + Version payante pour avoir un nombre illimité de flashcard
++ Pouvoir se connecter avec un compte type réseau social ou google
 
 
 ### 2.5 UI
 + Réaliser un wireframe afin de déterminer la forme général du site en mobile puis en desktop, et définir les cheminements de l'utilisateur
++ Réaliser la maquette
 #### 2.5.1 Charte graphique
 + Définir la charte graphique et l'identité du site:
   - Les couleurs: ``??``
@@ -410,8 +412,26 @@ Certaines options ne verront le jour qu'après qu'une version déjà pleinement 
   - Slogan : ``??`` 
   - Le logo: Deux cartes se chevauchant, à leur jonction un changement de couleur symbolise en double sens la séparation entre les cartes ou un éclair
   - Les formes: ``??``
-+ Réaliser la maquette
 + Pour les niveaux de difficultés: Quel logo ? Les étoiles étant déjà prises par les notes, des crânes ? Symbolique peut être trop jeu vidéo``??``
++ Les sessions doivent être facilement accessibles:
++ Au lancement on doit voir clairement :
+  - Un bouton pour continuer la session en cours
+  - un bouton pour lancer une nouvelle session
++ Quand on lance une nouvelle session:
+  - des paramètres par défaut sont choisis, on a donc plus qu'à choisir une collection et lancer
+  - si l'utilisateur a déjà lancé des sessions avant les paramètres précédents s'appliquent en guise de paramètres par défaut (y compris la collection précédente), il n'a donc plus qu' à lancer ou à modifier des paramètres
++ Le bouton pour relancer une session reprend simplement là où l'utilisateur était
++ Le menu est situé sur la gauche (un peu comme un dashboard)
++ Réaliser une page d'aides, qui regroupe:
+  - Une intrduction sur le principe des flashcards
+  - Comment elles sont utilisées dans ce site
+  - Les concepts de base liés à ce site, ainsi que les termes et leurs explications 
++ Le tutoriel doit:
+  - Demander à l'utilisateur s'il souhaite réaliser le tutoriel, et préciser qu'il pourra être réalisé plus tard en allant dans les menus
+  - Être simple et explicite (pas de fenêtre qui pop toutes les deux secondes), du genre un pas à pas qui prend en compte les grandes lignes, fait créer à l'utilisateur une petite collection de cartes, et lui fait ensuite utiliser
++ Pour la réalisation de la maquette on commmence par la partie mobile et on voit comment on peut l'adapter pour du desktop
+
+
 
 #### 2.5.2 Liste des termes en Anglais et Français
 
