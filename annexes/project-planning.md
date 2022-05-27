@@ -83,7 +83,7 @@ En conclusion on cherche à:
 + Les niveaux de difficulté des cartes
 + La difficulté estimée des collections
 + Les éléments de flashcards
-+ Fonctionnement de la création de carte
++ Fonctionnement de la création/modification de carte
 + Les statistiques
 + Les succès
 + La progression de l'utilisateur
@@ -159,6 +159,7 @@ Les collections sont des groupes de cartes généralement liées à une même th
     - Une **popularité** définie par le nombre de personnes qui ont choisi de l'utiliser
     - Une **note globale** définie par la moyenne des **notes** utilisateurs
     - Une **difficulté estimée** fixée par l'auteur principal
+    - Une **langue**: dans quelle langue la carte a été rédigée (pour les **labels** des **éléments**)
 + Lorsqu'on utilise une collection on peut choisir:
   - De l'utiliser telle quelle: on ne peut pas la modifier, mais si des cartes sont modifiées ou ajoutées par le créateur elles s'ajouteront à notre instance de la collection
   - De la privatiser: dans ce cas les cartes deviennent comme une de nos collections privée, on peut les modifier, les supprimer en ajouter, mais cela n'impacte pas la collection publique et on ne bénéficie pas des modifications de cette dernière
@@ -189,9 +190,26 @@ Les collections sont des groupes de cartes généralement liées à une même th
 + Ensuite une moyenne des 3 notes est réalisée pour déterminer la note sur 5 de cet utilisateur, les notes de tous les utilisateurs sont réunies pour déterminer la note globale de la collection
 
 #### 2.4.5 Les rangs
++ Les **rangs** sont un outil qui permet à l'utilisateur d'avoir un impact sur la manière dont les cartes lui sont présentées
++ Les cartes commencent toutes au **rang 1**
++ cela peut servir à:
+  - laisser l'utilisateur définir la souplesse dans ses réponses: par exemple au rang 1 on peut ne connaitre qu'une partie de la réponse alors qu'un rang 5 nécessite la réponse complète et exacte (laissée à l'appréciation de l'utilisateur)
+  > ex: pour du mandarin on pourrait avoir un rang de base `mot anglais` <-> `mot mandarin écrit/prononciation/Tons`, les cartes lorsqu'elles sont rangées au rang 1, peuvent etre considérées valides juste si on a le bon mot, peu importe le ton et l'écriture, au rang 2 il faudrait en plus être capable de connaitre le ton des mots, puis finalement de savoir l'écrire
+  - cela permettrait sur des notions avancées, d'avoir une progression, la personne pourrait choisir de déjà maitriser les traductions, avant de se soucier des prononciations puis de l'écriture/orthographe correcte (puiqu'il faudrait qu'il sache en premier comment dire ce mot, avant de se soucier de la prononciation exacte ou de l'ortographe)
+  - laisser l'utilisateur définir une progression différente pour les cartes, car il pourrait avoir réussi deux cartes dans une session, mais estimer qu'il maitrise largement mieux l'une que l'autre, les rangs lui permettent ainsi de déterminer quelles cartes il estime mieux maitriser
+  > La carte la mieux maitrisée pourrait donc monter de rang et l'autre non
++ Les rangs peuvent être renommés par l'utilisateur afin qu'il puisse en cours de **session** se rappeler quel règle il s'impose pour la **validation** des cartes
++ Chaque carte a une jauge allant de 1 à 5 et affichant aussi le nom du rang actuel (par défaut **rang 1**, **rang 2**,...)
++ Lors des sessions les rangs ne sont modifiables qu'après avoir révélé la réponse
++ Noms par défaut des rangs:
+  - 1: Non maitrisée
+  - 2: ``??``
+  - 3: ``??``
+  - 4: ``??``
+  - 5: Maitrisée
 
 #### Les niveaux de difficultés
-+ Le **niveau de difficulté** est un indicateur explicite du **taux de réussite** d'une carte, il sert à classer les cartes selon 3 niveaux de difficulté (sujet à rééquilibrage):
++ Le **niveau de difficulté** est un indicateur explicite du **taux de réussite global** d'une carte, il sert à classer les cartes selon 3 niveaux de difficulté (sujet à rééquilibrage):
   - **facile**: de 100% à 75% de taux de réussite (100% >= x >= 75%)
   - **moyen**: en dessous de 75% jusqu'à 25% non inclus de taux de réussite (75% > x > 25%)
   - **difficile**: de 0% à 25% de taux de réussite (25% >= x >= 0%) 
@@ -227,10 +245,33 @@ La difficulté estimée d'une collection est fixée par son **créateur**/**aute
     - Quand on lance une partie (ou l'ensemble) de ces cartes mélangées à des cartes non compatibles (ex:``Recto:Grammaire <=> Verso:Explication``), dans ce cas on ne pourra pas choisir quelles éléments on affiche sur quel côté, mais on aura tous les **recto** en question et les **verso** en réponse, ce qui permet de mélanger des cartes variées
   - L'ensemble des éléments sans emplacement particulier (``Caractère/Mot; Traduction; Prononciation``), ce qui permettra de sélectionner quels éléments on veut au **recto** et lesquels au **verso** tant qu'on utilise que des cartes du même **format**
 
-#### Fonctionnement de la création de cartes
+#### Fonctionnement de la création/modification de cartes
+###### Création rapide
++ Si on crée des collections avec la **création rapide**:
+  - On choisit le libellé de l'élément au **recto**
+  - On choisit le libellé de l'élément au **verso**
+  - On choisit les catégories/sous-catégories de la collection
+  - Le rang est défini automatiquement à 1
+  - On peut remplir en masse les cartes (par groupe de 10)
+###### Création avancée
++ Si on crée des collections avec la **création avancée**:
+  - On choisit le **format** d'affichage (soit grâce à un template préfait, soit en créant le sien), c'est à dire quels éléments existent sur les cartes (il peut donc y en avoir plusieurs par côté)
+  - On choisit l'affichage par défaut pour la collection (quels éléments pour le verso, lesquels pour le recto)
+  - On choisit les catégories/sous-catégories de la collection
+  - Une série de groupe de champs est alors affichée correspondant aux différents **éléments**,on peut les remplir carte par carte
+  - Pour chaque carte les options qu'on a défini par défaut pour la collection peuvent être changées, le rang (défini automatiquement à 1 par défaut) peut aussi être modifié pour chaque carte, ainsi si en créant des cartes on sait déjà à quel point on estime les maitriser ou non alors on peut leur attribuer un rang supérieur à 1
+  - On peut ensuite choisir d'ajouter des cartes suivant un autre modèle d'affichage et un autre affichage par défaut, et/ou une autre catégorie, un avertissement préviendra qu'il pourrait ne pas être possible de choisir l'affichage lors des sessions (seul l'affichage par défaut sera disponible)
+###### Ajout à une collection existante
++ Si on ajoute des cartes à une collection déjà existante:
+  - Le **format** déjà existant nous est proposé pour les cartes qu'on souhaite ajouter, on peut ajouter un autre format si on le souhaite, le reste du fonctionnement est similaire à un ajout de collection
++ Il n'est pas possible de créer des cartes sans collection (en revanche on peut très bien créer une collection "divers" ou on ajoute tous les types de cartes qu'on veut)
+###### Modification des cartes
+``??``
 
 #### Les statistiques
-- Taux de réussite de la carte
+- **Taux de réussite globale** de la carte (sur tous les passages)
+- Résultats des validations qui permet de savoir le nombre de fois ou une carte est réussie d'affilé (ex: 00111110111: la carte a été échoué deux fois, avant d'être réussie 5 fois, puis un échec et 3 réussites )
+- **Taux de réussite récente**: observe les 5 derniers résultats (identique au taux de réussite globale si 5 passages ou moins)
 
 #### Les succès
 + Peuvent être affichés sur notre profil ``??``
@@ -248,7 +289,7 @@ La progression de l'utilisateur sera indiqué par des graphiques basées sur les
   - basés sur les paramètres de base de l'application si c'est la première fois
   - ou basés sur ses précédents paramètres s'il en a
 + Il peux choisir de changer le type de cartes qui est proposé:
-  - **générique** (DEFAUT): toutes les cartes qu'il a en stock, ne permet pas de choisir l'affichage 
+  - **générique** (DEFAUT): toutes les cartes qu'il a en stock, ne permet pas de choisir l'affichage des éléments
   - une **collection**
   - une **catégorie** ou **sous-catégorie**
   - toutes les cartes d'un **rang**
@@ -257,6 +298,15 @@ La progression de l'utilisateur sera indiqué par des graphiques basées sur les
   - Eviter les frustrations liées à une réponse que l'appli juge invalide, mais que l'utilisateur considère comme assez maitrisée pour être considérée correcte
   - Suite à l'abandon de l'idée de compétition entre les utilisateurs (avec un tableau de score), cette validation par l'application n'est en réalité plus nécessaire
 + Il est possible de planifier des sessions d'apprentissage (exemple tous les mercredis à 13h avoir une notif de rappel pour une séance de cartes)
++ Lors d'une session les éléments d'une carte ne sont modifiables qu'après la révélation de la réponse
++ Après être passé à la carte suivante on peut revenir en arrière pour voir une carte et remodifier des éléments (ex: changer le rang)
++ L'appli sélectionne les cartes en fonction du **taux de priorité**, il s'agit d'une valeur calculée en fonction:
+  - du **rang**, 
+  - du **nombre de passage**, 
+  - du **taux de réussite global**/**difficulté**,
+  - le **taux de priorité** permet de savoir au bout de combien de temps la carte doit être reproposée:
+   - si une carte à un taux de réussite élevé, un rang élevé (indiquant que l'utilisateur ne la maitrise correctement) et un nombre de passage élevé, alors le taux de priorité sera faible, 
+   - à l'inverse si la carte est souvent échouée , n'a que peu de fois été réalisée et si son rang est faible indiquant que l'utilisateur n'estime pas la maitriser correctement alors le taux de priorité sera élevé.
 
 #### Paramètres de session
 
@@ -267,6 +317,23 @@ La progression de l'utilisateur sera indiqué par des graphiques basées sur les
     - Taille de police,
     - couleur du texte,
     - disposition des éléments de réponses
++ Il est possible de modifier les **poids** du **taux de priorité**, afin de définir la fréquence à laquelle les cartes nous sont proposées:
+  - poids du **nombre de passage ``??``** (auparavent appelé *timer*)
+  - poids du **taux de réussite global**/**difficulté**
+  - poids du **taux de réussite récent**
+  - poids du **rang**
+  - on peut aussi choisir de désactiver le rang et ainsi définir s'il influe ou non sur le taux
+  - Attention: les poids des cartes ne seront pas modifiés tout de suite, ils ne seront modifiés qu'au prochain passage sur cette carte
++ Il est possible de modifier la portée du **taux de réussite récent**:
+  - Par défaut il est à: **5 dernières cartes**
+  - On peut choisir de modifier ce chiffre entre 3 et 10
++ Il est possible de choisir au bout de combien de temps une carte passe automatiquement au rang supérieur ou est rétrogradée au rang inférieur:
+  - On peut choisir: 
+    - augmentation de rang quand le taux de réussite récent est égal à 100% et diminution de rang quand le taux de réussite récent est inférieur ou égal à 25% (DEFAUT)
+    - On peut modifier les deux curseurs avec des pourcentages
+    - Note: le **classement automatique des rangs** (**ranking**) est du coup également impacté par la modification éventuelle du **taux de réussite récent**
+  - On peut désactiver le **classement automatique des rangs**
+  - Même quand le **classement automatique des rangs** est activée on peut modifier le rang manuellement pour chaque carte grâce à la jauge
 
 #### Signalement et réclamation
 Créer un système de réclamation et de signalement:
@@ -293,6 +360,7 @@ Créer un système de réclamation et de signalement:
   - Il faudra mettre en place une charte de ce qui est accepté ou non sur le site, de façon à ce que les modérateurs puissent juger en ayant connaissance du règlement
   - Chaque décision de modérateur sera vérifiée par deux autres modérateurs afin de limiter les décisions injustes
 + L'**administrateur** peut:
++ Chaque utilisateur pourrait avoir la possibilité de créer un nombre limité (quand même assez élevé) de cartes, afin d'éviter de surcharger le serveur
 
 
 ### Options avancées de l'application
@@ -301,6 +369,10 @@ Certaines options ne verront le jour qu'après qu'une version déjà pleinement 
 + La possibilité de faire des dessins libres pendant les sessions d'apprentissage, ce afin de pouvoir par exemple, écrire des mots dans n'importe quel alphabet et testé notre connaissance de cette écriture, vérifier qu'on est capable de reproduire un schéma un peu complexe (car simplement essayer de le visualiser peut être trop compliqué pour des schémas trop complexes ou des alphabets difficiles):
   - Ces dessins pourraient être réalisées directement sur la carte, une zone de dessin s'afficherait en transparence par dessus, et on pourrait alors dessiner tout ce qu'on souhaite, à l'aide d'un outil type *canvas* comme sur *Skrible*
 + l'ajout de fichiers audio (ex: mot de langue étrangère), afin de créer des cartes de type ``audio <=> prononciation phonétique/description/traduction`` (ex: d'un coté un mot audio, de l'autre sa version écrite, afin de travailler sa prononciation)
++ S'il y a un portage en version application, la sauvegarde des cartes pourrait se faire sur la machine de l'utilisateur, il pourrait donc y avoir accès hors-ligne, et même exporter sa base de données de cartes
++ La possibilité d'imprimer nos flashcards en version papier
++ La possibilité d'importer un fichier JSON pour ajouter en masse des cartes, pour éviter les risques liés aux performances, cela pourrait uniquement être disponible à certaines personnes (compte payant ``??``), et/ou avec une limite au nombre ajoutable
++ Version payante pour avoir un nombre illimité de flashcard
 
 
 ### 2.5 UI
@@ -317,9 +389,44 @@ Certaines options ne verront le jour qu'après qu'une version déjà pleinement 
 
 #### 2.5.2 Liste des termes en Anglais et Français
 
+#### 2.5.3 Tutoriels et conseils d'utilisation
++ Tâcher d'être le plus efficace possible, l'utilsateur ne doit pas être submergé de pavé de textes explicatifs:
+  - Les boutons doivent être suffisamment explicite d'eux même
+  - Les éléments de l'interface comme la jauge doivent être visuellment explicite sans prendre toute la place
+  - S'il y a besoin d'une explication textuelle, en faire une version courte, avec éventuellement un lien vers un bloc d'aide plus long (si besoin)
+
 ## 3. Propositions de tests
 
 ## 4. Fonctionnement de la BDD
+Pour le stockage des cartes:
++ Quand une carte est sauvegardé on lui ajoute une checksum (pour l'instant il s'agit seulement des slug de labels de ses différents éléments, dans l'ordre alphabétique, voir s'il faudrait faire une vraie checksum ``??``)
++ On pourrait avoir une colonne avec des données de type array pour le contenu d'une carte, cela permettrait d'avoir une uniformité dans la notation (peut importe que la carte soit une carte simple avec un recto et un verso, ou un carte plus complexe avec plusieurs éléments par côté):
+```json
+{
+  checksum: meaning_pronunciation_word,
+  elements: [
+    {
+      slug: "meaning",
+      label: "Meaning",
+      content: "Hello",
+      default: "verso"
+    },
+    {
+      slug: "pronunciation",
+      label: "Pronunciation",
+      content: "bɔ̃ʒuʀ",
+      default: "verso"
+    },
+    {
+      slug: "word",
+      label: "Word",
+      content: "Bonjour",
+      default: "recto"
+    },
+  ]
+}
+```
+
 
 faire des schémas
 
@@ -352,7 +459,7 @@ Les familles d'apprentissage correspondent à la taxonomie la plus élevée du s
   - Santé & Sport
   - Arts & Cultures
 ```
-Les familles de cartes sont abandonnées, car:
+Les familles de cartes (voir aperçu ci-dessus) sont abandonnées, car:
 - leur rôle est trop proche de celui des catégories
 - Cela faisait donc un élément en plus en BDD qui n'était pas spécialement pertinent
 - Elles étaient supposées être limitées et assez génériques pour être mutuellement exclusives (une carte n'aurait pu faire partie que d'une seule famille), ce qui oblige à faire des choix pour les noms des familles, ce qui aurait pu causer:
@@ -377,7 +484,7 @@ L'idée de compétition entre utilisateurs est abandonnée pour:
 - menu sur la gauche en desktop
 - Pour des raisons d'accessibilité attention avec les swaps, ils doivent pouvoir etre utilisé par un controle à la voix ? si ça marche comme ça ? à voir
 ``` 
-Les options de swipe qui étaient prévues au début du projet, bien qu'intéressantes visuellement sont abandonnées car:
+Les options de swipe (voir aperçu ci-dessus) qui étaient prévues au début du projet, bien qu'intéressantes visuellement sont abandonnées car:
 + C'est visuel justement, et donc pose des problème d'accessibilité, les lecteurs d'écran sont apparemment capables de prendre en compte les actions correspondant à des *swipes* sur la droite ou la gauche, mais le projet nécessitait de modifier ces actions (donc risque d'interférence avec un comportement natif)
 + Il s'agit d'éléments compliqués à implémenter, or ils devront du coup être désactivés ou doublés d'une option plus classique de type clic sur un bouton, il est donc peu intéressant d'investir autant de temps dans des actions qui ne seront valide que dans certains cas, en effet il faudrait les désactiver pour: 
   - Le mode desktop (ou le remplacer par l'utilisation des flches du clavier)
@@ -385,3 +492,11 @@ Les options de swipe qui étaient prévues au début du projet, bien qu'intéres
   - De plus certaines personnes même si elles n'utilisent pas les lecteurs d'écran pourrait avoir des difficultés à comprendre si le fonctionnment n'est pas *classique* (comme un bouton)
   - Il faudrait que j'ajoute exprès des éléments tutoriels pour expliquer ou il faut swiper pour telle ou telle action, alors qu'il serait plus simple d'avoir des boutons, clairs et explicites qui ne nécessite pas de double explications
 + Ainsi on gagne en uniformité sur le projet
+
+### La conception automatique de flashcards
++ Bien qu'il aurait été intéressant de pouvoir avoir des séries de règles afin de créer des cartes de manière semi-automatique:  
+  - par exemple un professeur qui souhaiterais entrainer ses élèves aux tables de multiplication pourrait sélectionner une série de nombres un opérateur et un multiplicateur et générer automatiquement toutes les cartes qu'il souhaite (par exemple pour la table du 12)
+  - Cela poserait des problème de performances voire pourrait crasher le site, puisqu'il serait extrêmement simple de créer une règle pour avoir une infinité de cartes
+  - Cela nécessiterais donc trop de barrières pour être fiable, même avec une limite au nombre de cartes générables de cette manière, il serait quand même possible de créer des cartes à un rythme trop rapide pour que ce soit sécurisé
+  - De plus ce serait dangereux, puisqu'il serait peut etre possible à l'utilisateur de détourner le système pour exécuter du code malveillant, ou alors limiter à seulement un petit nombres de règles aisément maitrisables, mais il n'y aurait alors probablment plus beaucoup d'intérêt 
+
