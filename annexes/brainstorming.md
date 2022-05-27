@@ -116,16 +116,16 @@
 * ~~Ajouter une option pour rétrogader ou promouvoir automatiquement une carte après un certain nombre (réglable) d'échecs ou de réussite, en plus de laisser l'utilisdateur le faire manuellement~~
 * ~~Les rangs sont nomable et pourraient soit etre pratiqués individuellement exemple: session de cartes rangs 3, soit mélangées quelquesoit le rang et dans ce cas avoir le rang marqué au dessus de la réponse pour indique à l'utilisateur quel sévérité il peut utiliser pour valider ou on la carte), le rang pourrait etre changeable en cours de validation, exempleune fois la réponse affichée, si la carte est en rang 1 (ex:juste définition) et qu'on estime que on sait aussi la prononciation et l'écrit alors on peut la passer au rang supérieur (select ? / Jauge ?)~~
 
-* Paramètres d'une session d'apprentissage:
-Quand on lance une session on choisit d'abord la collection, afin de déterminer si elle est éligible au changement d'affichage des éléments (c'est à dire si toutes les cartes ont le même **format**), sinon on ne pourra choisir qu'entre recto ou verso
-  - famille de carte
-  - catégorie et/ou sous-catégorie
-  - difficulté des cartes (toutes, facile, moyen, difficile)
-  - rang des cartes (si elles en ont: tous les rangs, rang 1, 2 jusqu'à 5 ou nombre custom ?)
-  - nombre de cartes à apprendre/ou chronomètre avec objectif maximum de cartes dans un certain temps (utile ?)
-  - Si en mode nombre de cartes , option pour chronométrer le temps passé ?
-  - Notes (quand on utilise des cartes de la communauté on peut les filtrer en fonction de leur note/popularité)
-  - quelle partie de la carte on montre (recto ou verso, si un des côtés possèdent plusieurs infos, laquelle montrer ? juste la prononciation, prononciation et écriture ?....)
+* ~~Paramètres d'une session d'apprentissage:~~
+~~Quand on lance une session on choisit d'abord la collection, afin de déterminer si elle est éligible au changement d'affichage des éléments (c'est à dire si toutes les cartes ont le même **format**), sinon on ne pourra choisir qu'entre recto ou verso~~
+  - ~~famille de carte~~
+  - ~~catégorie et/ou sous-catégorie~~
+  - ~~difficulté des cartes (toutes, facile, moyen, difficile)~~
+  - ~~rang des cartes (si elles en ont: tous les rangs, rang 1, 2 jusqu'à 5 ou nombre custom ?)~~
+  - ~~nombre de cartes à apprendre/ou chronomètre avec objectif maximum de cartes dans un certain temps (utile ?)~~
+  - ~~Si en mode nombre de cartes , option pour chronométrer le temps passé ?~~
+  - ~~Notes (quand on utilise des cartes de la communauté on peut les filtrer en fonction de leur note/popularité)~~
+  - ~~quelle partie de la carte on montre (recto ou verso, si un des côtés possèdent plusieurs infos, laquelle montrer ? juste la prononciation, prononciation et écriture ?....)~~
 
 * ~~Recto et verso peuvent avoir plusieurs éléments -> voir au niveau bdd si du coup on stock le contenu recto et verso ou si on stock plutot des types de réponses (définition, description, prononciation, formule, image, qcm, schéma,...) et on choisit ensuite ce que l'on souhaite afficher sur la carte ? à voir car ce ne serait pas la meme chose si on prend des cartes communautaires ou perso -> problème si on a des cartes communautaires avec les types description et image, et d'autres schéma et formule , comment on choisit ça dans les paramètres de session ?, il faudrait que l'option pour changer ce qu'on affiche sur les cartes ne soit dispo que pour les cartes d'un meme type, le mieux serait donc que par défaut on a juste question sur recto/ réponse sur verso, ensuite on peut créer des types de cartes avancées (certains patterns déjà tout fait existeront par exemple pour les langues ou la géographie), sur lesquels on choisit les différents éléments (ex: nom du pays, drapeau, population, langue), toutes les cartes suivant ce modèle ne peuvent que etre mélangés avec des cartes suivant le meme modèle (collection de carte), ou alors des cartes génériques mais à ce moment là on ne peut ps sélectionner les éléments affichables ou non (on pourra ainsi tout de meme utiliser nos cartes dans une collection générique, et afficher toutes les infos)~~
 
@@ -134,26 +134,26 @@ Quand on lance une session on choisit d'abord la collection, afin de déterminer
   - ~~ou alors la possibilité pour l'utilisateur de créer des règles qui régissent ces cartes auto (exemple s'il veut une série de carte pour la table du 11, il pourrait choisir pour règle les nombres entre 0 et 100 * 11)~~
   - ~~une importation depuis du JSON (mais cela pourrait aussi etre utilisé pour simplement créer des séries de cartes)~~ 
 
-* statistiques et données des cartes:
+* ~~statistiques et données des cartes:~~
 
-  - Générales et personnelles:
-    - Contenu du recto (plusieurs éléments ?)
-    - Contneu du verso (plusieurs éléments ?)
-    - difficulté de la carte
-    - Rangs possibles et rang actuel
-    - Famille
-    - Catégorie
-    - Note sur le site globale (si partagée)
-    - Popularité globale (si partagée)
-  - Propre à une carte de l'utilisateur:
-    - rang actuel de la carte
-    - Nombre de passage sur la carte
-    - taux de réussite
-    - priorité de la carte: ~~calculée en fonction du rang, du nombre de passage, du taux de réussite/difficulté, elle permet d'ajuster le **timer (nom à changer)** et de savoir au bout de combien de temps la carte doit être reproposé, en gros si une carte à un taux de réussite élevé, un rang élevé (indiquant que l'utilisateur ne la maitrise correctement) et un nombre de passage élevé, alors le taux de priorité sera faible, à l'inverse si la carte est souvent échouée , n'a que peu de fois été réalisée et si son rang est faible indiquant que l'utilisateur n'estime pas la maitriser correctement alors le taux de priorité sera élevé~~
-  - Propre à l'utilisateur:
-    - Taux de réussite globale
-    - Cartes pratiquées par jour
-    - difficulté globale des cartes réussi (créer un score en fonction de la difficulté et du taux de réussite ?)
+  - ~~Générales et personnelles:~~
+    - ~~Contenu du recto (plusieurs éléments ?)~~
+    - ~~Contenu du verso (plusieurs éléments ?)~~
+    - ~~difficulté de la carte~~
+    - ~~Rangs possibles et rang actuel~~
+    - ~~Famille~~
+    - ~~Catégorie~~
+    - ~~Note sur le site globale (si partagée)~~
+    - ~~Popularité globale (si partagée)~~
+  - ~~Propre à une carte de l'utilisateur:~~
+    - ~~rang actuel de la carte~~
+    - ~~Nombre de passage sur la carte~~
+    - ~~taux de réussite~~
+    - ~~priorité de la carte~~: ~~calculée en fonction du rang, du nombre de passage, du taux de réussite/difficulté, elle permet d'ajuster le **timer (nom à changer)** et de savoir au bout de combien de temps la carte doit être reproposé, en gros si une carte à un taux de réussite élevé, un rang élevé (indiquant que l'utilisateur ne la maitrise correctement) et un nombre de passage élevé, alors le taux de priorité sera faible, à l'inverse si la carte est souvent échouée , n'a que peu de fois été réalisée et si son rang est faible indiquant que l'utilisateur n'estime pas la maitriser correctement alors le taux de priorité sera élevé~~
+  - ~~Propre à l'utilisateur:~~
+    - ~~Taux de réussite globale~~
+    - ~~Cartes pratiquées par jour~~
+    - ~~difficulté globale des cartes réussi (créer un score en fonction de la difficulté et du taux de réussite ?)~~
 
 * Pour le design du site
   - on épure au maximum

@@ -199,6 +199,7 @@ Les collections sont des groupes de cartes généralement liées à une même th
   - laisser l'utilisateur définir une progression différente pour les cartes, car il pourrait avoir réussi deux cartes dans une session, mais estimer qu'il maitrise largement mieux l'une que l'autre, les rangs lui permettent ainsi de déterminer quelles cartes il estime mieux maitriser
   > La carte la mieux maitrisée pourrait donc monter de rang et l'autre non
 + Les rangs peuvent être renommés par l'utilisateur afin qu'il puisse en cours de **session** se rappeler quel règle il s'impose pour la **validation** des cartes
++ Les noms des rangs ne sont modifiables qu'à l'échelle d'une collection
 + Chaque carte a une jauge allant de 1 à 5 et affichant aussi le nom du rang actuel (par défaut **rang 1**, **rang 2**,...)
 + Lors des sessions les rangs ne sont modifiables qu'après avoir révélé la réponse
 + Noms par défaut des rangs:
@@ -266,12 +267,22 @@ La difficulté estimée d'une collection est fixée par son **créateur**/**aute
   - Le **format** déjà existant nous est proposé pour les cartes qu'on souhaite ajouter, on peut ajouter un autre format si on le souhaite, le reste du fonctionnement est similaire à un ajout de collection
 + Il n'est pas possible de créer des cartes sans collection (en revanche on peut très bien créer une collection "divers" ou on ajoute tous les types de cartes qu'on veut)
 ###### Modification des cartes
-``??``
++ Certains éléments des cartes peuvent être modifiés directement lors des sessions, tels que:
+  - Le rang des cartes modifiable avec la jauge
+  - ``??``
++ Pour le reste on peut aller voir les cartes dans la liste de cartes et les modifier (ou cliquer sur éditer après la validation d'une carte dans une session)
 
-#### Les statistiques
-- **Taux de réussite globale** de la carte (sur tous les passages)
-- Résultats des validations qui permet de savoir le nombre de fois ou une carte est réussie d'affilé (ex: 00111110111: la carte a été échoué deux fois, avant d'être réussie 5 fois, puis un échec et 3 réussites )
-- **Taux de réussite récente**: observe les 5 derniers résultats (identique au taux de réussite globale si 5 passages ou moins)
+#### Les statistiques et informations
+Les cartes ont un ensemble de statistique qui leur est propre (sauvegardé individuellement pour un utilisateur)
+- **Taux de réussite global** de la carte (sur tous les passages)
+- **Résultats des validations** qui permet de savoir le nombre de fois ou une carte est réussie d'affilé (ex: 00111110111: la carte a été échoué deux fois, avant d'être réussie 5 fois, puis un échec et 3 réussites )
+- **Taux de réussite récent**: observe les 5 derniers résultats (identique au taux de réussite global si 5 passages ou moins)
+- La **difficulté** de la carte (basée sur le **taux de réussite global**)
+- Le **rang** actuel de la carte
+- La **catégorie/sous-catégorie**
+- Le **nombre de passage** sur la carte (après validation)
+- La **priorité d'apprentissage** de la carte
+
 
 #### Les succès
 + Peuvent être affichés sur notre profil ``??``
@@ -283,6 +294,10 @@ Idées de succès:
 
 #### La progression de l'utilisateur
 La progression de l'utilisateur sera indiqué par des graphiques basées sur les statistiques des cartes (rang de la carte, taux de réussite)
++ L'utilsateur a des statistiques globales:
+  - **Taux de réussite moyen** de toutes les cartes (calculé à partir du taux de réussite global de chaque carte)
+  - nombre total de cartes pratiquées
+  - nombre de cartes pratiquées par jour
 
 #### Fonctionnement général d'une session d'apprentissage
 + L'utilisateur lance une session, des paramètres de base lui sont proposés:
@@ -309,6 +324,17 @@ La progression de l'utilisateur sera indiqué par des graphiques basées sur les
    - à l'inverse si la carte est souvent échouée , n'a que peu de fois été réalisée et si son rang est faible indiquant que l'utilisateur n'estime pas la maitriser correctement alors le taux de priorité sera élevé.
 
 #### Paramètres de session
+Pour les paramètres de lancement d'une session:
++ On commence par déterminer quelle collection sera utilisée:
+  - Si la session n'est pas éligible au changement d'affichage on n'aura pas la possibilité de choisir quels éléments s'affichent sur quel côté et la configuration par défaut sera choisie pour toutes les cartes
+  - Si toutes les cartes ont le même **format** alors on pourra choisir les éléments
+  - On peut choisir de lancer plusieurs collections ou  toutes nos collections, dans ce cas l'affichage disponible sera uniquement celui par défaut
++ Une fois ce choix réalisé on peut choisir:
+  - catégorie(s)/sous-catégorie(s)
+  - le niveau de difficulté des cartes (**tous**, **facile**, **moyen**, **difficile**)
+  - le rang des cartes
+  - le nombre de cartes
+  - le côté de la carte à afficher (recto ou verso), si la collection est éligible au changement d'affichage on peut alors choisir quels éléments doivent être montrés au recto et lesquels au verso
 
 #### Paramètre généraux
 + Dans les options il faut pouvoir:
@@ -394,6 +420,15 @@ Certaines options ne verront le jour qu'après qu'une version déjà pleinement 
   - Les boutons doivent être suffisamment explicite d'eux même
   - Les éléments de l'interface comme la jauge doivent être visuellment explicite sans prendre toute la place
   - S'il y a besoin d'une explication textuelle, en faire une version courte, avec éventuellement un lien vers un bloc d'aide plus long (si besoin)
+
+#### 2.5.4 Affichage d'une carte
++ Quand on affiche une carte elle doit contenir visuellement:
+  - Le contenu du verso (par défaut quand on est pas dans une session)
+  - Le contenu du recto (par défaut quand on est pas dans une session)
+  - un bouton d'édition (sauf si dans session et carte pas validée)
+  - la difficulté de la carte
+  - la jauge de rang avec le rang actuel
+
 
 ## 3. Propositions de tests
 
@@ -499,4 +534,7 @@ Les options de swipe (voir aperçu ci-dessus) qui étaient prévues au début du
   - Cela poserait des problème de performances voire pourrait crasher le site, puisqu'il serait extrêmement simple de créer une règle pour avoir une infinité de cartes
   - Cela nécessiterais donc trop de barrières pour être fiable, même avec une limite au nombre de cartes générables de cette manière, il serait quand même possible de créer des cartes à un rythme trop rapide pour que ce soit sécurisé
   - De plus ce serait dangereux, puisqu'il serait peut etre possible à l'utilisateur de détourner le système pour exécuter du code malveillant, ou alors limiter à seulement un petit nombres de règles aisément maitrisables, mais il n'y aurait alors probablment plus beaucoup d'intérêt 
+
+### Le temps chronométré
++ Un des problèmes auquel on souhaite répondre est le manque de temps de l'utilisateur, lui apporter une pression de temps supplémentaire n'apporterait rien de positif
 
