@@ -508,7 +508,7 @@ faire des schémas
 - ***Figma*** pour le wireframe, et la maquette
 - ***Gimp*** et ***Inkscape*** pour le logo et la retouche d'images
 - ***Docker*** pour la conteneurisation
-- ***i18n*** pour l'internationalisation
+- ***i18next*** pour l'internationalisation ``??``
 - Front: ***Vue.js***
 - Back: 
   - ***Express.js*** pour le routing

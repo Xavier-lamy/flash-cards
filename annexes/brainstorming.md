@@ -170,4 +170,4 @@
 + Nom: Flexcards ? sans doute que non, c'est déjà le nom d'une société portuguaise qui n'a pas vraiment de rapport, ils impriment juste des cartes genre cartes de visite
 
 - penser à l'internationalisation: faire site en anglais, mettre une version francaise au moins ?
-  - i18n ?
+  - i18next ?
