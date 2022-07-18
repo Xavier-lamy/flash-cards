@@ -171,3 +171,23 @@
 
 - penser à l'internationalisation: faire site en anglais, mettre une version francaise au moins ?
   - i18next ?
+
+BDD:
+- il faut un maximum de 4 éléments par carte (c'est largement suffisant)
+- on crée une table pour les libellés d'éléments (pour une collection donnée, on a les libellés qui lui sont liés)
+- le champ qui indique le format de défaut pour le recto verso stocke une liste de numéros, il y a meme deux champs, un verso qui indiques les éléments par défaut dans le verso et un recto idem, donc par exemple: recto: [1,2] verso [3] ;
+- autre idée pour stocker les valeurs par défaut recto/verso, on pourrait stocker un simple nombre plutôt qu'une array (peut etre mieux pour les perfs ?) -> exemple le premier champ élément d'une carte possède le nombre des unités ``0001``, le deuxième champ est une dizaine ``0020``, le 3eme une centaine ``0300`` et le 4ème le millier: ``4000`` donc par exemple pour un recto: 4 et 1 avec un verso 2;on pourrait avoir ``4001`` et ``0200`` dans deux colonnes ou peut etre même dans une seule avec un nombre à virgule par exemple: ``4001.0200`` est-ce vraiment mieux niveau perf ? comment on récupère l'info facilement après sur l'app ? formule mathématique ? 
+- OU alors même concept que just au dessus mais en binaire ? parce que du coup si on a juste besoin de la position du nombre ce sera toujours la meme, par exemple: 4001, si à la place j'écris 1001 (9) ce sera aussi compréhensible , on aurait donc ``0001``, ``0010``, ``0100`` et ``1000`` et on pourrait alors recomposer , est ce que dans ce cas ça serait pas mieux de stocker directement le chiffre corrspondant ? ce serait plus simple pour la vérif, on stockerait 1 pour le 1er champ, 2 pour le deuxième, 4 pour le 3eme et 8 pour le 4eme et on pourrait alors composer, stocker 12 dans verso indique qu'on a le 3eme et le 4eme dans le verso, si on veut on peut même faire: 4 premiers bits = éléments au recto, 4 derniers =éléments au verso, comme ça on stocke tout dans une colonne: donc si on stocke ``1001 0100`` (148): cela signifie qu'on a le 4eme et le premier élément au recto par défaut, le 3 eme au verso, et le 2eme quin'est pas montré sur la config de défaut , on pourrait peut etre aussi stocker les codes des possibilités, exemple: 148, 20, ... ensuite quand on doit récupérer l'affichage par défaut on analyse le nombre binaire comme si c'était une chaine:
+- pour l'élément 1: si string(0) = 1 alors elem1 est au recto, si string(4) = 1 alors elem1 au verso si aucun des deux = 1 alors elem1 n'apparait pas sur l'affichage par défaut, et ainsi de suite (cette méthode serait normalement plus efficace que de faire un switch case finalement du genre 148= 4 et 1 au recto et 3 au verso), parce qu'avec 4 éléments et la possibilité d'en afficher entre minimum 2, maximum 4 soit au recto soit au verso, et qu'il en faille minimum 1 de chaque côté (donc 0000 0000 est interdit des deux côtés et 1111 impossible car cela forcerait 0000 de l'autre côté) on a: 14 possibilités de placement à gauche: dont:
+  - 4 avec 1 carte -> chacune des 3 cartes restantes a 3 positions possibles si on ne met qu'une carte, 2 si on en met 2, et 1 si on en met 3ce qui fait donc 6 combinaisons
+  - 6 avec 2 cartes -> chacune des 2 cartes restantes a 2 positions possible restante si on en met q'une et une seule position si on en met 2 ce qui fait 3 combinaisons
+  - 4 avec 3 cartes -> la carte n'a plus qu'une position possible à chaque fois ce qui fait une combinaison
+  - On a donc au total ``4 * 6 + 6 * 3 + 4 * 1 = 46``, 46 possibilités pour le switch case, ce qui fait beaucoup pour juste vérifier un affichage par défaut
+
+
+  - L'autre possibilité est une array json 
+
+
+Si une carte fait partie de plusierus colllections, l'affichage apr défaut de la collection prend le dessus sur celui de la carte
+Est ce qu'une carte peut faire partie de plusieurs collections ?  
+Les collections ont un format , les cartes pas besoin peut etre ?

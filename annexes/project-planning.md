@@ -27,9 +27,9 @@ Back: Développer la partie back-end d’une application web ou web mobile en in
 ## 2. UX Design
 
 ### 2.1 Objectifs généraux
-+ L'objectif est de réaliser une application de flashcards maléable.
++ L'objectif est de réaliser une application de **flashcards** maléable.
 + Les utilisateurs doivent pouvoir:
-  - Créer leur propres flash cards
+  - Créer leur propres flashcards
   - S'entrainer en utilisant leur flashcards ou celles de la communauté
   - Il doit donc y avoir possibilité de partager ses cartes avec la communauté
   - Avoir un aperçu de leur progression
@@ -92,14 +92,14 @@ En conclusion on cherche à:
 + [Les paramètres généraux](#2415-paramètre-généraux)
 + [Signalement et réclamation](#2416-signalement-et-réclamation)
 #### 2.4.1 Fonctionnement des flashcards
-+ Les flashcards possèdent un recto et un verso
++ Les flashcards possèdent un **recto** et un **verso**
 + Sur chaque côté plusieurs éléments peuvent être affichés (ex: ``traduction + prononciation <=> mot étranger``)
-+ Chaque carte doit avoir un affichage par défaut (c'est à dire spécifier ce qui s'affiche par défaut au recto et au verso)
++ Chaque carte doit avoir un **affichage par défaut** (c'est à dire spécifier ce qui s'affiche par défaut au recto et au verso)
 
 #### 2.4.2 Les catégories et sous-catégories
 Les **catégories**  correspondent à la taxonomie la plus élevée du site
 + Certaines sont crées dès le lancement du site
-+ Les catégories et sous-catégories peuvent être ajoutées par les utilisateurs pour leurs propres collections
++ Les **catégories** et **sous-catégories** peuvent être ajoutées par les **utilisateurs** pour leurs propres **collections**
 + Il peut y avoir techniquement une infinité de sous-catégories néanmoins il faudra tenter de limiter à 2 générations de sous-catégories, l'objectif n'est pas de faire une classification réelle du savoir, mais d'avoir une classification générale afin de faciliter la navigation sur le site.
 + Par exemple, tenter de classer toutes les cartes liées aux langues en fonction des familles linguistiques, serait suicidaire; voir les [langues par famille sur Wikipédia](https://fr.wikipedia.org/wiki/Langues_par_famille)
 + De plus classer de manière trop scientifique, bien que plus exacte, risquerait d'être juste incompréhensible pour la majorité des gens, si on souhaite savoir ce qu'est la famille des langues Finno-Ougriennes alors il est plus pertinent d'apprendre une série de cartes sur les familles de langues, plutôt que d'observer les catégories
@@ -240,7 +240,7 @@ La difficulté estimée d'une collection est fixée par son **créateur**/**aute
 + Quand on crée une collection on choisit au début le **format** des cartes, soit:
   - Avec des **formats** préfaits proposés par l'application: (ex: ``Caractère/Mot <=> Traduction + Prononciation``)
   - En créant soi même son **format** pour cette **collection**
-  - On peut aussi créer des collections avec des **formats** différents mélangées au sein d'une même collection (ex: une partie ``formule <=> explication`` et une partie ``schéma <=> procédé``), dans ce cas on ne pourra pas choisir les éléments affichables lors d'une session , on aura simplement le choix d'affciher le **recto** ou le **verso**
+  - On peut aussi créer des collections avec des **formats** différents mélangées au sein d'une même collection (ex: une partie ``formule <=> explication`` et une partie ``schéma <=> procédé``), dans ce cas on ne pourra pas choisir les éléments affichables lors d'une session , on aura simplement le choix d'afficher le **recto** ou le **verso**
 + Quand on enregistre la collection elle retient:
   - Une version par défaut (``Recto:Caractère/Mot <=> Verso:Traduction + Prononciation``): ce sera utilisé:
     - Quand on lance une session avec cette collection sans changer les paramètres
@@ -389,16 +389,23 @@ Créer un système de réclamation et de signalement:
 + Chaque utilisateur pourrait avoir la possibilité de créer un nombre limité (quand même assez élevé) de cartes, afin d'éviter de surcharger le serveur
 
 #### Schéma explicatif du cheminement
+- Dans une première phase, la version des collections publiques ne sera pas mise en place, (elle doit quand même être anticipée le plus possible pour le fonctionnement général), l'objectif est déjà de valider le fonctionnement des Flashcards à l'échelle individuelle
+- Dans le schéma suivant, les ronds représentent les actions ou capacités de l'utilisateur, les carrés représentent les vues
 ```mermaid
 flowchart TD
-    A[User is connected] --> |Yes| B[Show connected view]
-    A --> |No| C[Show connection view:]
-    C -- can --> D((Create an account))
-    C --> E[See a landing page with introduction]
-    C -- can --> F((can see public collections))
-    C -- can --> G((can connect))
-    B --> H[has access to dashboard]
-    B -- is first time ? --> J[Show tutorial]
+    A[User is connected] --> |Yes| B[Show dashboard]
+    A --> |No| C[Show landing page with introduction:]
+    C -- User can --> D((Create an account))
+    C -- User can --> E((See public collections))
+    C -- User can --> F((connect))
+    B -- User can --> H((Create news cards))
+    B -- User can --> I((Launch new learning session))
+    B -- User can --> J((See card collections))
+    B -- is first time ? --> G[Show tutorial]
+    G --> B
+    D -- User can --> F
+    F --> B
+
 ```
 La vue de connection est la landing page, il y a:
 - la page d'explication du concept
@@ -433,7 +440,7 @@ Certaines options ne verront le jour qu'après qu'une version déjà pleinement 
   - Slogan : ``??`` 
   - Le logo: Deux cartes se chevauchant, à leur jonction un changement de couleur symbolise en double sens la séparation entre les cartes ou un éclair
   - Les formes: ``??``
-+ Pour les niveaux de difficultés: Quel logo ? Les étoiles étant déjà prises par les notes, des crânes ? Symbolique peut être trop jeu vidéo``??``
++ Pour les niveaux de difficultés: Quel logo ? Les étoiles étant déjà prises par les notes, des crânes ? Symbolique peut être trop jeu vidéo``?? -> pourquoi pas il y a bien des succès``
 + Les sessions doivent être facilement accessibles:
 + Au lancement on doit voir clairement :
   - Un bouton pour continuer la session en cours
@@ -444,7 +451,7 @@ Certaines options ne verront le jour qu'après qu'une version déjà pleinement 
 + Le bouton pour relancer une session reprend simplement là où l'utilisateur était
 + Le menu est situé sur la gauche (un peu comme un dashboard)
 + Réaliser une page d'aides, qui regroupe:
-  - Une intrduction sur le principe des flashcards
+  - Une introduction sur le principe des flashcards
   - Comment elles sont utilisées dans ce site
   - Les concepts de base liés à ce site, ainsi que les termes et leurs explications 
 + Le tutoriel doit:
@@ -453,6 +460,16 @@ Certaines options ne verront le jour qu'après qu'une version déjà pleinement 
 + Pour la réalisation de la maquette on commmence par la partie mobile et on voit comment on peut l'adapter pour du desktop
 
 #### 2.5.2 Liste des termes en Anglais et Français
+cartes: cards
+flashcards: flashcards
+collections: collections
+utilisateurs: users
+sous-catégories: subcategories
+catégories: categories
+affichage par défaut: default display
+verso: verso
+recto: recto
+
 
 #### 2.5.3 Tutoriels et conseils d'utilisation
 + Tâcher d'être le plus efficace possible, l'utilsateur ne doit pas être submergé de pavé de textes explicatifs:
@@ -513,6 +530,7 @@ faire des schémas
 - Back: 
   - ***Express.js*** pour le routing
   - ***Sequelize*** pour l'Object Relational Mapper (ORM)
+  - ***ViteJs*** pour la compilation/minification
   - ``??`` pour la base de donnée
 
 ## 6. Les idées abandonnées et raisons de leur abandon
