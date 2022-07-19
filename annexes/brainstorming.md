@@ -175,7 +175,7 @@
 BDD:
 - il faut un maximum de 4 éléments par carte (c'est largement suffisant)
 - on crée une table pour les libellés d'éléments (pour une collection donnée, on a les libellés qui lui sont liés)
-- le champ qui indique le format de défaut pour le recto verso stocke une liste de numéros, il y a meme deux champs, un verso qui indiques les éléments par défaut dans le verso et un recto idem, donc par exemple: recto: [1,2] verso [3] ;
+- le champ qui indique le format par défaut de la collection pour le recto verso stocke une liste de numéros, il y a meme deux champs, un verso qui indiques les éléments par défaut dans le verso et un recto idem, donc par exemple: recto: [1,2] verso [3] -> c=voir plutôt deuxième idée ;
 - autre idée pour stocker les valeurs par défaut recto/verso, on pourrait stocker un simple nombre plutôt qu'une array (peut etre mieux pour les perfs ?) -> exemple le premier champ élément d'une carte possède le nombre des unités ``0001``, le deuxième champ est une dizaine ``0020``, le 3eme une centaine ``0300`` et le 4ème le millier: ``4000`` donc par exemple pour un recto: 4 et 1 avec un verso 2;on pourrait avoir ``4001`` et ``0200`` dans deux colonnes ou peut etre même dans une seule avec un nombre à virgule par exemple: ``4001.0200`` est-ce vraiment mieux niveau perf ? comment on récupère l'info facilement après sur l'app ? formule mathématique ? 
 - OU alors même concept que just au dessus mais en binaire ? parce que du coup si on a juste besoin de la position du nombre ce sera toujours la meme, par exemple: 4001, si à la place j'écris 1001 (9) ce sera aussi compréhensible , on aurait donc ``0001``, ``0010``, ``0100`` et ``1000`` et on pourrait alors recomposer , est ce que dans ce cas ça serait pas mieux de stocker directement le chiffre corrspondant ? ce serait plus simple pour la vérif, on stockerait 1 pour le 1er champ, 2 pour le deuxième, 4 pour le 3eme et 8 pour le 4eme et on pourrait alors composer, stocker 12 dans verso indique qu'on a le 3eme et le 4eme dans le verso, si on veut on peut même faire: 4 premiers bits = éléments au recto, 4 derniers =éléments au verso, comme ça on stocke tout dans une colonne: donc si on stocke ``1001 0100`` (148): cela signifie qu'on a le 4eme et le premier élément au recto par défaut, le 3 eme au verso, et le 2eme quin'est pas montré sur la config de défaut , on pourrait peut etre aussi stocker les codes des possibilités, exemple: 148, 20, ... ensuite quand on doit récupérer l'affichage par défaut on analyse le nombre binaire comme si c'était une chaine:
 - pour l'élément 1: si string(0) = 1 alors elem1 est au recto, si string(4) = 1 alors elem1 au verso si aucun des deux = 1 alors elem1 n'apparait pas sur l'affichage par défaut, et ainsi de suite (cette méthode serait normalement plus efficace que de faire un switch case finalement du genre 148= 4 et 1 au recto et 3 au verso), parce qu'avec 4 éléments et la possibilité d'en afficher entre minimum 2, maximum 4 soit au recto soit au verso, et qu'il en faille minimum 1 de chaque côté (donc 0000 0000 est interdit des deux côtés et 1111 impossible car cela forcerait 0000 de l'autre côté) on a: 14 possibilités de placement à gauche: dont:
@@ -183,11 +183,64 @@ BDD:
   - 6 avec 2 cartes -> chacune des 2 cartes restantes a 2 positions possible restante si on en met q'une et une seule position si on en met 2 ce qui fait 3 combinaisons
   - 4 avec 3 cartes -> la carte n'a plus qu'une position possible à chaque fois ce qui fait une combinaison
   - On a donc au total ``4 * 6 + 6 * 3 + 4 * 1 = 46``, 46 possibilités pour le switch case, ce qui fait beaucoup pour juste vérifier un affichage par défaut
+  |-> En résumé: dans la table collection, il  y a un champ pour l'affichage par défaut qui contient 8 chiffres (sous forme binaire): ``1000 0100``, le premier paquet de 4 représente le recto, et le deuxième paquet le verso; le premier chiffre de chaque paquet représente l'élément 1 et ainsi de suite jusqu'à 4 
 
 
   - L'autre possibilité est une array json 
 
 
 Si une carte fait partie de plusierus colllections, l'affichage apr défaut de la collection prend le dessus sur celui de la carte
-Est ce qu'une carte peut faire partie de plusieurs collections ?  
-Les collections ont un format , les cartes pas besoin peut etre ?
+Est ce qu'une carte peut faire partie de plusieurs collections ?: non -> l'idéal ce serait une seule collection par cartes (ça permettrait d'avoir les options générique attribué à la collection (genre les labels)) 
+Les collections ont un format , les cartes pas besoin peut etre -> oui pas besoin ?
+
+nosql pour la bdd ?
+
+Si on fait pas en mode JSON pour les cartes:
+
+les cartes doivent avoir:
+- l'id de la collection à laquelle elles appartiennent
+- le contenu de l'élément 1
+- le contenu de l'élément 2
+- le contenu de l'élément 3
+- le contenu de l'élément 4
+- l'affichage par défaut de la carte (ou à mettre plutot dans collection ?) -> sous forme de paquets en binaire voir plus haut
+- Le rang de la carte
+
+
+Faire 2 tables ? une pour les cartes privées ? et une pour les cartes publiques ? les cartes privés serait propre à chaque personne, et si elles proviennent d'une carte publique aurait un lien vers leur carte publique originnelle, ce qui permet de savoir au sein d'une collection issue d'une collection publique quelle carte il manque par rapport à la collection publique, ou alors les cartes pourraient avoir des relation interne dans une seule table (genre pour une carte privée: public_card_id réfère à l'id d'une autre carte qui elle est public), on peut aussi faire pour toutes les cartes une table qui reprend les infos qui change pour chaque utilisateur (chaque carte serait donc unique et dupliquée pour chaque user), et une table générique avec les infos visuelles (comme le contenu), dans ce cas si la carte est privée, elle est unique et possède une seule entrée dans la table des stats, et si elle est publique elle est unique dans la table contenu mais possède plusieurs entrées (une par user) dans la table stat
+
+ si il y a des images possibles dans les éléments de carte on ne stocke que l'url en bdd et les images dans un dossier uploads
+
+les collections doivent avoir:
+- le format ? :
+  - si le format est unique pour une collection, alors toutes les cartes créées dans cette collection ont automatiquement le meme affichage par défaut
+  - Si la collection possède des formats mélangés ??
+- Le label pour chacun des 4 éléments
+- la note moyenne de la collection (vide si non publique)
+- un statut privé/public
+
+
+Pour les tables des cartes il faudrait peut etre:
+- Une table pour le contenu de la carte et les éléments qui dans le cas d'une collection publique ne pourront être changé que par l'auteur
+- Une table pour les statistiques de la carte lié à chaque utilisateur, les deux tables sont en relation: ainsi on a deux cas:
+  - Cas 1: une carte privée unique pour un utilisateur: il a donc le contenu de sa carte sur une table et les statistiques qui y sont liées dans une autre table relié par l'id de la carte, la table statistique est relié à l'user par le user_id
+  - Cas 2: un utilisateur utilise une collection publique pour ses sessions: la table contenu de la carte, ne peut pas être modifié par ses actions, en revanche ses actions peuvent influer sur son entrée pour cette carte dans la table statistiques
+
+Dans les collections publiques, pour une carte donnée, un utilisateur qui n'est pas l'auteur:
+  - peut influer sur (ce qui est dans la table stats de la carte, relié par l'user_id à l'user et par le card_id à la carte):
+    - Son taux de réussite pour cette carte et le niveau de difficulté pour lui
+    - Le rang qu'il donne à la carte (puisque le rang est une info privée)
+    - le nombre de passage qu'il a fait sur cette carte
+    - Sa priorité d'apprentissage pour cette carte
+
+
+En bdd on stocke pour les stats d'une carte:
+- Les résultats de validation (sous forme 110011100001...)
+- Le rang actuel
+- La priorité d'apprentissage (calculé par les différents poids et recalculé à chaque fois qu'on valide une carte
+- Le nombre de passage n'a pas besoin d'etre enregistré en bdd, puisqu'il suffit de compter la taille de la chaine des résultats de validation
+- Le taux de réussite moyen n'est pas stocké non plus ? car il est calculé de la manière suivante: compter les ``1`` dans la chaine des résultats de validation et en divisant par le nombre total d'itérations sur la carte (longueur de la chaine) puis en transformant en pourcentages
+- par contre on pourrait stocker le niveau de difficulté (pour faciliter la récupération d'infos quand on doit choisir que les cartes avec un certain niveau de diffculté)
+
+
+~~idée: supprimer le concept de format: les collections n'ont plus qu'un format possible (exemple description, caractère, traduction), si un utilisateur souhaite avoir plusieurs format dans une meme collection (exemple schéma->explication et terme->définition), il lui suffit de créer les 4 éléments, (schéma, définition, explication, terme) puis lors d'une session il en met deux au recto et deux au verso (exemple schéma et terme au recto, et explication, définition au verso, ainsi les cartes ne sont pas obligées d'avoir tous les éléments, les éléments sont donc considérés comme ayant un ``et/ou`` au lieu d'un ``et``), en plus de ça on pourrait éventuellement laisser le choix à l'user de faire des sessions avec plusieurs collections mélangées (ce qui reviendrait au meme mais rendrait la création de collection plus simple en forçant un seul format)-> idée retenue, car de plus, avec le concept de colections sous collections on peut déjà facilement émuler les formats (exemple faire une collection physique/chimie avec une sous collection ``schéma/explication`` et une autre ``terme/définition``), comme ça en plus on peut choisir de faire soit uniquement une sous collection, soit la collection entière ou même plusieurs collection, ce qui signifie: facilité de stockage en bdd, facilité de création des collections et usage plus flexible pour l'user~~

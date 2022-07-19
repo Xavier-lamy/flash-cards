@@ -141,17 +141,17 @@ Les **catégories**  correspondent à la taxonomie la plus élevée du site
     - Sculpture
 
 #### 2.4.3 Les collections
-Les collections sont des groupes de cartes généralement liées à une même thématique, et pouvant appartenir à une ou plusieurs catégories
+Les **collections** sont des groupes de cartes généralement liées à une même thématique, et pouvant appartenir à une ou plusieurs catégories
 + Il peut s'agir:
-  - d'un groupement de cartes rassemblées par un utilisateur sur son profil privé
-  - d'un groupement de cartes rassemblées par un utilisateur sur un profil public et donc accessible à la communauté
+  - d'un groupement de cartes rassemblées par un utilisateur sur son **profil privé**
+  - d'un groupement de cartes rassemblées par un utilisateur sur un **profil public** et donc accessible à la communauté
 + Seule les collections peuvent être partagées en profil public, les cartes isolées peuvent uniquement être créée de manière privée (il est de toute façon généralement conseillé de créer des collections plutôt que de laisser des cartes seules)
-+ Une collection publique possède:
-  - Un auteur principal:
++ Une **collection publique** possède:
+  - Un **auteur principal**:
     - qui a créé et nommé la collection
     - qui peut accepter ou non les demandes d'édition
     - qui peut accepter les ajouts d'auteurs secondaires
-  - Des auteurs secondaires
+  - Des **auteurs secondaires**
 + Elle est définie par:
     - Un **nom**
     - une **description**
@@ -160,6 +160,7 @@ Les collections sont des groupes de cartes généralement liées à une même th
     - Une **note globale** définie par la moyenne des **notes** utilisateurs
     - Une **difficulté estimée** fixée par l'auteur principal
     - Une **langue**: dans quelle langue la carte a été rédigée (pour les **labels** des **éléments**)
+    - Un **format** pour les libellés: la collection définit les libellés des éléments pour les cartes qu'elle contient
 + Lorsqu'on utilise une collection on peut choisir:
   - De l'utiliser telle quelle: on ne peut pas la modifier, mais si des cartes sont modifiées ou ajoutées par le créateur elles s'ajouteront à notre instance de la collection
   - De la privatiser: dans ce cas les cartes deviennent comme une de nos collections privée, on peut les modifier, les supprimer en ajouter, mais cela n'impacte pas la collection publique et on ne bénéficie pas des modifications de cette dernière
@@ -210,7 +211,7 @@ Les collections sont des groupes de cartes généralement liées à une même th
   - 5: Maitrisée
 
 #### 2.4.6 Les niveaux de difficultés
-+ Le **niveau de difficulté** est un indicateur explicite du **taux de réussite global** d'une carte, il sert à classer les cartes selon 3 niveaux de difficulté (sujet à rééquilibrage):
++ Le **niveau de difficulté** est un indicateur explicite du **taux de réussite moyen** d'une carte, il sert à classer les cartes selon 3 niveaux de difficulté (sujet à rééquilibrage):
   - **facile**: de 100% à 75% de taux de réussite (100% >= x >= 75%)
   - **moyen**: en dessous de 75% jusqu'à 25% non inclus de taux de réussite (75% > x > 25%)
   - **difficile**: de 0% à 25% de taux de réussite (25% >= x >= 0%) 
@@ -218,7 +219,7 @@ Les collections sont des groupes de cartes généralement liées à une même th
 + Dès qu'on s'auto-évalue pour la deuxième fois sur une carte, le niveau de difficulté est alors ré-établi en fonction du taux de réussite, puis le niveau de difficulté est ensuite recalculé à chaque auto-évaluation:
   - en effet si on a qu'un seul passage sur une carte, il n'y aurait donc que deux possibilités de taux de réussite (0% ou 100%), tandis qu'au bout de deux passage on aurrait alors 3 possibilités (0%, 50%, 100%), permettant alors d'établir un niveau de difficulté
 + Le niveau de difficulté d'une carte est bien entendu de plus en plus pertinent à mesure que l'utilisateur pratique (une carte faite 20 fois avec seulement 30% de taux de réussite, est clairement une carte difficile en revanche une carte faite uniquement 3 fois avec un taux de réussite de 33%, cela signifie simplement qu'on l'a réussi une fois et échoué deux fois, mais elle n'a pas été faite beaucoup de fois, donc peut etre que seulement deux essais de plus porterait son score à 80%) 
-+ Si on fait une session de cartes de difficultés variées, c'est à dire quand on ne fait pas une session de carte basée sur une difficulté particulière, alors le niveau de diffculté doit s'afficher sur la carte
++ Si on fait une session de cartes de difficultés variées, c'est à dire quand on ne fait pas une session de carte basée sur une difficulté particulière, alors le niveau de diffculté doit s'afficher sur la carte ``-> il pourrait peut être aussi s'afficher quand il n'y a qu'une difficulté, afin d'indiquer le niveau à l'utilisateur??``
 
 #### 2.4.7 La difficulté estimée des collections
 La difficulté estimée d'une collection est fixée par son **créateur**/**auteur principal**, il s'agit d'une valeur arbitraire, il doit être précisé sur le site, que ce niveau de difficulté peut ne pas être représentatif de la difficulté réelle pour chaque personne
@@ -230,6 +231,7 @@ La difficulté estimée d'une collection est fixée par son **créateur**/**aute
   - Caractère (exemple caractère arabe, chinois, russe)
   - Image (Dessin/Photo/...)
   - QCM
++ Les cartes au sein d'une même collection ne peuvent avoir que maximum 4 éléments différents (exemple: ``prononciation, traduction, caractère, audio``)
 + Ces différents types doivent pouvoir permettre de créer de nombreuses combinaisons d'éléments sur les flashcards, exemple:
   - ``Mot <=> Description/image``
   - ``Image <=> Description``
@@ -239,12 +241,11 @@ La difficulté estimée d'une collection est fixée par son **créateur**/**aute
 + A la création de cartes on peut donc choisir plusieurs éléments de chaque côté 
 + Quand on crée une collection on choisit au début le **format** des cartes, soit:
   - Avec des **formats** préfaits proposés par l'application: (ex: ``Caractère/Mot <=> Traduction + Prononciation``)
-  - En créant soi même son **format** pour cette **collection**
-  - On peut aussi créer des collections avec des **formats** différents mélangées au sein d'une même collection (ex: une partie ``formule <=> explication`` et une partie ``schéma <=> procédé``), dans ce cas on ne pourra pas choisir les éléments affichables lors d'une session , on aura simplement le choix d'afficher le **recto** ou le **verso**
+  - En créant soi même son **format** pour cette **collection**, le format ne peut avoir que 4 éléments, il faut choisir l'affichage par défaut de la collection (ex: element 1 et 3 au recto et 2 et 4 au verso), cet affichage par défaut servira lorsque l'utilisateur souhaite s'exercer avec plusieurs collections ou sous-collections en même temps, car dans ce cas si les formats ne sont pas identiques, il ne pourra avoir le choix qu'entre recto et verso et ne pourra pas choisir quel élément il met sur quel face pour cette session
 + Quand on enregistre la collection elle retient:
-  - Une version par défaut (``Recto:Caractère/Mot <=> Verso:Traduction + Prononciation``): ce sera utilisé:
+  - Un affichage par défaut (``Recto:Caractère/Mot <=> Verso:Traduction + Prononciation``): ce sera utilisé:
     - Quand on lance une session avec cette collection sans changer les paramètres
-    - Quand on lance une partie (ou l'ensemble) de ces cartes mélangées à des cartes non compatibles (ex:``Recto:Grammaire <=> Verso:Explication``), dans ce cas on ne pourra pas choisir quelles éléments on affiche sur quel côté, mais on aura tous les **recto** en question et les **verso** en réponse, ce qui permet de mélanger des cartes variées
+    - Quand on lance une session avec des collections mélangées qui ne possède pas le même **format** dans ce cas on ne pourra pas choisir quelles éléments on affiche sur quel côté, mais on aura tous les **recto** en question et les **verso** en réponse, ce qui permet de mélanger des cartes variées
   - L'ensemble des éléments sans emplacement particulier (``Caractère/Mot; Traduction; Prononciation``), ce qui permettra de sélectionner quels éléments on veut au **recto** et lesquels au **verso** tant qu'on utilise que des cartes du même **format**
 
 #### 2.4.9 Fonctionnement de la création/modification de cartes
@@ -255,33 +256,41 @@ La difficulté estimée d'une collection est fixée par son **créateur**/**aute
   - On choisit les catégories/sous-catégories de la collection
   - Le rang est défini automatiquement à 1
   - On peut remplir en masse les cartes (par groupe de 10)
+  - Les libellés qu'on a choisit formeront automatiquement un nouveau format
 ###### Création avancée
 + Si on crée des collections avec la **création avancée**:
-  - On choisit le **format** d'affichage (soit grâce à un template préfait, soit en créant le sien), c'est à dire quels éléments existent sur les cartes (il peut donc y en avoir plusieurs par côté)
+  - On choisit le **format** d'affichage (soit grâce à un template préfait, soit en créant le sien), c'est à dire quels éléments existent sur les cartes et les libellés (il peut donc y en avoir plusieurs par côté)
   - On choisit l'affichage par défaut pour la collection (quels éléments pour le verso, lesquels pour le recto)
   - On choisit les catégories/sous-catégories de la collection
   - Une série de groupe de champs est alors affichée correspondant aux différents **éléments**,on peut les remplir carte par carte
-  - Pour chaque carte les options qu'on a défini par défaut pour la collection peuvent être changées, le rang (défini automatiquement à 1 par défaut) peut aussi être modifié pour chaque carte, ainsi si en créant des cartes on sait déjà à quel point on estime les maitriser ou non alors on peut leur attribuer un rang supérieur à 1
-  - On peut ensuite choisir d'ajouter des cartes suivant un autre modèle d'affichage et un autre affichage par défaut, et/ou une autre catégorie, un avertissement préviendra qu'il pourrait ne pas être possible de choisir l'affichage lors des sessions (seul l'affichage par défaut sera disponible)
+  - Pour chaque carte le rang (défini automatiquement à 1 par défaut) peut être modifié, ainsi si en créant des cartes on sait déjà à quel point on estime les maitriser ou non alors on peut leur attribuer un rang supérieur à 1
+
+###### Modification des collections
++ Quand une collection est créée on peut modifier:
+  - le nom des libellés, 
+  - l'affichage par défaut des éléments
+  - ajouter un élément si on a pas déjà dépassé la limite de 4 (toutes les cartes déjà présentes dans cette collection retourneront donc ``null`` pour ce nouvel élément)
+  - supprimer un élément: un message d'avertissement doit apparaitre pour prévenir l'utilisateur que toutes les données contenues pour cette élément dans les cartes déjà présentes seront supprimées définitivement
 ###### Ajout à une collection existante
 + Si on ajoute des cartes à une collection déjà existante:
-  - Le **format** déjà existant nous est proposé pour les cartes qu'on souhaite ajouter, on peut ajouter un autre format si on le souhaite, le reste du fonctionnement est similaire à un ajout de collection
+  - Le **format** déjà existant nous est proposé pour les cartes qu'on souhaite ajouter
 + Il n'est pas possible de créer des cartes sans collection (en revanche on peut très bien créer une collection "divers" ou on ajoute tous les types de cartes qu'on veut)
 ###### Modification des cartes
-+ Certains éléments des cartes peuvent être modifiés directement lors des sessions, tels que:
++ Certains éléments des cartes peuvent être modifiés directement lors des sessions d'apprentissage, ces éléments ne sont modifiables qu'après la révélation de la carte, avant d'en valider le résultat (ce qui passe à la suivante) tels que:
   - Le rang des cartes modifiable avec la jauge
+  - Le contenu d'un élément
   - ``??``
-+ Pour le reste on peut aller voir les cartes dans la liste de cartes et les modifier (ou cliquer sur éditer après la validation d'une carte dans une session)
++ Pour le reste on peut aller voir les cartes dans la liste de cartes et les modifier
 
 #### 2.4.10 Les statistiques et informations
 Les cartes ont un ensemble de statistiques qui leur est propre (sauvegardé individuellement pour un utilisateur)
-- **Taux de réussite global** de la carte (sur tous les passages)
+- **Taux de réussite moyen** de la carte (sur tous les passages)
 - **Résultats des validations** qui permet de savoir le nombre de fois ou une carte est réussie d'affilé (ex: 00111110111: la carte a été échoué deux fois, avant d'être réussie 5 fois, puis un échec et 3 réussites )
 - **Taux de réussite récent**: observe les 5 derniers résultats (identique au taux de réussite global si 5 passages ou moins)
-- La **difficulté** de la carte (basée sur le **taux de réussite global**)
+- La **difficulté** de la carte (basée sur le **taux de réussite moyen**)
 - Le **rang** actuel de la carte
 - La **catégorie/sous-catégorie**
-- Le **nombre de passage** sur la carte (après validation)
+- Le **nombre de passage** sur la carte (un passage est compté après validation voir une carte sans la valider comme étant réussie ou échouée, ne compte pas)
 - La **priorité d'apprentissage** de la carte
 
 
@@ -296,7 +305,7 @@ Idées de succès:
 #### 2.4.12 La progression de l'utilisateur
 La progression de l'utilisateur sera indiqué par des graphiques basées sur les statistiques des cartes (rang de la carte, taux de réussite)
 + L'utilsateur a des statistiques globales:
-  - **Taux de réussite moyen** de toutes les cartes (calculé à partir du taux de réussite global de chaque carte)
+  - **Taux de réussite global** de toutes les cartes (calculé à partir du taux de réussite moyen de chaque carte)
   - nombre total de cartes pratiquées
   - nombre de cartes pratiquées par jour
 
@@ -309,29 +318,30 @@ La progression de l'utilisateur sera indiqué par des graphiques basées sur les
   - une **collection**
   - une **catégorie** ou **sous-catégorie**
   - toutes les cartes d'un **rang**
-+ L'utilisateur valide lui même sa réponse, c'est à lui d'estimer si sa réponse est correct ou non, ce choix est fait par rapport à une validation par l'application, pour:
++ L'utilisateur valide lui même sa réponse, après la validation cela passe à l acarte suivante, c'est à lui d'estimer si sa réponse est correct ou non, ce choix est fait par rapport à une validation par l'application, pour:
   - Eviter à l'utilisateur d'avoir à taper chacune de ses réponses, ce qui lui ferait perdre du temps et créerait de la frustration, ainsi il a juste à choisir la validité de ses réponses
   - Eviter les frustrations liées à une réponse que l'appli juge invalide, mais que l'utilisateur considère comme assez maitrisée pour être considérée correcte
   - Suite à l'abandon de l'idée de compétition entre les utilisateurs (avec un tableau de score), cette validation par l'application n'est en réalité plus nécessaire
 + Il est possible de planifier des sessions d'apprentissage (exemple tous les mercredis à 13h avoir une notif de rappel pour une séance de cartes)
-+ Lors d'une session les éléments d'une carte ne sont modifiables qu'après la révélation de la réponse
++ Lors d'une session les éléments d'une carte ne sont modifiables qu'après la révélation de la réponse juste avant la validation
 + Après être passé à la carte suivante on peut revenir en arrière pour voir une carte et remodifier des éléments (ex: changer le rang)
 + L'appli sélectionne les cartes en fonction du **taux de priorité**, il s'agit d'une valeur calculée en fonction:
   - du **rang**, 
   - du **nombre de passage**, 
-  - du **taux de réussite global**/**difficulté**,
+  - du **taux de réussite moyen**/**difficulté**,
   - le **taux de priorité** permet de savoir au bout de combien de temps la carte doit être reproposée:
    - si une carte à un taux de réussite élevé, un rang élevé (indiquant que l'utilisateur ne la maitrise correctement) et un nombre de passage élevé, alors le taux de priorité sera faible, 
    - à l'inverse si la carte est souvent échouée , n'a que peu de fois été réalisée et si son rang est faible indiquant que l'utilisateur n'estime pas la maitriser correctement alors le taux de priorité sera élevé.
 
 #### 2.4.14 Paramètres de session
 Pour les paramètres de lancement d'une session:
++ On peut choisir de filtrer nos collections par catégorie, pour n'afficher que les collections disponible dans une catégorie particulière
 + On commence par déterminer quelle collection sera utilisée:
-  - Si la session n'est pas éligible au changement d'affichage on n'aura pas la possibilité de choisir quels éléments s'affichent sur quel côté et la configuration par défaut sera choisie pour toutes les cartes
-  - Si toutes les cartes ont le même **format** alors on pourra choisir les éléments
-  - On peut choisir de lancer plusieurs collections ou  toutes nos collections, dans ce cas l'affichage disponible sera uniquement celui par défaut
-+ Une fois ce choix réalisé on peut choisir:
-  - catégorie(s)/sous-catégorie(s)
+  - On peut choisir de lancer une collection, ou plusieurs collections
+  - Si la session n'est pas éligible au changement d'affichage (collections de formats différents) on n'aura pas la possibilité de choisir quels éléments s'affichent sur quel côté et la configuration par défaut sera choisie pour toutes les cartes, on pourra en revanche choisir d'afficher le recto ou le verso
+  - Si toutes les cartes ont le même **format** (une seule collection, ou toutes les collections ont la même checksum de format) alors on pourra choisir les éléments à afficher et leur disposition
+
++ Une fois ce choix de collection réalisé on peut choisir:
   - le niveau de difficulté des cartes (**tous**, **facile**, **moyen**, **difficile**)
   - le rang des cartes
   - le nombre de cartes
@@ -346,7 +356,7 @@ Pour les paramètres de lancement d'une session:
     - disposition des éléments de réponses
 + Il est possible de modifier les **poids** du **taux de priorité**, afin de définir la fréquence à laquelle les cartes nous sont proposées:
   - poids du **nombre de passage ``??``** (auparavent appelé *timer*)
-  - poids du **taux de réussite global**/**difficulté**
+  - poids du **taux de réussite moyen**/**difficulté**
   - poids du **taux de réussite récent**
   - poids du **rang**
   - on peut aussi choisir de désactiver le rang et ainsi définir s'il influe ou non sur le taux
@@ -390,21 +400,72 @@ Créer un système de réclamation et de signalement:
 
 #### Schéma explicatif du cheminement
 - Dans une première phase, la version des collections publiques ne sera pas mise en place, (elle doit quand même être anticipée le plus possible pour le fonctionnement général), l'objectif est déjà de valider le fonctionnement des Flashcards à l'échelle individuelle
-- Dans le schéma suivant, les ronds représentent les actions ou capacités de l'utilisateur, les carrés représentent les vues
+- Dans le schéma suivant, les rectangles à bord arrondis représentent les capacités ou le statut de l'utilisateur, les carrés représentent les vues, les hexagones représentent les liens de navigation
 ```mermaid
 flowchart TD
-    A[User is connected] --> |Yes| B[Show dashboard]
-    A --> |No| C[Show landing page with introduction:]
-    C -- User can --> D((Create an account))
-    C -- User can --> E((See public collections))
-    C -- User can --> F((connect))
-    B -- User can --> H((Create news cards))
-    B -- User can --> I((Launch new learning session))
-    B -- User can --> J((See card collections))
-    B -- is first time ? --> G[Show tutorial]
-    G --> B
-    D -- User can --> F
+    START([User is connected]) -- Yes --> B([First time on website ?])
+    START -- No --> LAND[Show landing page with introduction:]
+    LAND -- Nav --> D{{Create an account}}
+    LAND -- Nav --> E{{See public collections}}
+    LAND -- Nav --> F{{connect}}
+    B -- Yes --> G[Show tutorial]
+    B -- No --> DASH[Show dashboard]
+    DASH -- Nav --> I{{Launch new learning session}}
+    DASH -- Nav --> J{{Private Collections}}
+    J -- Nav --> N{{See all collections}}
+    N --> NA[Private Collections List]
+    NA --> NI{{Edit one collection}}
+    NI --> NJ[Edit one collection view]
+    NJ --> NK{{Validate edition}}
+    NK --> NA
+    NA --> NB{{Show one collection}}
+    NB --> NC[One collection cards list]
+    NC --> ND{{Show one card}}
+    NC --> NE{{Edit one card}}
+    ND --> NF[Card view]
+    NF --> NE
+    NE --> NG[Edit card view]
+    NG --> NH{{Validate edition}}
+    NH --> NF
+    J -- Nav --> K{{Create new collection}}
+    K --> KA[Create collection form]
+    KA --> KB{{Validate creation}}
+    KB --> NA
+    DASH -- Nav --> E
+    DASH -- Nav --> M{{Settings}}
+    M --> SETT[General settings page]
+    G --> DASH
+    D -- Nav --> F
     F --> B
+    E --> L[Public collections List]
+    L --> LA{{Show one public collection}}
+    LA --> LB[One public collection view]
+    LB --> LBA{{Return to public collections}}
+    LBA --> L
+    LB --> LC([User already use this collection ?])
+    LC --> LCYES([Yes])
+    LC --> LCNO([No])
+    LCYES --> LD{{Rate this collection}}
+    LCNO --> LE{{Add collection to private list}}
+    I --> O[Session settings page]
+    O --> P{{Start}}
+    P --> PA[Card question side]
+    PA --> PB{{Reveal answer}}
+    PB --> PC[Card answer side]
+    PC --> PD{{Edit card}}
+    PD --> PG[Simple edit card view]
+    PG --> PC
+    PC --> PE{{Validate card as success}}
+    PE --> PH([User has validated])
+    PC --> PF{{Validate card as failure}}
+    PF --> PH
+    PH -- Show next card/Repeat loop until over --> PA
+    PH -- If last card: session is over --> PI[Session statistics]
+    PI --> PJ{{Return to dashboard}}
+    PI --> PK{{Next learning session}}
+    PK --> O
+    PJ --> DASH
+
 
 ```
 La vue de connection est la landing page, il y a:
@@ -460,15 +521,91 @@ Certaines options ne verront le jour qu'après qu'une version déjà pleinement 
 + Pour la réalisation de la maquette on commmence par la partie mobile et on voit comment on peut l'adapter pour du desktop
 
 #### 2.5.2 Liste des termes en Anglais et Français
-cartes: cards
-flashcards: flashcards
-collections: collections
-utilisateurs: users
-sous-catégories: subcategories
-catégories: categories
-affichage par défaut: default display
-verso: verso
-recto: recto
+- slug -> terme français: terme anglais
+- card -> carte: card
+- flashcard -> flashcard: flashcard
+- collection -> collection: collection
+- subcategory -> sous-catégorie: subcategory
+- category -> catégorie: category
+- default_display -> affichage par défaut: default display
+- verso -> verso: verso
+- recto -> recto: recto
+- private_profile -> profil privé: private profile
+- public_profile -> profil public: public profile
+- public_collection -> collection publique: public collection
+- private_collection -> collection privée: private collection
+- creator -> créateur (d'une collection): creator
+- main_author -> auteur principal: main author
+- auxiliary_author -> auteur secondaire: auxiliary author
+- collection_name -> nom de la collection: collection name
+- collection_description -> description de la description: collection description
+- subcollection -> sous-collections: subcollection
+- popularity -> popularité: popularity
+- global_rating -> note globale: global rating
+- rating -> note: rating
+- collection_difficulty -> difficulté estimée: estimated difficulty
+- collection_language -> langue de la collection: collection language
+- add -> ajouter: add
+- delete -> supprimer: delete
+- edit -> modifier: edit
+- make_private -> rendre privé (une collection): make private
+- collection_maintenance -> maintenance de la collection: collection maintenance
+- inactive_collection -> inactive (collection): inactive collection
+- active_collection -> active (collection): active collection
+- rating_card_no_mistake_text -> "Les informations sur les cartes ne contiennent pas d'erreur": "Card informations does not contain any mistake"
+- rating_card_relevant_text -> "Les informations sur les cartes sont pertinentes": "Card informations are relevant"
+- rating_card_improve_text -> "Les cartes de cette collection sont efficaces et m'ont permis de progresser dans le domaine souhaité": "Cards in this collection are efficient and help me improve my knowledge in this field"
+- rating_0 -> Absolument pas d'accord: Strongly disagree
+- rating_1 -> Pas d'accord: Disagree
+- rating_2 -> Plutôt pas d'accord: Rather disagree
+- rating_3 -> Plutôt d'accord: Rather agree
+- rating_4 -> D'accord: Agree
+- rating_5 -> Complètement d'accord: Strongly agree
+- card_rank -> rang: rank
+- element_label -> libellé: label
+- learning_session -> session d'apprentissage: learning session
+- card_validation -> validation (des cartes): card validation
+- ranking_gauge -> jauge (de rang): ranking gauge
+- rank_label_1 -> non Maitrisée (rang 1 par défaut): not mastered
+- rank_label_2 -> ``??`` (rang 2 par défaut): ``??``
+- rank_label_3 -> ``??`` (rang 3 par défaut): ``??``
+- rank_label_4 -> ``??`` (rang 4 par défaut): ``??``
+- rank_label_5 -> maitrisée (rang 5 par défaut): mastered
+- card_diffculty_level -> niveau de difficulté (d'une carte): difficulty level
+- recent_success_rate -> taux de réussite récent: recent success rate
+- average_success_rate -> taux de réussite moyen (anciennement global): average success rate
+- global_success_rate -> taux de réussite global (anciennement moyen): global success rate
+- difficulty_level -> Niveau de difficulté: Difficulty level
+- difficulty_level_easy -> facile: easy 
+- difficulty_level_medium -> moyen: medium 
+- difficulty_level_hard -> difficile: hard
+- difficulty_level_all -> tous (les niveaux de difficulté): all
+- card_element -> élément (de flashcard): element
+- card_element_type -> type (d'élément): type
+- card_format -> format (de collection): format
+- general_settings -> paramètres: settings
+- session_settings -> paramètres de session d'apprentissage: learning session settings
+- quick_creation -> création rapide: quick creation
+- advanced_creation -> création avancée: advanced creation
+- validation_result -> résultat des validations: validation result
+- failure -> échec: failure
+- success -> réussite: success
+- priority_rate -> priorité d'apprentissage/taux de priorité: learning priority rate
+- achievement -> succès: achievement
+- progression -> progression: progression
+- review_count -> nombre de passage (sur une carte): review count
+- total_review_count -> nombre total de cartes pratiquées: total review count
+- daily_review_count -> nombre de cartes pratiquées par jour: daily review count
+- weight -> poids (du taux de priorité, du nombre de passage,...): weight
+- {n}_last_cards -> 5 dernières cartes (paramètre du taux de réussite): 5 last reviewed cards
+- auto_ranking -> classement automatique des rangs: auto-ranking
+- problem_report -> signalement: report
+- complaint -> réclamation: complaint
+- user -> utilisateur: user
+- logged_user -> utilisateur (connecté): (connected) user
+- anonymous -> utilisateur anonyme (non connecté): anonymous user
+- moderator -> modérateur: moderator
+- administrator -> administrateur: administrator
 
 
 #### 2.5.3 Tutoriels et conseils d'utilisation
@@ -484,7 +621,6 @@ recto: recto
   - un bouton d'édition (sauf si dans session et carte pas validée)
   - la difficulté de la carte
   - la jauge de rang avec le rang actuel
-
 
 ## 3. Propositions de tests
 
