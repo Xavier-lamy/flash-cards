@@ -255,15 +255,17 @@ La difficulté estimée d'une collection est fixée par son **créateur**/**aute
   - On choisit le libellé de l'élément au **verso**
   - On choisit les catégories/sous-catégories de la collection
   - Le rang est défini automatiquement à 1
-  - On peut remplir en masse les cartes (par groupe de 10)
+  - On peut remplir en masse les cartes (par groupe de 10): il y a un groupe de champs avec le libellé qu'on vient de créer et un champ pour entrer nos valeurs
   - Les libellés qu'on a choisit formeront automatiquement un nouveau format
 ###### Création avancée
++ Il s'agit d'un bouton qui permet d'afficher plus de choix de personalisation
 + Si on crée des collections avec la **création avancée**:
   - On choisit le **format** d'affichage (soit grâce à un template préfait, soit en créant le sien), c'est à dire quels éléments existent sur les cartes et les libellés (il peut donc y en avoir plusieurs par côté)
   - On choisit l'affichage par défaut pour la collection (quels éléments pour le verso, lesquels pour le recto)
   - On choisit les catégories/sous-catégories de la collection
   - Une série de groupe de champs est alors affichée correspondant aux différents **éléments**,on peut les remplir carte par carte
   - Pour chaque carte le rang (défini automatiquement à 1 par défaut) peut être modifié, ainsi si en créant des cartes on sait déjà à quel point on estime les maitriser ou non alors on peut leur attribuer un rang supérieur à 1
+  - Pour le remplissage de masse on a 10 groupes de champs avec à chaque fois les 4 champs pour les éléments 1,2,3,4 (ou moins si on a choisit moins d'éléments), + un champ curseur avec 1 en valeur par défaut pour le rang, qu'on peut alors changer
 
 ###### Modification des collections
 + Quand une collection est créée on peut modifier:
@@ -303,6 +305,7 @@ Idées de succès:
 
 #### 2.4.12 La progression de l'utilisateur
 La progression de l'utilisateur sera indiqué par des graphiques basées sur les statistiques des cartes (rang de la carte, taux de réussite)
++ Certains éléments de base comme le nombre total de cartes et le taux de réussite globale, pourraient avoir un affichage sur le dashboard directement, les détails liés à chaque carte ou collection seront en revanche disponible quand on visualise une collection
 + L'utilisateur a des statistiques globales:
   - **Taux de réussite global** de toutes les cartes (calculé à partir du taux de réussite moyen de chaque carte)
   - nombre total de cartes pratiquées
@@ -320,7 +323,6 @@ La progression de l'utilisateur sera indiqué par des graphiques basées sur les
   - Eviter à l'utilisateur d'avoir à taper chacune de ses réponses, ce qui lui ferait perdre du temps et créerait de la frustration, ainsi il a juste à choisir la validité de ses réponses
   - Eviter les frustrations liées à une réponse que l'appli juge invalide, mais que l'utilisateur considère comme assez maitrisée pour être considérée correcte
   - Suite à l'abandon de l'idée de compétition entre les utilisateurs (avec un tableau de score), cette validation par l'application n'est en réalité plus nécessaire
-+ Il est possible de planifier des sessions d'apprentissage (exemple tous les mercredis à 13h avoir une notif de rappel pour une séance de cartes)
 + Lors d'une session les éléments d'une carte ne sont modifiables qu'après la révélation de la réponse juste avant la validation
 + Après être passé à la carte suivante on peut revenir en arrière pour voir une carte et remodifier des éléments (ex: changer le rang)
 + L'appli sélectionne les cartes en fonction du **taux de priorité**, il s'agit d'une valeur calculée en fonction:
@@ -334,6 +336,7 @@ La progression de l'utilisateur sera indiqué par des graphiques basées sur les
 #### 2.4.14 Paramètres de session
 Pour les paramètres de lancement d'une session:
 + On peut choisir de filtrer nos collections par catégorie, pour n'afficher que les collections disponible dans une catégorie particulière
++ Si on a aucune collection, on ne peut pas arriver à la page des paramètres, on aura alors un message pour nous demander de sélectionner une collection dans les collections publiques ou d'en créer une
 + On commence par déterminer quelle collection sera utilisée:
   - On peut choisir de lancer une collection, ou plusieurs collections
   - Si la session n'est pas éligible au changement d'affichage (collections de formats différents) on n'aura pas la possibilité de choisir quels éléments s'affichent sur quel côté et la configuration par défaut sera choisie pour toutes les cartes, on pourra en revanche choisir d'afficher le recto ou le verso
@@ -345,13 +348,14 @@ Pour les paramètres de lancement d'une session:
   - le nombre de cartes
   - le côté de la carte à afficher (recto ou verso), si la collection est éligible au changement d'affichage on peut alors choisir quels éléments doivent être montrés au recto et lesquels au verso
 
++ Si on utilise à la fois des collections privées et publiques dans une session alors on ne peut éditer rien d'autre que le rang.
+
 #### 2.4.15 Paramètre généraux
 + Dans les options il faut pouvoir:
   - customiser l'aspect visuel des cartes:
     - couleurs d'arrière plan,
     - Taille de police,
     - couleur du texte,
-    - disposition des éléments de réponses
 + Il est possible de modifier les **poids** du **taux de priorité**, afin de définir la fréquence à laquelle les cartes nous sont proposées:
   - poids du **nombre de passage ``??``** (auparavent appelé *timer*)
   - poids du **taux de réussite moyen**/**difficulté**
@@ -364,8 +368,8 @@ Pour les paramètres de lancement d'une session:
   - On peut choisir de modifier ce chiffre entre 3 et 10
 + Il est possible de choisir au bout de combien de temps une carte passe automatiquement au rang supérieur ou est rétrogradée au rang inférieur:
   - On peut choisir: 
-    - augmentation de rang quand le taux de réussite récent est égal à 100% et diminution de rang quand le taux de réussite récent est inférieur ou égal à 25% (DEFAUT)
-    - On peut modifier les deux curseurs avec des pourcentages
+    - augmentation de rang quand le taux de réussite récent est (supérieur ou) égal à 100% (par défaut) et diminution de rang quand le taux de réussite récent est inférieur à 25% (DEFAUT)
+    - On peut modifier les deux curseurs avec des pourcentages, en revanche la valeur du curseur de diminution ne peut pas etre supérieur à celle du curseur d'augmentation (il peuvent etre égaux par contre, vu qu'on a supérieur ou égal contre strictement inférieur)
     - Note: le **classement automatique des rangs** (**ranking**) est du coup également impacté par la modification éventuelle du **taux de réussite récent**
   - On peut désactiver le **classement automatique des rangs**
   - Même quand le **classement automatique des rangs** est activée on peut modifier le rang manuellement pour chaque carte grâce à la jauge
@@ -397,7 +401,6 @@ Créer un système de réclamation et de signalement:
 + Chaque utilisateur pourrait avoir la possibilité de créer un nombre limité (quand même assez élevé) de cartes, afin d'éviter de surcharger le serveur
 
 #### Schéma explicatif du cheminement
-- Dans une première phase, la version des collections publiques ne sera pas mise en place, (elle doit quand même être anticipée le plus possible pour le fonctionnement général), l'objectif est déjà de valider le fonctionnement des Flashcards à l'échelle individuelle
 - Dans le schéma suivant, les rectangles à bord arrondis représentent les capacités ou le statut de l'utilisateur, les carrés représentent les vues, les hexagones représentent les liens de navigation
 ```mermaid
 flowchart TD
@@ -408,7 +411,9 @@ flowchart TD
     LAND -- Nav --> F{{connect}}
     B -- Yes --> G[Show tutorial]
     B -- No --> DASH[Show dashboard]
-    DASH -- Nav --> I{{Launch new learning session}}
+    DASH --> DASHCOLORNOT([If user has at least one collection])
+    DASHCOLORNOT -- Else --> DASHALERT([Display alert to make him create one])
+    DASHCOLORNOT -- Nav --> I{{Launch new learning session}}
     DASH -- Nav --> J{{Private Collections}}
     J -- Nav --> N{{See all collections}}
     N --> NA[Private Collections List]
@@ -471,8 +476,31 @@ La vue de connection est la landing page, il y a:
 - une possibilité de créer un compte ou de se connecter
 
 
-### Options avancées de l'application
+### Phases du projet
+#### Phase I. Minimum requis
+- Création/modification de collections publiques
+- Création/modification de collections privées
+- Création/modification de cartes au sein des collections
+- Utilisation des collections publiques
+- Création d'utilisateur
+- Modifications des paramètres
+- Calcul de priorité de présentation des cartes
+#### Phase II. Éléments intéressants à ajouter
+- Système de signalement/réclamation
+- Role modérateur
+- Capacité de nommer des auteurs secondaires
+- Possibilité de transformer une collection publique en collection privée
+- succès
+- Possibilité d'ajouter des images dans les éléments
+- Customisation de l'interface visuel
+- Sytème de notes
+- Requetes d'ajout de catégories
+- Filtres de recherche dans la liste des collections publiques
+- Graphiques de progression sur les pages des collections et des cartes
+
+#### Phase III. Options avancées de l'application
 Certaines options ne verront le jour qu'après qu'une version déjà pleinement fonctionnelle de l'application soit en état, c'est le cas de:
++ la possibilité de planifier des sessions d'apprentissage (exemple tous les mercredis à 13h avoir une notif de rappel pour une séance de cartes)
 + La possibilité de dessiner directement dans l'application pour la création des cartes, ce qui permettrait de réaliser soi même ses propres schémas, dessins, lettres,...; au lieu de les importer directement en format d'images
 + La possibilité de faire des dessins libres pendant les sessions d'apprentissage, ce afin de pouvoir par exemple, écrire des mots dans n'importe quel alphabet et testé notre connaissance de cette écriture, vérifier qu'on est capable de reproduire un schéma un peu complexe (car simplement essayer de le visualiser peut être trop compliqué pour des schémas trop complexes ou des alphabets difficiles):
   - Ces dessins pourraient être réalisées directement sur la carte, une zone de dessin s'afficherait en transparence par dessus, et on pourrait alors dessiner tout ce qu'on souhaite, à l'aide d'un outil type *canvas* comme sur *Skrible*
@@ -624,33 +652,9 @@ Certaines options ne verront le jour qu'après qu'une version déjà pleinement 
 
 ## 4. Fonctionnement de la BDD
 Pour le stockage des cartes:
-+ Quand une carte est sauvegardé on lui ajoute une checksum (pour l'instant il s'agit seulement des slug de labels de ses différents éléments, dans l'ordre alphabétique, voir s'il faudrait faire une vraie checksum ``??``)
-+ On pourrait avoir une colonne avec des données de type array pour le contenu d'une carte, cela permettrait d'avoir une uniformité dans la notation (peut importe que la carte soit une carte simple avec un recto et un verso, ou un carte plus complexe avec plusieurs éléments par côté):
-```json
-{
-  checksum: meaning_pronunciation_word,
-  elements: [
-    {
-      slug: "meaning",
-      label: "Meaning",
-      content: "Hello",
-      default: "verso"
-    },
-    {
-      slug: "pronunciation",
-      label: "Pronunciation",
-      content: "bɔ̃ʒuʀ",
-      default: "verso"
-    },
-    {
-      slug: "word",
-      label: "Word",
-      content: "Bonjour",
-      default: "recto"
-    },
-  ]
-}
-```
++ Quand une collection est sauvegardée on lui ajoute une checksum (il s'agit des slug de labels de ses différents éléments, dans l'ordre alphabétique), ainsi on peut comparer deux collections différentes pour vérifier qu'elles aient les même libellés pour les éléments de cartes, et ainsi savoir si l'utilisateur peut choisir l'affichage des libellés sur les cartes, ou devra se contenter de recto/verso
+
+
 
 
 faire des schémas
@@ -730,6 +734,36 @@ Les options de swipe (voir aperçu ci-dessus) qui étaient prévues au début du
   - Il faudrait que j'ajoute exprès des éléments tutoriels pour expliquer ou il faut swiper pour telle ou telle action, alors qu'il serait plus simple d'avoir des boutons, clairs et explicites qui ne nécessite pas de double explications
 + Ainsi on gagne en uniformité sur le projet
 
+### L'utilisation du json pour stocker les données des cartes:
+```markdown
++ On pourrait avoir une colonne avec des données de type array pour le contenu d'une carte, cela permettrait d'avoir une uniformité dans la notation (peut importe que la carte soit une carte simple avec un recto et un verso, ou un carte plus complexe avec plusieurs éléments par côté):
+```
+```json
+{
+  checksum: meaning_pronunciation_word,
+  elements: [
+    {
+      slug: "meaning",
+      label: "Meaning",
+      content: "Hello",
+      default: "verso"
+    },
+    {
+      slug: "pronunciation",
+      label: "Pronunciation",
+      content: "bɔ̃ʒuʀ",
+      default: "verso"
+    },
+    {
+      slug: "word",
+      label: "Word",
+      content: "Bonjour",
+      default: "recto"
+    },
+  ]
+}
+```
+Il sera plus simple d'utiliser des champs différents pour les différents éléments, de plus du au fait que les labels sont maintenant attribués aux collections, il est plus simple de faire avec des champs (ex: l'élément-1 de la table des contenus de carte, a donc pour libellé, le libellé d'élément 1 dans la table collection)
 ### La conception automatique de flashcards
 + Bien qu'il aurait été intéressant de pouvoir avoir des séries de règles afin de créer des cartes de manière semi-automatique:  
   - par exemple un professeur qui souhaiterais entrainer ses élèves aux tables de multiplication pourrait sélectionner une série de nombres un opérateur et un multiplicateur et générer automatiquement toutes les cartes qu'il souhaite (par exemple pour la table du 12)

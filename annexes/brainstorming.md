@@ -213,8 +213,8 @@ Faire 2 tables ? une pour les cartes privées ? et une pour les cartes publiques
 
 les collections doivent avoir:
 - le format ? :
-  - si le format est unique pour une collection, alors toutes les cartes créées dans cette collection ont automatiquement le meme affichage par défaut
-  - Si la collection possède des formats mélangés ??
+  - ~~si le format est unique pour une collection, alors toutes les cartes créées dans cette collection ont automatiquement le meme affichage par défaut~~
+  - ~~Si la collection possède des formats mélangés ?? -> non impossible désormais~~
 - Le label pour chacun des 4 éléments
 - la note moyenne de la collection (vide si non publique)
 - un statut privé/public
@@ -275,29 +275,33 @@ En bdd on stocke:
   - Disposition par défaut des éléments (chaine binaire format ``0001 0010``)
   - Checksum: 4 slugs d'intitulé de label ? pour vérifier si les libellés d'éléments sont identiques et donc peuvent permettre à l'user de choisir quels éléments il met sur le recto et le verso dans le cas d'une utilisation de plusieurs collections en même temps
 
-La création avancée consiste en un bouton afficher plus d'options sur la création de base (création rapide)
+~~La création avancée consiste en un bouton afficher plus d'options sur la création de base (création rapide)~~
 
-Pour la création en remplissage en masse
-on a 10 groupe de champs avec à chaque fois les 4 champs pour les éléments 1,2,3,4 (ou moins si on a choisit moins d'éléments), + un champ curseur avec 1 en valeur par défaut pour le rang
+~~Pour la création en remplissage en masse~~
+~~on a 10 groupe de champs avec à chaque fois les 4 champs pour les éléments 1,2,3,4 (ou moins si on a choisit moins d'éléments), + un champ curseur avec 1 en valeur par défaut pour le rang~~
 
 
 Algo pour la priorité d'apprentissage, elle doit etre défini par divers éléments qui ont chacun un poids:
 - Plus la priorité d'apprentissage est un nombre élevé plus on nous repropose la carte souvent
-- Les cartes devrait avoir une priorité d'apprentissage soit égale à 0 et pouvant etre négative (sans doute le mieux mais attention aux multiplications, les poids multiplicateurs ne doivent pas pouvoir etre négatif, autrement il risquerait d'y avaoir des passage soudain du négatif au positif pour la priorité) ``poids de base = 0``, les nombre seront sujet à rééquilibrage, et peuvent de plus etre changés dans les options
+- Les cartes devrait avoir une priorité d'apprentissage soit égale à 0 et pouvant etre négative (sans doute le mieux mais attention aux multiplications, les poids multiplicateurs ne doivent pas pouvoir etre négatif, autrement il risquerait d'y avaoir des passage soudain du négatif au positif pour la priorité) ``poids de base = 0``, les nombre seront sujet à rééquilibrage, et peuvent de plus etre changés dans les options) soit égal à un grand nombre et pouvant monter de part et d'autre de ce nombre
 
 - Nombre de passage: le nombre de passage doit avoir une grande influence sur la priorité, l'objectif étant qu'on nous repropose pas toujours la meme carte à chaque session: pour cela il faudrait donc soustraire ce poid à la priorité à chaque fois qu'on passe sur une carte (comme ça les cartes qui n'ont pas encore été vu gardent le meme poids, les cartes vues baisse en priorité): ``poids = -1 à chaque passage``
 
 - taux de réussite moyen: ce poid doit etre aussi une soustraction/addition, au dessus d'une valeur pivot (quand on réussit plus qu'on échoue) plus ce taux de réussite est élevé plus on soustrait une grosse valeur, en dessous d'une valeur pivot (quand on échoue plus qu'on réussit) plus le taux est bas plus on ajoute une grosse valeur (pour que la carte soit souvent proposée) ``si taux réussite > pivot(50%) alors poids = -2 ; si taux réussite <= pivot(50%) alors poids = +2``
 - taux de réussite récent: meme chose que le taux de réussite moyen mais ses limites de poids doivent etre plus extreme que le taux moyen, car les résultats récents doivent avoir plus de poids dans le calcul: ``si taux réussite récent > pivot(50%) alors poids = -5 ; si taux réussite récent <= pivot(50%) alors poids = +5``
 - rang: 
-  - Si l'utilisateur souhaite que ce soit le rang 5 qui soit proposé plus souvent au lieu du rang 1 il lui suffit d'inverser les noms (appeler le rang 5 rang 1 et inversement), donc le rang compte toujours de la meme façon: plus le rang est élevé, plus la carte doit etre proposé rarement (le rang 5 est supposé etre le rang où on maitrise la carte), ce poid ne doit pas etre trop puissant non plus, idéalement meme si un utilisateur estime la connaitre, si en réalité il échoue tout le temps à cette carte, il faut quand meme que l'appli puisse lui proposer en fonction de son taux de réussite( de toute façon l'user peut choisir de faire des sessions par rang si vraiment il ne veut pas d'un rang): si poid est négatif (= on la connait bien) après calcul des autres poids ``rang 5 = *2, rang 4 * 1.75, rang 3 = *1.50 , rang 2 = *1.25, rang 1 = * 1``, en revanche si poids est positif (donc on ne la sait pas très bien) alors on a ``rang 5 = /2, rang 4 /1.75, rang 3 = /1.50 , rang 2 = /1.25, rang 1 = * 1``: exemples:
-    - ~~test 1 une carte de poid ``-4`` (après calcul des autres poids) aura donc un poid de ``2*-4=-8`` du au rang 1 et sera donc moins proposée que les autres cartes rang 1, alors qu'une rang 1 avec poids de ``3`` aura donc un poids final de ``3*2=6`` et sera donc plus proposé, problème si ces memes cartes avec les meme poids étaient au rang 5 on aurait: ``0.5*-4`` = ``-2`` alors qu'elle est rang 5, elle serait donc proposé plus que la rang 1 donc avec le meme taux d'echec qu'une rang 1 on aimerait qu'elle soit quand meme présentée moins souvent qu'une rang 1, définie comme étant moins sue , est ce que ce serait pas ce qu'on souhaite du coup ? les autres poids gèrent la partie réel savoir, de base si une rang 5 a le meme taux qu'une rang 1, cela signifie que l'user ne la sait finalement pas tant que ça, c'eest peut etre du coup pertinent que l'app lui propose plus qu'une rang 1 qu'il sait en pratique de la meme manière, et les autres poids s'occuperont du reste ?~~ 
-    - test 2:
+  - Si l'utilisateur souhaite que ce soit le rang 5 qui soit proposé plus souvent au lieu du rang 1 il lui suffit d'inverser les noms (appeler le rang 5 rang 1 et inversement), donc le rang compte toujours de la meme façon: plus le rang est élevé, plus la carte doit etre proposé rarement (le rang 5 est supposé etre le rang où on maitrise la carte), ce poid ne doit pas etre trop puissant non plus, idéalement meme si un utilisateur estime la connaitre, si en réalité il échoue tout le temps à cette carte, il faut quand meme que l'appli puisse lui proposer en fonction de son taux de réussite( de toute façon l'user peut choisir de faire des sessions par rang si vraiment il ne veut pas d'un rang): si poid est négatif (= on la connait bien) après calcul des autres poids ``rang 5 = /1, rang 4 / 1.25, rang 3 = /1.50 , rang 2 = /1.75, rang 1 = / 2``, en revanche si poids est positif (donc on ne la sait pas très bien) alors on a ``rang 5 = * 1, rang 4 = *1.25, rang 3 = *1.50 , rang 2 = *1.75, rang 1 = *2``: exemples:
+    - test 2: si on a une carte avec un poid calculé (avant d'appliquer le rang) de ``-6`` (donc elle ne doit pas etre proposé trop souvent) et une autre avec un poid de ``+8`` elle doit etre proposé plus souvent car on ne la sait pas trop, il faut que le rang influe sur le poid en fonction du rang: le rang devrait réduire le poid si on la connait bien, et l'atténuer si on ne connait pas trop, alors que le rang 1 devrait etre plus puissant que le 5, donc la carte ``-6`` si situé au rang 1 devrait être un peu ignoré, si situé au rang 5 elle devrait être plus ignorée qu'au rang 1 (donc etre encore plus inférieur à -6), pour la +8: au rang 5 on veut que malgré le fait qu'elle soit sue de la meme manière, elle soit moins proposée (car on est supposé plus la savoir), donc dans ce cas on aurait -6 et +8 pour le rang 5, et -3 et +16 pour le rang 1, la carte sera donc bel et bien moins proposée au rang 5, il s'agit ainsi de donner à l'utilisateur le choix de déterminer quelle carte il veux plus souvent puisque si une carte qui est arrivé automatiquement au rang 5 est selon lui pas si maitrisée, il peut choisir de la rétrograder au rang 1 pour lui donner plus de poids
+    Est-ce qu'il faudrait réinjecter à chaque fois l'ancien calcul de priorité dans le nouveau ? -> probablment que non, car on a déjà la fréquence d'apparition des cartes définie par le poid du nombre de passage
+    - ~~test 1 (abandonné) une carte de poid ``-4`` (après calcul des autres poids) aura donc un poid de ``2*-4=-8`` du au rang 1 et sera donc moins proposée que les autres cartes rang 1, alors qu'une rang 1 avec poids de ``3`` aura donc un poids final de ``3*2=6`` et sera donc plus proposé, problème si ces memes cartes avec les meme poids étaient au rang 5 on aurait: ``0.5*-4`` = ``-2`` alors qu'elle est rang 5, elle serait donc proposé plus que la rang 1 donc avec le meme taux d'echec qu'une rang 1 on aimerait qu'elle soit quand meme présentée moins souvent qu'une rang 1, définie comme étant moins sue , est ce que ce serait pas ce qu'on souhaite du coup ? les autres poids gèrent la partie réel savoir, de base si une rang 5 a le meme taux qu'une rang 1, cela signifie que l'user ne la sait finalement pas tant que ça, c'eest peut etre du coup pertinent que l'app lui propose plus qu'une rang 1 qu'il sait en pratique de la meme manière, et les autres poids s'occuperont du reste ?~~ 
+    
+
+  On pourrait modifier le poid final en: arrondissant à 2 décimales après la virgule puis en multipliant par 100 afin de ne pas stocker des nombres à virgule
   - vu qu'il est possible de désactiver la prise en compte du rang dans la priorité, quand il est désactivé: soit on ajoute/soustrait 0 soit on multiplie/divise par 1
 
-Est-ce que le rang doit vraiment pouvoir etre désactivable ?  il vaudrait peut etre mieux simplement le mettre en automatiqe pour ceux qui veulent pas s'embeter avec ça, ou alors quand on désactive le rang, il s'agit d'une simple option à cocher, si elle est coché alors le poids du rang est soit de 0 s'il doit s'ajouter soit de 1 s'il doit etre un multiplicateur, comme ça il est présent mais n'influe pas sur le calcul -> oui c'est ce qu'on voulait à la base, donc le rang n'est en réalité pas vraiment désactivable avec une case option mais son curseur de poid peut etre mis à 0 (ou 1 si c'est un multiplicateur)
+Est-ce que le rang doit vraiment pouvoir etre désactivable ?  il vaudrait peut etre mieux simplement le mettre en automatiqe pour ceux qui veulent pas s'embeter avec ça, ou alors quand on désactive le rang, il s'agit d'une simple option à cocher, si elle est coché alors le poids du rang est soit de 0 s'il doit s'ajouter soit de 1 s'il doit etre un multiplicateur, comme ça il est présent mais n'influe pas sur le calcul -> oui c'est ce qu'on voulait à la base, donc le rang n'est en réalité pas vraiment désactivable avec une case option mais son curseur de poid peut etre mis à 0 (ou 1 si c'est un multiplicateur)-> du coup le mieux case à cocher dans les paramètres pour laisser le rang influer sur la priorité, si on coche cette case ça met tous les poids de rang à 1
 
-Si un élément a un label mais que pour une carte il n'y a pas de contenu comment on fait , exemple dans le cas où on a rajouté des labels après pour des nouvelles cartes ?
+Si un élément a un label mais que pour une carte il n'y a pas de contenu comment on fait , exemple dans le cas où on a rajouté des labels après pour des nouvelles cartes ? est-ce qu'on affiche "pas d'entrée pour ce libellé" ? ou on laisse vide ?, ce qu'on peut faire c'est ne pas afficher le libellé si il n'y a pas de contenu, de cette manière si on a rajouter un libellé, les cartes qui n'ont pas de contneu pour ce libellé n'auront pas de problème d'affichage
 
 Pour la popularité de la collection il n'y a pas besoin de la stocker ?, quand on cherche à l'obtenir on peut simplement regarder dans la liste des collections perso combien utilise l'id de la collection publique (problème si quelqu'un l'a passé en privé ce ne serait pas répercuté ?): du coup la popularité calcule uniquement ceux qui l'utilisent en mode publique ? ou quand on utilise en mode privé il faudrait aussi rajouter un champs pour ça ?: solution:
   - Quand on clique sur utiliser en privé directement: une fois que la collection a été dupliqué et nous est donné en privé on ajoute 1 au compteur d'utilisation
@@ -340,8 +344,41 @@ Table des utilisateurs:
   - Nom d'utilisateur
   - Role: admin, modo, utilisateur connecté, auteur?? (ou alors auteur n'est pas un rôle, on recherche dans la table des collections, les collections avec le tag public et l'id de cet utilisateur dans auteur, auteur principal ou auxiliaire)
 
+Table des paramètres généraux et de session (par défaut):
++ id
++ User_id 
++ paramètre de session par défaut (objet JSon ou décomposer en plusieurs champs ?)-> on décompose en plusieurs champs, ces paramètres sont ceux présentés par défaut si l'utilisateur ne change rien, ensuite à chaque fois qu'il fait de nouveaux réglages pour une session , ces nouveaux paramètres remplacent les anciens, liste des paramètres de session (avec leur valeur par défaut):
+  - Liste des collections utilisées: array('')-> par défaut sa première collection créée est ajouté à l'array
+  - Niveau de difficulté des cartes choisies: defaut:all
+  - Rang des cartes: defaut:all
+  - Nombre de cartes par session: defaut:10
+  - Côté à afficher en guise de question: defaut:recto (note les éléments à afficher sur ce recto/verso sont défini à l'échelle d'une collection, par son affichage par défaut)
++ paramètre généraux (objet JSon)-> on décompose en plusieurs champs, en revanche les paramètres graphiques pourraient etre en json (un peu comme une sorte de thème.json, l'utilisateur pourrait customiser, et on récupère pour lui en fonction des ses customisations) (est-ce qu'on remplacerait pas plutot par des cookies ?), liste des paramètres généraux, leur valeur par défaut et les valeurs limites possible:
+  - view_count_weight: 1,
+  - average_success_rate_weight: 2,
+  - recent_success_rate_weight: 5,
+  - rank_five_weight: 1,
+  - rank_four_weight: 1.25,
+  - rank_three_weight: 1.5,
+  - rank_two_weight: 1.75,
+  - rank_one_weight: 2,
+  - recent_success_rate_range: defaut:5, valeurs limites:3 -- (pas:1) --> 10
+  - classement automatique des rangs est activé: defaut:true
+  - valeur pour passage au rang supérieur: defaut:(>=)100% 
+  - valeur pour passage au rang inférieur: defaut:(<)25% 
+  - Aspect visuel des cartes (est-ce qu'on met ça pour les collections plutot ? comme ça on peut custom chaque collection séparément-> non ça ferait beaucoup d'éléments en bdd, pour un truc que les gens utiliseraient pas tous) (objet JSON): exemple (à revoir plus tard):
+  ```json
+  {
+    style: [
+      background-color:"color-value",
+      text-color:"color-value",
+      font-size:"size-value",
+    ]
+  }
+  ```
 
-Pour les catégories comment ça marche entre public et privé ?
+
+Pour les catégories comment ça marche entre public et privé ?-> peut etre simplemeny faire des catégories publiques, pas de possibilité d'en faire des privées-> oui ce sera mieux
 
 Dans le cas ou une collection publique est utilisé de manière privée, elle est alors dupliquée et l'utilisateur se voit attribuer une nouvelle collection privée qui lui est propre basée sur la version publique, mais il peut alors la modifier comme bon lui semble, cette nouvelle version étant désormais séparée de la version publique, il faudra penser à récupérer toutes les éventuelles statistiques et rangs liées aux cartes de cette collection pour les attribuer à la nouvelle version privée (juste changer les ids ?), donc c'est à dire que dans ce cas:
   - On crée une nouvelle collection dupliquée de l'ancienne (table collec générale), elle passe en privée, on récupère toutes les collections enfant si nécessaire et on fait la meme
@@ -374,7 +411,40 @@ Question: que se passe-t-il si on prend deux collections qui ont le meme checksu
       - le checksum n'est pas le meme, dans ce cas les labels ne seront de toute façon pas identique et les affichages par défaut s'appliquent alors pour toutes les cartes (l'user peut quand meme choisir si on lui ontre le recto ou le verso mais pas ce qu'il y a dessus)
       - Donc dans ces deux cas restants on peut prendre l'affichage par défaut propre aux deux collections
 
-Question: que se passe-t-il quand on utilise à la fois des collections privées et publiques dans une session ? :
-- le plus simple serait de mettre le mode édition publique pour tout dans ce cas, donc on ne peut changer que le rang des cartes y compris pour nos cartes privées
+~~Question: que se passe-t-il quand on utilise à la fois des collections privées et publiques dans une session ? :~~
+- ~~le plus simple serait de mettre le mode édition publique pour tout dans ce cas, donc on ne peut changer que le rang des cartes y compris pour nos cartes privées~~
 
 ~~idée: supprimer le concept de format: les collections n'ont plus qu'un format possible (exemple description, caractère, traduction), si un utilisateur souhaite avoir plusieurs format dans une meme collection (exemple schéma->explication et terme->définition), il lui suffit de créer les 4 éléments, (schéma, définition, explication, terme) puis lors d'une session il en met deux au recto et deux au verso (exemple schéma et terme au recto, et explication, définition au verso, ainsi les cartes ne sont pas obligées d'avoir tous les éléments, les éléments sont donc considérés comme ayant un ``et/ou`` au lieu d'un ``et``), en plus de ça on pourrait éventuellement laisser le choix à l'user de faire des sessions avec plusieurs collections mélangées (ce qui reviendrait au meme mais rendrait la création de collection plus simple en forçant un seul format)-> idée retenue, car de plus, avec le concept de colections sous collections on peut déjà facilement émuler les formats (exemple faire une collection physique/chimie avec une sous collection ``schéma/explication`` et une autre ``terme/définition``), comme ça en plus on peut choisir de faire soit uniquement une sous collection, soit la collection entière ou même plusieurs collection, ce qui signifie: facilité de stockage en bdd, facilité de création des collections et usage plus flexible pour l'user~~
+
+
+~~Les phases du projet:~~
++ ~~Phase 1:  ce qu'il faut au projet pour fonctionner de manière basique:~~
+  - ~~Création/modification de collections publiques~~
+  - ~~Création/modification de collections privées~~
+  - ~~Création/modification de cartes au sein des collections~~
+  - ~~Utilisation des collections publiques~~
+  - ~~Création d'utilisateur~~
+  - ~~Modifications des paramètres~~
+  - ~~Calcul de priorité de présentation des cartes~~
+
+
++ ~~Phase 2: les éléments qui seraient intéressant à ajouter mais peuvent être amenés dans le projet sur le tard (voir après l'examen):~~
+  - ~~Système de signalement/réclamation~~
+  - ~~Role modérateur~~
+  - ~~Capacité de nommer des auteurs secondaires~~
+  - ~~Possibilité de transformer une collection publique en collection privée~~
+  - ~~succès~~
+  - ~~Possibilité d'ajouter des images dans les éléments~~
+  - ~~Customisation de l'interface visuel~~
+  - ~~Sytème de notes~~
+  - ~~Requetes d'ajout de catégories~~
+  - ~~Filtres de recherche dans la liste des collections publiques~~
+  - ~~Graphiques de progression sur les pages des collections et des cartes~~
++ ~~Phase 3: les éléments bonus (tel que l'ajout de fonctions de dessin), qui seront peut etre mis en place, mais seulement à l'avenir si le projet fonctionne déjà correctement de base:~~
+  - ~~Planification de sessions régulières~~
+  - ~~Possibilité de dessiner directement dans l'application~~
+  - ~~Possibilité de faire des dessins libre pendant les sessions d'apprentissage~~
+  - ~~fichiers audio~~
+  - ~~portage en version appli, avec sauvegarde sur la machine de l'utilisateur~~
+  - ~~exportation des cartes au format JSON~~
+  - ~~impresssion au format papier~~
