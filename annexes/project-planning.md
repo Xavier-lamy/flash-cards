@@ -145,7 +145,6 @@ Les **collections** sont des groupes de cartes généralement liées à une mêm
 + Il peut s'agir:
   - d'un groupement de cartes rassemblées par un utilisateur sur son **profil privé**
   - d'un groupement de cartes rassemblées par un utilisateur sur un **profil public** et donc accessible à la communauté
-+ Seule les collections peuvent être partagées en profil public, les cartes isolées peuvent uniquement être créée de manière privée (il est de toute façon généralement conseillé de créer des collections plutôt que de laisser des cartes seules)
 + Une **collection publique** possède:
   - Un **auteur principal**:
     - qui a créé et nommé la collection
@@ -159,7 +158,7 @@ Les **collections** sont des groupes de cartes généralement liées à une mêm
     - Une **popularité** définie par le nombre de personnes qui ont choisi de l'utiliser
     - Une **note globale** définie par la moyenne des **notes** utilisateurs
     - Une **difficulté estimée** fixée par l'auteur principal
-    - Une **langue**: dans quelle langue la carte a été rédigée (pour les **labels** des **éléments**)
+    - Une **langue**: dans quelle langue la carte a été rédigée (pour les **labels** des **éléments**), la langue pourra faire partie des filtres de recherche pour les collections publiques
     - Un **format** pour les libellés: la collection définit les libellés des éléments pour les cartes qu'elle contient
 + Lorsqu'on utilise une collection on peut choisir:
   - De l'utiliser telle quelle: on ne peut pas la modifier, mais si des cartes sont modifiées ou ajoutées par le créateur elles s'ajouteront à notre instance de la collection
@@ -171,7 +170,8 @@ Les **collections** sont des groupes de cartes généralement liées à une mêm
   - Choisir les catégories et sous-catégories
   - Choisir les auteurs
   - Choisir de classer par popularité et/ou par note
-  - Choisir d'activer ou non les **collections** **inactives**  
+  - Choisir d'activer ou non les **collections** **inactives** 
+  - Choisir la langue des labels 
 
 #### 2.4.4 Les notes
 + Les cartes ne peuvent pas être notées individuellement
@@ -201,13 +201,13 @@ Les **collections** sont des groupes de cartes généralement liées à une mêm
   > La carte la mieux maitrisée pourrait donc monter de rang et l'autre non
 + Les rangs peuvent être renommés par l'utilisateur afin qu'il puisse en cours de **session** se rappeler quel règle il s'impose pour la **validation** des cartes
 + Les noms des rangs ne sont modifiables qu'à l'échelle d'une collection
-+ Chaque carte a une jauge allant de 1 à 5 et affichant aussi le nom du rang actuel (par défaut **rang 1**, **rang 2**,...)
++ Chaque carte a une jauge allant de 1 à 5 et affichant aussi le nom du rang actuel
 + Lors des sessions les rangs ne sont modifiables qu'après avoir révélé la réponse
 + Noms par défaut des rangs:
   - 1: Non maitrisée
-  - 2: ``??``
-  - 3: ``??``
-  - 4: ``??``
+  - 2: ``Rang 2??``
+  - 3: ``Rang 3??``
+  - 4: ``Rang 4??``
   - 5: Maitrisée
 
 #### 2.4.6 Les niveaux de difficultés
@@ -291,8 +291,7 @@ Les cartes ont un ensemble de statistiques qui leur est propre (sauvegardé indi
 - Le **rang** actuel de la carte
 - La **catégorie/sous-catégorie**
 - Le **nombre de passage** sur la carte (un passage est compté après validation voir une carte sans la valider comme étant réussie ou échouée, ne compte pas)
-- La **priorité d'apprentissage** de la carte
-
+- La **priorité d'apprentissage** de la carte:
 
 #### 2.4.11 Les succès
 + Peuvent être affichés sur notre profil ``??``
@@ -304,10 +303,9 @@ Idées de succès:
 
 #### 2.4.12 La progression de l'utilisateur
 La progression de l'utilisateur sera indiqué par des graphiques basées sur les statistiques des cartes (rang de la carte, taux de réussite)
-+ L'utilsateur a des statistiques globales:
++ L'utilisateur a des statistiques globales:
   - **Taux de réussite global** de toutes les cartes (calculé à partir du taux de réussite moyen de chaque carte)
   - nombre total de cartes pratiquées
-  - nombre de cartes pratiquées par jour
 
 #### 2.4.13 Fonctionnement général d'une session d'apprentissage
 + L'utilisateur lance une session, des paramètres de base lui sont proposés:
@@ -343,7 +341,7 @@ Pour les paramètres de lancement d'une session:
 
 + Une fois ce choix de collection réalisé on peut choisir:
   - le niveau de difficulté des cartes (**tous**, **facile**, **moyen**, **difficile**)
-  - le rang des cartes
+  - le rang des cartes (on peut choisir quels rangs seront présent: tous ou cocher les cases de ceux qu'on veut, ce qui exclu les non-cochés)
   - le nombre de cartes
   - le côté de la carte à afficher (recto ou verso), si la collection est éligible au changement d'affichage on peut alors choisir quels éléments doivent être montrés au recto et lesquels au verso
 
@@ -549,6 +547,7 @@ Certaines options ne verront le jour qu'après qu'une version déjà pleinement 
 - delete -> supprimer: delete
 - edit -> modifier: edit
 - make_private -> rendre privé (une collection): make private
+- use_public_version -> utiliser la version publique: use public version
 - collection_maintenance -> maintenance de la collection: collection maintenance
 - inactive_collection -> inactive (collection): inactive collection
 - active_collection -> active (collection): active collection
@@ -595,7 +594,6 @@ Certaines options ne verront le jour qu'après qu'une version déjà pleinement 
 - progression -> progression: progression
 - review_count -> nombre de passage (sur une carte): review count
 - total_review_count -> nombre total de cartes pratiquées: total review count
-- daily_review_count -> nombre de cartes pratiquées par jour: daily review count
 - weight -> poids (du taux de priorité, du nombre de passage,...): weight
 - {n}_last_cards -> 5 dernières cartes (paramètre du taux de réussite): 5 last reviewed cards
 - auto_ranking -> classement automatique des rangs: auto-ranking
@@ -694,6 +692,17 @@ Les familles de cartes (voir aperçu ci-dessus) sont abandonnées, car:
   - Des oublis de familles qui auraient pu être importantes
   - Des groupements arbitraires d'éléments au sein de familles (voir des opinions controversées)
 
+### Les cartes sans collections
+```markdown
++ Seule les collections peuvent être partagées en profil public, les cartes isolées peuvent uniquement être créée de manière privée (il est de toute façon généralement conseillé de créer des collections plutôt que de laisser des cartes seules -> non les care)
+```
+Cet élément est abandonné, les cartes doivent maintenant obligatoirement etre dans une collection
+
+### Les collections avec plusieurs formats
+Pour faciliter la création de cartes, il n'y a plus qu'un seul format possible par collection, les formats définissent en effet les collections, il n'y a donc pas beaucoup de sens à pouvoir en mettre plusieurs par collection, si l'utilisateur a néanmoins  le besoin de créer plusieurs formas au sein d'une collection, il peut en créant des sous-collections (ce qui revient du coup au meme mais simplifie grandement la base de données et le système de sessions d'apprentissage)
+
+### nombre de cartes pratiquées par jour
+Nécessiterait soir une moyenne soit une liste des derniers jours, n'aurait pas beaucoup d'utilité par rapport à son taux de réussite
 
 ### La compétition entre utilisateurs
 L'idée de compétition entre utilisateurs est abandonnée pour:

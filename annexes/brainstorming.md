@@ -234,13 +234,147 @@ Dans les collections publiques, pour une carte donnée, un utilisateur qui n'est
     - Sa priorité d'apprentissage pour cette carte
 
 
-En bdd on stocke pour les stats d'une carte:
-- Les résultats de validation (sous forme 110011100001...)
-- Le rang actuel
-- La priorité d'apprentissage (calculé par les différents poids et recalculé à chaque fois qu'on valide une carte
-- Le nombre de passage n'a pas besoin d'etre enregistré en bdd, puisqu'il suffit de compter la taille de la chaine des résultats de validation
-- Le taux de réussite moyen n'est pas stocké non plus ? car il est calculé de la manière suivante: compter les ``1`` dans la chaine des résultats de validation et en divisant par le nombre total d'itérations sur la carte (longueur de la chaine) puis en transformant en pourcentages
-- par contre on pourrait stocker le niveau de difficulté (pour faciliter la récupération d'infos quand on doit choisir que les cartes avec un certain niveau de diffculté)
+En bdd on stocke:
++ Pour les stats d'une carte:
+  - L'id de cette version de la carte (primary_index)
+  - L'id de la carte dans la table contenu (card_content_id)
+  - L'id de l'utilisateur
+  - Les résultats de validation (sous forme 110011100001...)
+  - Le rang actuel
+  - La priorité d'apprentissage (calculé par les différents poids et recalculée à chaque fois qu'on valide une carte)
+  - Le nombre de passage n'a pas besoin d'etre enregistré en bdd, puisqu'il suffit de compter la taille de la chaine des résultats de validation
+  - Le taux de réussite moyen n'est pas stocké non plus ? car il est calculé de la manière suivante: compter les ``1`` dans la chaine des résultats de validation et en divisant par le nombre total d'itérations sur la carte (longueur de la chaine) puis en transformant en pourcentages
+  - taux de réussite récent pareil pas nécesaire de le stocker puisque facilement calculable (il suffit du coup de faire une fonction)
+  - par contre on pourrait stocker le niveau de difficulté (pour faciliter la récupération d'infos quand on doit choisir que les cartes avec un certain niveau de diffculté)
 
++ Pour le contenu d'une carte:
+  - Id de la carte (primary_index)
+  - Id de la collection dans la table collection version publique
+  - Contenu du label 1 (les contenus doivent pouvoir stocker n'importe quel type de donnée. Les images vidéos et autres médias sont stockés sous forme de lien vers leur emplacement, voir pour faire en sorte que les utilisateurs puissent linker vers une image sur une banque d'image par exemple)
+  - Contenu du label 2
+  - Contenu du label 3
+  - Contenu du label 4
+
++ Pour une collection version générale (publique, fonctionne aussi pour une privée), dans le cas où cette collection est utilisée de manière publique par un utilisateur ces éléments sont ceux qu'il ne peut donc pas modifier.
+  - Id de la collection (primary index)
+  - Id du créateur/auteur principal de la collection
+  - Id des auteurs auxiliaires (vide si privée)
+  - Nom de la collection
+  - Description de la collection
+  - Difficulté estimée (vide si privée)
+  - popularité (définie par le nombre de fois où quelqu'un a cliqué sur utiliser en privé ou utilser en public, mais pas par les transfert d'une utilisation publique vers une privée) (vide si privée)
+  - Liste des ids de catégorie de la collection (relation avec la table des catégories)
+  - langue des labels de la collection (permet de trier comme pour les catégories, devrait donc être un select avec tous les langages habituels dans les applis)
+  - Collection parente: Id ?? null/0 -> on se sert de ce champ pour faire une relation interne: parent hasMany Children, et les collections children hasOne parent, si 0 alors pas de relation
+  - Tag de la collection (public/private)
+  - Statut de la collection (active/inactive, active par défaut)-> ne peut etre changé que pour les collections publiques, car les collections privées peuvent etre supprimées
+  - Intitulé du label 1
+  - Intitulé du label 2
+  - Intitulé du label 3
+  - Intitulé du label 4
+  - Disposition par défaut des éléments (chaine binaire format ``0001 0010``)
+  - Checksum: 4 slugs d'intitulé de label ? pour vérifier si les libellés d'éléments sont identiques et donc peuvent permettre à l'user de choisir quels éléments il met sur le recto et le verso dans le cas d'une utilisation de plusieurs collections en même temps
+
+La création avancée consiste en un bouton afficher plus d'options sur la création de base (création rapide)
+
+Pour la création en remplissage en masse
+on a 10 groupe de champs avec à chaque fois les 4 champs pour les éléments 1,2,3,4 (ou moins si on a choisit moins d'éléments), + un champ curseur avec 1 en valeur par défaut pour le rang
+
+
+Algo pour la priorité d'apprentissage, elle doit etre défini par divers éléments qui ont chacun un poids:
+- Plus la priorité d'apprentissage est un nombre élevé plus on nous repropose la carte souvent
+- Les cartes devrait avoir une priorité d'apprentissage soit égale à 0 et pouvant etre négative (sans doute le mieux mais attention aux multiplications, les poids multiplicateurs ne doivent pas pouvoir etre négatif, autrement il risquerait d'y avaoir des passage soudain du négatif au positif pour la priorité) ``poids de base = 0``, les nombre seront sujet à rééquilibrage, et peuvent de plus etre changés dans les options
+
+- Nombre de passage: le nombre de passage doit avoir une grande influence sur la priorité, l'objectif étant qu'on nous repropose pas toujours la meme carte à chaque session: pour cela il faudrait donc soustraire ce poid à la priorité à chaque fois qu'on passe sur une carte (comme ça les cartes qui n'ont pas encore été vu gardent le meme poids, les cartes vues baisse en priorité): ``poids = -1 à chaque passage``
+
+- taux de réussite moyen: ce poid doit etre aussi une soustraction/addition, au dessus d'une valeur pivot (quand on réussit plus qu'on échoue) plus ce taux de réussite est élevé plus on soustrait une grosse valeur, en dessous d'une valeur pivot (quand on échoue plus qu'on réussit) plus le taux est bas plus on ajoute une grosse valeur (pour que la carte soit souvent proposée) ``si taux réussite > pivot(50%) alors poids = -2 ; si taux réussite <= pivot(50%) alors poids = +2``
+- taux de réussite récent: meme chose que le taux de réussite moyen mais ses limites de poids doivent etre plus extreme que le taux moyen, car les résultats récents doivent avoir plus de poids dans le calcul: ``si taux réussite récent > pivot(50%) alors poids = -5 ; si taux réussite récent <= pivot(50%) alors poids = +5``
+- rang: 
+  - Si l'utilisateur souhaite que ce soit le rang 5 qui soit proposé plus souvent au lieu du rang 1 il lui suffit d'inverser les noms (appeler le rang 5 rang 1 et inversement), donc le rang compte toujours de la meme façon: plus le rang est élevé, plus la carte doit etre proposé rarement (le rang 5 est supposé etre le rang où on maitrise la carte), ce poid ne doit pas etre trop puissant non plus, idéalement meme si un utilisateur estime la connaitre, si en réalité il échoue tout le temps à cette carte, il faut quand meme que l'appli puisse lui proposer en fonction de son taux de réussite( de toute façon l'user peut choisir de faire des sessions par rang si vraiment il ne veut pas d'un rang): si poid est négatif (= on la connait bien) après calcul des autres poids ``rang 5 = *2, rang 4 * 1.75, rang 3 = *1.50 , rang 2 = *1.25, rang 1 = * 1``, en revanche si poids est positif (donc on ne la sait pas très bien) alors on a ``rang 5 = /2, rang 4 /1.75, rang 3 = /1.50 , rang 2 = /1.25, rang 1 = * 1``: exemples:
+    - ~~test 1 une carte de poid ``-4`` (après calcul des autres poids) aura donc un poid de ``2*-4=-8`` du au rang 1 et sera donc moins proposée que les autres cartes rang 1, alors qu'une rang 1 avec poids de ``3`` aura donc un poids final de ``3*2=6`` et sera donc plus proposé, problème si ces memes cartes avec les meme poids étaient au rang 5 on aurait: ``0.5*-4`` = ``-2`` alors qu'elle est rang 5, elle serait donc proposé plus que la rang 1 donc avec le meme taux d'echec qu'une rang 1 on aimerait qu'elle soit quand meme présentée moins souvent qu'une rang 1, définie comme étant moins sue , est ce que ce serait pas ce qu'on souhaite du coup ? les autres poids gèrent la partie réel savoir, de base si une rang 5 a le meme taux qu'une rang 1, cela signifie que l'user ne la sait finalement pas tant que ça, c'eest peut etre du coup pertinent que l'app lui propose plus qu'une rang 1 qu'il sait en pratique de la meme manière, et les autres poids s'occuperont du reste ?~~ 
+    - test 2:
+  - vu qu'il est possible de désactiver la prise en compte du rang dans la priorité, quand il est désactivé: soit on ajoute/soustrait 0 soit on multiplie/divise par 1
+
+Est-ce que le rang doit vraiment pouvoir etre désactivable ?  il vaudrait peut etre mieux simplement le mettre en automatiqe pour ceux qui veulent pas s'embeter avec ça, ou alors quand on désactive le rang, il s'agit d'une simple option à cocher, si elle est coché alors le poids du rang est soit de 0 s'il doit s'ajouter soit de 1 s'il doit etre un multiplicateur, comme ça il est présent mais n'influe pas sur le calcul -> oui c'est ce qu'on voulait à la base, donc le rang n'est en réalité pas vraiment désactivable avec une case option mais son curseur de poid peut etre mis à 0 (ou 1 si c'est un multiplicateur)
+
+Si un élément a un label mais que pour une carte il n'y a pas de contenu comment on fait , exemple dans le cas où on a rajouté des labels après pour des nouvelles cartes ?
+
+Pour la popularité de la collection il n'y a pas besoin de la stocker ?, quand on cherche à l'obtenir on peut simplement regarder dans la liste des collections perso combien utilise l'id de la collection publique (problème si quelqu'un l'a passé en privé ce ne serait pas répercuté ?): du coup la popularité calcule uniquement ceux qui l'utilisent en mode publique ? ou quand on utilise en mode privé il faudrait aussi rajouter un champs pour ça ?: solution:
+  - Quand on clique sur utiliser en privé directement: une fois que la collection a été dupliqué et nous est donné en privé on ajoute 1 au compteur d'utilisation
+  - Si on choisit de l'utiliser en public, une table perso nous est créée pour cette collection et donc on ajoute 1 au compteur d'utilisations
+  - Si on utilisait déjà en public et qu'on passe en privé, rien ne change (puisque notre utilisation est déjà comptabilisée) 
+  - Donc en résumé quand on est dans le cas où l'appli crée une nouvelle table perso pour une collection, on ajoute 1 au compteur de popularité, sachant que quand on passe d'une utilisation publique à une privée, seul l'id de la collection générique est changée dans la collec perso on n'en a pas recréer donc il n'y a pas de problème
+
+
+
++ Pour une collection version perso (partie propre à chaque utilsateur, donc soit correspondant aux éléments propre à un user pour une collection publique, soit ces meme éléments pour sa collec privée), dans le cas où elle est utilisé de manière publique, il s'agit des éléments qu'il peut modifier (sauf les Id bien sur qui servent pour les relations):
+  - Id de la version privée de la collection (primary index)
+  - Id de la collection d'origine (pour avoir toute les infos)
+  - Nom donné au rang 1 pour cette collection
+  - Nom donné au rang 2 pour cette collection
+  - Nom donné au rang 3 pour cette collection
+  - Nom donné au rang 4 pour cette collection
+  - Nom donné au rang 5 pour cette collection
+
+
+Table des notes: 
+  - Id de la collection (générique) notées
+  - Id de l'utilisateur qui a noté
+  - note pour la première question 
+  - note pour la deuxième question 
+  - note pour la troisième question 
+  - note générale donnée par cet utilisateur à cette collection
+
+
+
+Table des catégories:
+  - Id de la catégorie
+  - Nom de la catégorie
+  - Catégorie parente ( 1id )
+  - Catégories enfantes ( plusieurs ids possibles )
+
+Table des utilisateurs:
+  - Id de l'utilisateur
+  - email
+  - password
+  - Nom d'utilisateur
+  - Role: admin, modo, utilisateur connecté, auteur?? (ou alors auteur n'est pas un rôle, on recherche dans la table des collections, les collections avec le tag public et l'id de cet utilisateur dans auteur, auteur principal ou auxiliaire)
+
+
+Pour les catégories comment ça marche entre public et privé ?
+
+Dans le cas ou une collection publique est utilisé de manière privée, elle est alors dupliquée et l'utilisateur se voit attribuer une nouvelle collection privée qui lui est propre basée sur la version publique, mais il peut alors la modifier comme bon lui semble, cette nouvelle version étant désormais séparée de la version publique, il faudra penser à récupérer toutes les éventuelles statistiques et rangs liées aux cartes de cette collection pour les attribuer à la nouvelle version privée (juste changer les ids ?), donc c'est à dire que dans ce cas:
+  - On crée une nouvelle collection dupliquée de l'ancienne (table collec générale), elle passe en privée, on récupère toutes les collections enfant si nécessaire et on fait la meme
+  - la table card_content voie aussi ses entrées dupliquées, les nouvelles entrées récupèrent désormais l'id de la nouvelle collection créée
+  - Dans les table card stats et collec perso, on change alors l'id de la collection d'origine par celui de la nouvelle (ainsi toutes les stats sont gardées)
+
+Il faut prévoir un système de demande pour passer éditeur, c'est à dire qu'un utilisateur peut faire une demande pour passer éditeur secondaire sur une collection,  l'éditeur principal reste seul maitre à bord, donc:
+- si la collection est passé inactive par lui, les auteurs secondaires sont désatribués de la collection, il ne peuvent plus la modifier
+- s'il souhaite quitter l'édition de cette collection un choix s'offre à lui pour sélectionner celui qui reprend le role d'auteur principal
+- s'il supprime son compte: l'auteur secondaire le plus ancien (donc le premier dans l'array des ids, faire attention à la manière dont j'ajoute les ids, afin que cette ordre d'ajout ne change jamais) devient automatiquement l'auteur principal
+- rappel une collection publique ne peut jamais disparaitre
+
+Note: passer une collection privée en version publique est possible, il suffit alors de mettre le tag de private à public, en revanche on ne peut plus la repasser dans l'autre sens (impossible de passer une collection de public à privé), si on souhaite à nouveau passer en privé, il faut alors utiliser en privé (et cela dupliquera, une version publique et une privée)
+
+Note: le système de demande pour passer auteur, et le système pour passer une collection utilisé en public en version privé, ou utiliser une public en privé seront des systèmes avancés, dans la version de base on se concentre déjà sur faire fonctionner: création de collections privées, création de collection publiques, utilisation d'une collection publique, utilisation d'une collection privée, il n'y aura de base pas de passerelle entre les deux, mais le système devrait etre assez maléable pour ajouter facilement ceci plus tard
+
+Rajouter la possibilité de sauter des rangs ? (exemple n'utiliser que 1, 3 et 5 et skip les 2 et 4, ou meme plus maléable en choisissant le nombre de range voulu entre 2 et 5): pour le stockage ça ne changerait rien, il suffit simplement d'ajouter dans le calcul du passage automatique au rang supérieur de prendre en compte l'option des rangs utilisés, et dans la jauge de n'afficher que le nombre nécessaire ?
+
+Quand on utilise une collection en version publique, il faut qu'on puisse la passer en mode privée (l'inverse n'est pas possible) ainsi si un jour la collec publiqe passe en inactive, on peut la prendre en privé pour la modifier
+
+Question: que se passe-t-il si on prend deux collections qui ont le meme checksum mais pas la meme disposition par défaut ?, le problème dans ce cas est que l'appli nous laisse choisir ce qu'on met au recto et ce qu'on met au verso, car les labels sont les même, mais en revanche si on choisit de prendre l'affichage par défaut sans rien changer, les deux collections n'afficheront pas les meme éléments au cours de la session:
+- Solution 1: on fait une double vérif: 
+  + on check d'abord le checksum pour vérifier si l'user aura le droit de choisir ce qui s'affiche au recto et au verso:
+    - si oui on lui affiche le formulaire de choix des labels, 
+    - si non on ne l'affiche pas et il peut uniquement choisir recto ou verso
+  + puis on vérifie la disposition par défaut (recto/verso)
+    - Si le checksum est le meme mais la disposition n'est pas la même pour les deux collections: alors on utilise l'affichage par défaut de la première collection pour les deux
+    - Sinon les cas restants sont: 
+      - Le checksum est le meme et la disposition est la meme, donc pour toutes les cartes on peut prendre l'affichage par défaut (vu que c'est le meme)
+      - le checksum n'est pas le meme, dans ce cas les labels ne seront de toute façon pas identique et les affichages par défaut s'appliquent alors pour toutes les cartes (l'user peut quand meme choisir si on lui ontre le recto ou le verso mais pas ce qu'il y a dessus)
+      - Donc dans ces deux cas restants on peut prendre l'affichage par défaut propre aux deux collections
+
+Question: que se passe-t-il quand on utilise à la fois des collections privées et publiques dans une session ? :
+- le plus simple serait de mettre le mode édition publique pour tout dans ce cas, donc on ne peut changer que le rang des cartes y compris pour nos cartes privées
 
 ~~idée: supprimer le concept de format: les collections n'ont plus qu'un format possible (exemple description, caractère, traduction), si un utilisateur souhaite avoir plusieurs format dans une meme collection (exemple schéma->explication et terme->définition), il lui suffit de créer les 4 éléments, (schéma, définition, explication, terme) puis lors d'une session il en met deux au recto et deux au verso (exemple schéma et terme au recto, et explication, définition au verso, ainsi les cartes ne sont pas obligées d'avoir tous les éléments, les éléments sont donc considérés comme ayant un ``et/ou`` au lieu d'un ``et``), en plus de ça on pourrait éventuellement laisser le choix à l'user de faire des sessions avec plusieurs collections mélangées (ce qui reviendrait au meme mais rendrait la création de collection plus simple en forçant un seul format)-> idée retenue, car de plus, avec le concept de colections sous collections on peut déjà facilement émuler les formats (exemple faire une collection physique/chimie avec une sous collection ``schéma/explication`` et une autre ``terme/définition``), comme ça en plus on peut choisir de faire soit uniquement une sous collection, soit la collection entière ou même plusieurs collection, ce qui signifie: facilité de stockage en bdd, facilité de création des collections et usage plus flexible pour l'user~~
