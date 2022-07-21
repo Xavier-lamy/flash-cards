@@ -99,11 +99,11 @@ En conclusion on cherche à:
 #### 2.4.2 Les catégories et sous-catégories
 Les **catégories**  correspondent à la taxonomie la plus élevée du site
 + Certaines sont crées dès le lancement du site
-+ Les **catégories** et **sous-catégories** peuvent être ajoutées par les **utilisateurs** pour leurs propres **collections**
++ Les **catégories** et **sous-catégories** sont à l'échelle publique (il est possible d'utiliser les catégories existantes pour nos collections privées)
 + Il peut y avoir techniquement une infinité de sous-catégories néanmoins il faudra tenter de limiter à 2 générations de sous-catégories, l'objectif n'est pas de faire une classification réelle du savoir, mais d'avoir une classification générale afin de faciliter la navigation sur le site.
 + Par exemple, tenter de classer toutes les cartes liées aux langues en fonction des familles linguistiques, serait suicidaire; voir les [langues par famille sur Wikipédia](https://fr.wikipedia.org/wiki/Langues_par_famille)
 + De plus classer de manière trop scientifique, bien que plus exacte, risquerait d'être juste incompréhensible pour la majorité des gens, si on souhaite savoir ce qu'est la famille des langues Finno-Ougriennes alors il est plus pertinent d'apprendre une série de cartes sur les familles de langues, plutôt que d'observer les catégories
-+ L'ajout de catégories et sous-catégories en version publique, devra faire l'objet d'une demande validée
++ L'ajout de catégories et sous-catégories en version publique, devra faire l'objet d'une demande validée ***(Phase II)***
 + Une carte ou une collection peut techniquement appartenir à plusieurs catégories, mais il est recommandé d'en utiliser qu'une seule
 + Les catégories (liste non exhaustive) avec des exemples de sous catégories:
   - Culture générale
@@ -171,7 +171,7 @@ Les **collections** sont des groupes de cartes généralement liées à une mêm
   - Choisir les auteurs
   - Choisir de classer par popularité et/ou par note
   - Choisir d'activer ou non les **collections** **inactives** 
-  - Choisir la langue des labels 
+  - Choisir la langue des labels: devrait donc être un champ select select avec tous les langages habituels dans les applis
 
 #### 2.4.4 Les notes
 + Les cartes ne peuvent pas être notées individuellement
@@ -264,6 +264,8 @@ La difficulté estimée d'une collection est fixée par son **créateur**/**aute
   - On choisit l'affichage par défaut pour la collection (quels éléments pour le verso, lesquels pour le recto)
   - On choisit les catégories/sous-catégories de la collection
   - Une série de groupe de champs est alors affichée correspondant aux différents **éléments**,on peut les remplir carte par carte
+  - On peut choisir de rendre public avec un champ à cocher ``rendre public ``
+  - Si rendre public est coché: un champ permettant d'indiquer la langue utilisée pour les descriptions et les labels (défaut: anglais) s'affiche
   - Pour chaque carte le rang (défini automatiquement à 1 par défaut) peut être modifié, ainsi si en créant des cartes on sait déjà à quel point on estime les maitriser ou non alors on peut leur attribuer un rang supérieur à 1
   - Pour le remplissage de masse on a 10 groupes de champs avec à chaque fois les 4 champs pour les éléments 1,2,3,4 (ou moins si on a choisit moins d'éléments), + un champ curseur avec 1 en valeur par défaut pour le rang, qu'on peut alors changer
 
@@ -273,6 +275,7 @@ La difficulté estimée d'une collection est fixée par son **créateur**/**aute
   - l'affichage par défaut des éléments
   - ajouter un élément si on a pas déjà dépassé la limite de 4 (toutes les cartes déjà présentes dans cette collection retourneront donc ``null`` pour ce nouvel élément)
   - supprimer un élément: un message d'avertissement doit apparaitre pour prévenir l'utilisateur que toutes les données contenues pour cette élément dans les cartes déjà présentes seront supprimées définitivement
+  - Il n'est pas possible de passer une collection publique complètement en privée, on peut en revanche ajouter notre collection publique à notre répertoire de collections privées comme n'importe quel utilisateur.
 ###### Ajout à une collection existante
 + Si on ajoute des cartes à une collection déjà existante:
   - Le **format** déjà existant nous est proposé pour les cartes qu'on souhaite ajouter
@@ -332,6 +335,7 @@ La progression de l'utilisateur sera indiqué par des graphiques basées sur les
   - le **taux de priorité** permet de savoir au bout de combien de temps la carte doit être reproposée:
    - si une carte à un taux de réussite élevé, un rang élevé (indiquant que l'utilisateur ne la maitrise correctement) et un nombre de passage élevé, alors le taux de priorité sera faible, 
    - à l'inverse si la carte est souvent échouée , n'a que peu de fois été réalisée et si son rang est faible indiquant que l'utilisateur n'estime pas la maitriser correctement alors le taux de priorité sera élevé.
++ S'il n'y a pas assez de cartes dans la collection, exemple on en veut 10 mais la collection choisie n'en a que 5, alors on présente les 5 puis on affiche un message pour indiquer que la session prend fin prématurément du à une absence de carte.
 
 #### 2.4.14 Paramètres de session
 Pour les paramètres de lancement d'une session:
@@ -373,6 +377,8 @@ Pour les paramètres de lancement d'une session:
     - Note: le **classement automatique des rangs** (**ranking**) est du coup également impacté par la modification éventuelle du **taux de réussite récent**
   - On peut désactiver le **classement automatique des rangs**
   - Même quand le **classement automatique des rangs** est activée on peut modifier le rang manuellement pour chaque carte grâce à la jauge
+  - On peut cocher une option pour définir si le rang des cartes influe sur la fréquence à laquelle elles sont proposées:
+    - si cette option est cochée, alors les valeurs de poids des 5 rangs passent toutes à 1 en BDD (ainsi puisqu'il s'agit d'un multiplicateur, il n'influe plus sur la priorité des cartes)
 
 #### 2.4.16 Signalement et réclamation
 Créer un système de réclamation et de signalement:
@@ -384,6 +390,13 @@ Créer un système de réclamation et de signalement:
   - en premier lieu contacter l'auteur de la carte s'il est toujours présent sur le site, pour signaler l'erreur
   - si ce n'est plus possible on peut alors les signaler, les cartes signalées seront traités par les modérateurs
   - Si les modérateurs estiment que le signalement est en partie valide, mais qu'il n'est pas du ressort du site de juger, alors la carte sera conservée, mais un avertissement sera ajouté (par exemple une affirmation scientifique controversée si elle est signalée, devra avoir un avertissement prévenant de la controverse)
+
+##### Demande d'édition et auteurs secondaires ***(Phase II)***
+Il faut prévoir un système de demande pour passer éditeur, c'est à dire qu'un utilisateur peut faire une demande pour passer éditeur secondaire sur une collection,  l'éditeur principal reste seul maitre à bord, donc:
+- si la collection est passé ``inactive`` par lui, les **auteurs secondaires** sont désatribués de la collection, il ne peuvent plus la modifier
+- s'il souhaite quitter l'édition de cette collection un choix s'offre à lui pour sélectionner celui qui reprend le role d'**auteur principal**
+- s'il supprime son compte: l'**auteur secondaire** le plus ancien (donc le premier dans l'array des ids, faire attention à la manière dont j'ajoute les ids, afin que cette ordre d'ajout ne change jamais) devient automatiquement l'auteur principal
+- Rappel: une collection publique ne peut jamais disparaitre complètement
 
 ### Le cheminement de l'utilisateur
 
@@ -471,46 +484,9 @@ flowchart TD
 
 
 ```
-La vue de connection est la landing page, il y a:
-- la page d'explication du concept
-- une possibilité de créer un compte ou de se connecter
-
-
-### Phases du projet
-#### Phase I. Minimum requis
-- Création/modification de collections publiques
-- Création/modification de collections privées
-- Création/modification de cartes au sein des collections
-- Utilisation des collections publiques
-- Création d'utilisateur
-- Modifications des paramètres
-- Calcul de priorité de présentation des cartes
-#### Phase II. Éléments intéressants à ajouter
-- Système de signalement/réclamation
-- Role modérateur
-- Capacité de nommer des auteurs secondaires
-- Possibilité de transformer une collection publique en collection privée
-- succès
-- Possibilité d'ajouter des images dans les éléments
-- Customisation de l'interface visuel
-- Sytème de notes
-- Requetes d'ajout de catégories
-- Filtres de recherche dans la liste des collections publiques
-- Graphiques de progression sur les pages des collections et des cartes
-
-#### Phase III. Options avancées de l'application
-Certaines options ne verront le jour qu'après qu'une version déjà pleinement fonctionnelle de l'application soit en état, c'est le cas de:
-+ la possibilité de planifier des sessions d'apprentissage (exemple tous les mercredis à 13h avoir une notif de rappel pour une séance de cartes)
-+ La possibilité de dessiner directement dans l'application pour la création des cartes, ce qui permettrait de réaliser soi même ses propres schémas, dessins, lettres,...; au lieu de les importer directement en format d'images
-+ La possibilité de faire des dessins libres pendant les sessions d'apprentissage, ce afin de pouvoir par exemple, écrire des mots dans n'importe quel alphabet et testé notre connaissance de cette écriture, vérifier qu'on est capable de reproduire un schéma un peu complexe (car simplement essayer de le visualiser peut être trop compliqué pour des schémas trop complexes ou des alphabets difficiles):
-  - Ces dessins pourraient être réalisées directement sur la carte, une zone de dessin s'afficherait en transparence par dessus, et on pourrait alors dessiner tout ce qu'on souhaite, à l'aide d'un outil type *canvas* comme sur *Skrible*
-+ l'ajout de fichiers audio (ex: mot de langue étrangère), afin de créer des cartes de type ``audio <=> prononciation phonétique/description/traduction`` (ex: d'un coté un mot audio, de l'autre sa version écrite, afin de travailler sa prononciation)
-+ S'il y a un portage en version application, la sauvegarde des cartes pourrait se faire sur la machine de l'utilisateur, il pourrait donc y avoir accès hors-ligne, et même exporter sa base de données de cartes
-+ La possibilité d'imprimer nos flashcards en version papier
-+ La possibilité d'importer un fichier JSON pour ajouter en masse des cartes, pour éviter les risques liés aux performances, cela pourrait uniquement être disponible à certaines personnes (compte payant ``??``), et/ou avec une limite au nombre ajoutable
-+ Version payante pour avoir un nombre illimité de flashcard
-+ Pouvoir se connecter avec un compte type réseau social ou google
-
++ La vue de connection est la landing page, il y a:
+  - la page d'explication du concept
+  - une possibilité de créer un compte ou de se connecter
 
 ### 2.5 UI
 + Réaliser un wireframe afin de déterminer la forme général du site en mobile puis en desktop, et définir les cheminements de l'utilisateur
@@ -647,17 +623,301 @@ Certaines options ne verront le jour qu'après qu'une version déjà pleinement 
   - un bouton d'édition (sauf si dans session et carte pas validée)
   - la difficulté de la carte
   - la jauge de rang avec le rang actuel
++ Si une carte ne possède pas de contenu pour un libellé donné, alors on n'affiche pas non plus le libellé, cela peut notamment arriver dans le cas où on a rajouté un nouveau label en créant des cartes supplémentaires pour la collection, mais qu'on a pas encore mis à jour les nouvelles cartes.
+
++ Un problème lié à l'affichage pourrait survenir dans le cas où l'utilisateur choisit deux collections lors d'une session, qui ont la même checksum (donc les mêmes éléments), mais pas le même affichage par défaut, pour remédier à cela:
+  - L'appli demande déjà de choisir la ou les collections
+  - Elle regarde ensuite si elles ont le meme checksum
+    - Si non: on ne peut choisir que recto ou verso (par défaut en fonction de l'option stockée lors des précédentes sessions)
+    - Si oui:
+      - Si l'affichage par défaut n'est pas le même, l'appli prend alors l'affichage par défaut de la première collection (sauf s'il est changé par l'utilisateur) et l'applique aux autres collections (lorsqu'il valide les paramètres de sessions utilisés l'affichage est changé pour toutes les collections si nécessaire)
+      - Si l'affichage par défaut est le meme, il n'a pas besoin d'etre changé en bdd
+
++ Donc l'affichage par défaut d'une carte est changé lors des sessions, si une collection possédait l'afffichage ``1001 0100`` et que l'utilisateur souhaite pour cette session utiliser ``0101 1000`` alors cela le change pour toutes les collections de la session, de cette manière à chaque session on lui repropose les paramètres que la collection avait à la session précédente
 
 ## 3. Propositions de tests
 
 ## 4. Fonctionnement de la BDD
-Pour le stockage des cartes:
-+ Quand une collection est sauvegardée on lui ajoute une checksum (il s'agit des slug de labels de ses différents éléments, dans l'ordre alphabétique), ainsi on peut comparer deux collections différentes pour vérifier qu'elles aient les même libellés pour les éléments de cartes, et ainsi savoir si l'utilisateur peut choisir l'affichage des libellés sur les cartes, ou devra se contenter de recto/verso
+Pour les cartes et les collections il y a deux tables pour chacune de ces deux entités:
+  - Une table pour les éléments génériques (une pour les collections génériques, et une pour le contenu des cartes), qui sert à stocker les infos communes pour ces entités, dans le cas d'une collection publique ces infos sont celles qui ne peuvent être modifiés que par les auteurs de la collection.
+  - Une table pour les éléments personnels (une pour les noms de rangs pour les collections, et une pour les statistiques des cartes), qui sert à stocker les informations individuelles qui changent ou peuvent être modifiés par chaque utilisateur (par exemple les statistiques liées à une carte dépendent de chaque personne et les rangs sont privés)
+  - Une carte privée contient une entrée dans la table générique qui a une relation unique avec une seule entrée de la table des cartes personnelles, 
+  - une carte publique contient une entrée dans la table générique qui peut avoir une relation multiple avec les cartes personnelles
 
+### 4.1 Stockage des collections
+#### 4.1.1 Les informations génériques des collections
+La version générique des collections détient les informations qui dans le cas d'une collection publique ne peuvent être modifiées que par les auteurs, la table ``collections`` contient donc:
++ Id de la collection: ``id``
++ Référence de l'id du créateur/auteur principal actuel: ``user_id``
++ Référence des id des auteurs auxiliaires ``authors_id``:
+  - ***vide si privée***
+  - Sous forme d'array
+  - ce champ sera utilisé pour vérifier si un utilisateur peut avoir accès au bouton "modifier la collection" pour cette collection
++ Nom de la collection: ``name``
++ Description de la collection: ``description``
++ Difficulté estimée: ``difficulty``
+  - ***vide si privée***
++ Popularité: ``popularity``
+  - ***vide si privée***
+  - définie par le nombre de fois où quelqu'un a cliqué sur ``utiliser en privé`` ou ``utiliser en public``, mais pas par les transferts d'une utilisation publique vers une utilisation privée
+  - Donc à chaque qu'une nouvelle entrée est créée dans la table ``self_collection`` pour une collection donnée, on récupère la collection d'origine dans la table ``collection`` et on incrémente son compteur de popularité de 1, de cette manière les passages d'une utilisation publique à privé ne sont pas à nouveau pris en compte comme étant une utilisation , puisque l'entrée de ``self_collection`` change juste l'id de sa collection d'origine dans ce cas
++ Référence des ids de catégorie de la collection: ``categories``
+  - relation avec la table des catégories
+  - Sous forme d'array des ids
++ Langue des labels de la collection: ``language``
++ Collection parente: ``parent``
+  - Id ou null/0
+  - on se sert de ce champ pour faire une relation interne: ``children hasOne parent``
+  - Pour connaitre tous les enfants d'une collection parent il suffit alors de sélectionner toutes les entrées dont le champ ``parent`` est égal à l'id de la collection dont on veut connaitre les enfants
++ Tag de la collection: ``is_public``
+  - ``true``/``false``
++ Statut de la collection: ``status``
+  - ``active``/``inactive``, 
+  - ``active`` par défaut 
+  - ne peut etre changé que pour les collections publiques, car les collections privées peuvent etre supprimées
++ Intitulé du label 1 ``label_1``
++ Intitulé du label 2 ``label_2``
++ Intitulé du label 3 ``label_3``
++ Intitulé du label 4 ``label_4``
++ Disposition par défaut des éléments: ``default_display`` 
+  - chaine binaire format ``0001 0010``
+  - le premier paquet de 4 représente le recto,
+  - et le deuxième paquet le verso
+  - le premier chiffre de chaque paquet représente l'élément 1 et ainsi de suite jusqu'à 4 
++ La note globale de la collection: ``global_rating``:
+  - calculé avec la moyenne des notes pour cette collection
++ Checksum: ``checksum``
+  - il s'agit des slug de labels de ses différents éléments dans l'ordre alphabétique,
+  - ainsi, dans le cas d'une utilisation de plusieurs collections en même temps, on peut comparer deux collections différentes pour vérifier qu'elles aient les même libellés pour les éléments de cartes, et ainsi savoir si l'utilisateur peut choisir l'affichage des libellés sur les cartes, ou devra se contenter de recto/verso
+#### 4.1.2 Les informations personnelles des collections
++ Il s'agit des informations propre à chaque utilisateur, donc celles que l'utilisateur peut modifier à l'échelle de sa version de la collection
++ On les stocke dans une table ``self_collections`` qui contient:
+  - **Id de cette version** privée de la collection: ``id``
+  - Référence de l'**Id de la collection d'origine**: ``collection_id``
+  - Nom donné au rang 1 pour cette collection: ``rank_label_1``
+  - Nom donné au rang 2 pour cette collection: ``rank_label_2``
+  - Nom donné au rang 3 pour cette collection: ``rank_label_3``
+  - Nom donné au rang 4 pour cette collection: ``rank_label_4``
+  - Nom donné au rang 5 pour cette collection: ``rank_label_5``
 
+#### 4.1.3 Stockage des notes des collections
++ La table ``ratings`` contient: 
+  - L'**Id de la collection** (générique) notée: ``id``
+  - L'**Id de l'utilisateur** qui a noté: ``user_id``
+  - sa note pour la première question: ``first_rating``
+  - sa note pour la deuxième question: ``second_rating`` 
+  - sa note pour la troisième question: ``third_rating`` 
+  - la note moyenne donnée par cet utilisateur à cette collection: ``average_rating``
 
+#### 4.1.4 Stockage des catégories
++ La table ``categories`` contient:
+  - Id de la catégorie
+  - Nom de la catégorie
+  - Catégorie parente (1 Id): permet de faire une relation interne: les sous-catégorie hasOne catégorie et les catégories hasMany catégories
+#### 4.1.5 Utilisation d'une collection publique en version privée
+Quand on souhaite utiliser une collection publique on a deux choix principaux:
++ Utiliser la collection en version publique
+  - Si on a choisit cette solution, il est toujours possible de faire le choix de l'utiliser en privée plus tard
 
-faire des schémas
++ Utiliser la collection en version privée ***(Phase II)***:
+  - la version publique est alors dupliquée et l'utilisateur se voit attribuer une nouvelle collection privée qui lui est propre basée sur la version publique, mais il peut alors la modifier comme bon lui semble, cette nouvelle version étant désormais séparée de la version publique
+  - en terme de base de données: 
+    - on crée une nouvelle collection dupliquée de l'ancienne
+    - elle passe en privée
+    - on récupère toutes les collections enfant si nécessaire et on leur applique le meme traitement que pour la collection parente
+    - la table ``cards`` voie aussi ses entrées dupliquées,et les nouvelles entrées récupèrent désormais l'id de la nouvelle collection créée
+    - Dans la table ``self_cards`` et ``self_collections``, on change alors l'id de la collection d'origine par celui de la nouvelle (ainsi toutes les stats sont gardées)
+
+  + Note quand on crée une collection publique, on possède automatiquement une version privée de notre collection également
+  
+### 4.2 Stockage des cartes
+#### 4.2.1 Les informations génériques des cartes
++ On peut stocker maximum 4 éléments par carte
++ La version générique des cartes (utilisable par plusieurs personnes) est stockée dans la table ``cards``, elle contient les éléments modifiables uniquement par le/les auteur(s) d'une carte, et qui sont donc commun à tous ceux qui l'utilise:
+  - Id de la carte: ``id``
+  - Référence de l'id de la collection qui contient cette carte (dans ``collections``): ``collection_id``
+  - Contenu du label 1: ``content_1``
+  - Contenu du label 2: ``content_2``
+  - Contenu du label 3: ``content_3``
+  - Contenu du label 4: ``content_4``
+
+#### 4.2.2 Les informations personnelles des cartes
++ Il s'agit des informations propre à chaque utilisateur pour une carte donnée
++ Ces éléments doivent être recalculés (ou au moins revérifiés) à chaque validation de carte
++ Elles sont définies dans une table ``self_cards``, qui contient:
+  - L'**id de cette version** de la carte: ``id``
+  - La référence de l'**id de la carte d'origine** (pour le contenu): ``card_id``
+  - La référence de l'**id de l'utilisateur** qui utilise cette version de la carte: ``user_id``
+  - La chaine de **résultats de validation**: ``results``
+    - consiste en une suite de 1 et de 0
+    - quand la carte est réussi on met 1
+    - quand elle échoue on met 0
+    - les nombres sont entrés dans l'ordre de réussite, comme ça on garde une trace de l'ordre et du nombre de passage
+  - le **rang actuel** de la carte: ``rank``
+  - La **priorité d'apprentissage**: ``priority``
+    - calculée par les différents poids et recalculée à chaque fois qu'on valide une carte
+  - Le **niveau de difficulté**: ``difficulty_level``
+    - bien qu'il puisse être calculé facilement, il est utile de le stocker car on aura parfois besoin de le récupérer sans récupérer d'abord toutes les autres infos: par exemple le niveau de difficulté servira notamment pour les filtres quand on récupère les collections publiques, donc il faut qu'il soit disponible facilement
+  - Le **nombre de passage**: ``view_count``: 
+    - créer une fonction pour compter la taille de la chaine dans ``results``
+  - Le **taux de réussite moyen**: ``average_success_rate``
+    - créer une fonction pour compter les ``1`` dans la chaine des résultats de validation, diviser par le nombre total d'itérations sur la carte (``view_count``) puis transformer en pourcentage
+  - Le **taux de réussite récent**: ``recent_success_rate``
+    - créer une fonction qui récupère le nombre de cartes à utiliser pour ce paramètre (voir paramètres généraux) puis qui l'utilise pour sélectionner  uniquement les derniers chiffres de ``results`` et calculer une moyenne comme pour le taux de réussite moyen
+
+#### 4.2.3 Le fonctionnement de l'algorithme de priorité
+L'algorithme de **priorité** sert à définir à quel fréquence les cartes sont proposés à l'utilisateur, plus elle est élevée pour une carte, plus celle ci sera proposée:
++ On cherche à ce que:
+  - Les cartes de rang supérieurs soient proposées moins souvent que celles de rangs inférieurs
+  - le nombre de passage, le taux de réussite récent et moyen influe sur le taux de **priorité**
++ Cette **priorité** est égal à ``0`` par défaut
++ quand on échoue souvent une carte, ou qu'on ne la fait pas souvent, ce nombre doit être supérieur à 0 et s'éloigner de plus en plus
++ quand on réussi souvent une carte, ou qu'on la fait trop souvent, ce nombre doit être négatif et s'éloigner de 0
++ Les chiffres seront sujet à rééquilibrage et modifications tout au long du projet et des tests
+
+On a donc pour éléments influents:
++ le **nombre de passage**:
+  - doit avoir une grande influence sur la priorité,
+  - l'objectif étant qu'on nous repropose pas toujours la meme carte à chaque session: pour cela il faudrait donc soustraire ce poid à la priorité à chaque fois qu'on passe sur une carte (comme ça les cartes qui n'ont pas encore été vu gardent le meme poids, les cartes vues baissent en priorité): 
+  - ``poids = -1 à chaque passage``
++ le **taux de réussite moyen**: 
+  - ce poid doit etre aussi une soustraction/addition,
+  - au dessus d'une valeur pivot (quand on réussit plus qu'on échoue) plus ce taux de réussite est élevé plus on soustrait une grosse valeur,
+  - en dessous d'une valeur pivot (quand on échoue plus qu'on réussit) plus le taux est bas plus on ajoute une grosse valeur (pour que la carte soit souvent proposée) 
+  - ``si taux réussite > pivot(50%) alors poids = -2 ; si taux réussite <= pivot(50%) alors poids = +2``
++ le **taux de réussite récent**: 
+  - meme chose que pour le taux de réussite moyen mais ses limites de poids doivent etre plus extreme que le taux moyen, car les résultats récents doivent avoir plus de poids dans le calcul
+  - ``si taux réussite récent > pivot(50%) alors poids = -5 ; si taux réussite récent <= pivot(50%) alors poids = +5``
++ Le **rang**:
+  - après avoir additionné ou soustrait tous les autres éléments du taux de **priorité**, on multiplie ou divise par le modificateur de rang
+  - le modificateur lié au rang est un multiplicateur si le résultat actuel de la priorité est positif (afin que les rangs 1 s'éloigne plus de 0 que les rangs 5), donc on a ``rang 5 = * 1, rang 4 = *1.25, rang 3 = *1.50 , rang 2 = *1.75, rang 1 = *2``
+  - c'est un diviseur si le résultat actuel de la priorité est négatif (afin que les rangs 1 se rapproche plus de 0 que les rangs 5), donc on a ``rang 5 = /1, rang 4 / 1.25, rang 3 = /1.50 , rang 2 = /1.75, rang 1 = / 2``
+  - Si le rang est désactivé pour le calcul de priorité, tous ces curseurs sont à 1 et il n'influe donc pas sur ce calcul
++ Afin d'éviter de stocker des nombres décimaux en BDD, le rang est arrondi à deux décimales après la virgule puis multiplier par 100
++ Il est recalculé à chaque validation, en fonction des statistiques de la carte
+
+#### 4.2.4 Stockage des fichiers multimédias
++ Les images ou autre fichiers médias sont stockés sous forme d'un objet JSON qui comprend:
+  - Le type de média dont il s'agit (afin de savoir quel élément HTML retourner à l'affichage): ``img``, ``audio``,...
+  - L'url du media, soit vers une banque d'image en ligne, ou dans le dossier ``uploads`` par exemple
+
+#### 4.3 Informations de l'utilisateur
+##### 4.3.1 Table des utilisateurs
++ La table ``users`` stocke:
+  - Id de l'utilisateur: ``id``
+  - son email: ``email``
+  - son mot de passe crypté: ``password``
+  - son nom d'utilisateur: ``username``
+  - son role: ``role``
+    - ``admin``, ``moderator`` ou ``standard``
+##### 4.3.2 Table des paramètres généraux et de session
++ La table ``settings`` stocke toutes les données relatifs au paramètres globaux du site, ou les paramètres de session qui ne sont pas propre à une collection en particulier:
+  - Id de la configuration de paramètres: ``id``
+  - Id de l'utilisateur à qui appartient cette configuration: ``user_id``
+
+  - Liste des collections utilisées par défaut au lancement d'une session: ``session_default_collections``
+    - type: ``array('')``
+    - par défaut sa première collection créée est ajouté à l'array
+    - à chaque fois qu'il lance une nouvelle session, ce paramètre est mis à jour avec les nouvelles collections à utiliser
+  - Niveau de difficulté des cartes choisies: ``session_default_difficulty``:
+    - defaut:``all``
+    - est changé à chaque session en fonction du dernier choix réalisé
+  - Rang des cartes: ``session_default_rank``
+    - defaut: ``all``
+    - est changé à chaque session en fonction du dernier choix réalisé
+  - Nombre de cartes par session: ``session_default_number``
+    - defaut: ``10``
+    - est changé à chaque session en fonction du dernier choix réalisé
+  - Côté à afficher en guise de question: ``session_default_side``
+    - defaut: ``recto``
+    - est changé à chaque session en fonction du dernier choix réalisé
+    - note: les éléments à afficher sur ce recto/verso sont défini à l'échelle d'une collection, par son affichage par défaut
+
+  - Poids du nombre de passage: ``view_count_weight``
+    - defaut: ``1``
+  - Poids du taux de réussite moyen: ``average_success_rate_weight``
+    - defaut: ``2``
+  - Poids du taux de réussite récent: ``recent_success_rate_weight``
+    - defaut: ``5``
+  - Poids du rang de niveau 1: ``rank_one_weight``
+    - defaut: ``2``
+  - Poids du rang de niveau 2: ``rank_two_weight``
+    - defaut: ``1.75``
+  - Poids du rang de niveau 3: ``rank_three_weight``
+    - defaut: ``1.5``
+  - Poids du rang de niveau 4: ``rank_four_weight``
+    - defaut: ``1.25``
+  - Poids du rang de niveau 5: ``rank_five_weight``
+    - defaut: ``1``
+  - Portée du taux de réussite récent: ``recent_success_rate_range``
+    - defaut: ``5``
+    - valeurs limites:3 -- (pas:1) --> 10
+  - classement automatique des rangs est activé: ``auto_ranking``
+    - defaut: ``true``
+  - valeur pour passage au rang supérieur: ``raise_rank_limiter``
+    - defaut: ``100%``
+    - rappel: il s'agit d'une borne, les éléments ``>=`` à cette valeur passeront au rang supérieur, il n'est pas possible de dépasser 100%, le ``>`` n'a donc de sens que quand l'utilisateur choisit un nombre inférieur à 100%, mais il est plus simple d'avoir une règle de comparaison unique, qui ne dépend pas de la valeur entrée
+  - valeur pour passage au rang inférieur: ``lower_rank_limiter``
+    - defaut: ``25%``
+    - rappel: il s'agit d'une borne, on utilise ``<`` et pas ``<=``, afin d'éviter un conflit avec l'option ci-dessus
+    - cette option ne peut pas être supérieur ou égale à l'option ci-dessus ceci est géré au niveau du formulaire de changents de paramètres
+  - Aspect visuel des cartes: ``card_style``
+    - Il s'agit d'un objet JSON, qui prend les différents choix graphiques de l'utilisateur, exemple:
+    ```json
+    {
+      style: [
+        background-color:"color-value",
+        text-color:"color-value",
+        font-size:"size-value",
+      ]
+    }
+    ```
+
+#### 4.4 Schémas des relations entre les tables
+<style>
+.er.entityLabel {
+  fill: rgb(230,54,28);
+}
+</style>
+```mermaid
+erDiagram
+
+USER ||--o{ COLLECTION : "main creator"
+USER {
+  int id PK
+  string email
+  string password
+  string username
+  string role
+}
+COLLECTION {
+  int id PK
+  int user_id FK "The creator id"
+  int authors_id FK "auxiliaries user id list"
+}
+
+USER }o--o{ COLLECTION : "auxiliaries"
+
+USER ||--|| SETTING : "has one configuration"
+
+USER ||--o{ RATING : "can rate"
+
+USER ||--o{ SELFCOLLECTION : "has a version of"
+
+USER ||--o{ SELFCARD : "has a version of"
+
+COLLECTION ||--|{  SELFCOLLECTION : "is origin of"
+
+COLLECTION }o--o{ CATEGORY : "can belong to"
+
+CATEGORY ||--o{ CATEGORY : "can have subcategories"
+
+COLLECTION ||--o{ RATING : "can be rated"
+
+COLLECTION ||--|{ CARD : "contains"
+
+CARD ||--|{ SELFCARD : "is origin of"
+```
 
 ## 5. Technologies et outils utilisés
 - ***Figma*** pour le wireframe, et la maquette
@@ -670,6 +930,41 @@ faire des schémas
   - ***Sequelize*** pour l'Object Relational Mapper (ORM)
   - ***ViteJs*** pour la compilation/minification
   - ``??`` pour la base de donnée
+
+## 5.1 Phases du projet
+#### Phase I. Minimum requis
+- Création/modification de collections publiques
+- Création/modification de collections privées
+- Création/modification de cartes au sein des collections
+- Utilisation des collections publiques
+- Création d'utilisateur
+- Modifications des paramètres
+- Calcul de priorité de présentation des cartes
+#### Phase II. Éléments intéressants à ajouter mais non indispensables au fonctionnement de base
+- Système de signalement/réclamation
+- Role modérateur
+- Capacité de nommer des auteurs secondaires
+- Possibilité de transformer une collection publique en collection privée
+- succès
+- Possibilité d'ajouter des images dans les éléments
+- Customisation de l'interface visuel
+- Sytème de notes
+- Requetes d'ajout de catégories
+- Filtres de recherche dans la liste des collections publiques
+- Graphiques de progression sur les pages des collections et des cartes
+
+#### Phase III. Options avancées de l'application
+Certaines options ne verront le jour qu'après qu'une version déjà pleinement fonctionnelle de l'application soit en état, c'est le cas de:
++ la possibilité de planifier des sessions d'apprentissage (exemple tous les mercredis à 13h avoir une notif de rappel pour une séance de cartes)
++ La possibilité de dessiner directement dans l'application pour la création des cartes, ce qui permettrait de réaliser soi même ses propres schémas, dessins, lettres,...; au lieu de les importer directement en format d'images
++ La possibilité de faire des dessins libres pendant les sessions d'apprentissage, ce afin de pouvoir par exemple, écrire des mots dans n'importe quel alphabet et testé notre connaissance de cette écriture, vérifier qu'on est capable de reproduire un schéma un peu complexe (car simplement essayer de le visualiser peut être trop compliqué pour des schémas trop complexes ou des alphabets difficiles):
+  - Ces dessins pourraient être réalisées directement sur la carte, une zone de dessin s'afficherait en transparence par dessus, et on pourrait alors dessiner tout ce qu'on souhaite, à l'aide d'un outil type *canvas* comme sur *Skrible*
++ l'ajout de fichiers audio (ex: mot de langue étrangère), afin de créer des cartes de type ``audio <=> prononciation phonétique/description/traduction`` (ex: d'un coté un mot audio, de l'autre sa version écrite, afin de travailler sa prononciation)
++ S'il y a un portage en version application, la sauvegarde des cartes pourrait se faire sur la machine de l'utilisateur, il pourrait donc y avoir accès hors-ligne, et même exporter sa base de données de cartes
++ La possibilité d'imprimer nos flashcards en version papier
++ La possibilité d'importer un fichier JSON pour ajouter en masse des cartes, pour éviter les risques liés aux performances, cela pourrait uniquement être disponible à certaines personnes (compte payant ``??``), et/ou avec une limite au nombre ajoutable
++ Version payante pour avoir un nombre illimité de flashcard
++ Pouvoir se connecter avec un compte type réseau social ou google
 
 ## 6. Les idées abandonnées et raisons de leur abandon
 ### Les familles
@@ -701,6 +996,17 @@ Les familles de cartes (voir aperçu ci-dessus) sont abandonnées, car:
 + Seule les collections peuvent être partagées en profil public, les cartes isolées peuvent uniquement être créée de manière privée (il est de toute façon généralement conseillé de créer des collections plutôt que de laisser des cartes seules -> non les care)
 ```
 Cet élément est abandonné, les cartes doivent maintenant obligatoirement etre dans une collection
+
+
+### Création d'une collection publique depuis une collection privée
+
+```markdown
+Passer une collection privée en version publique est possible:
+- il suffit alors de mettre le tag de ``private`` à ``public``
+- en revanche on ne peut plus la repasser dans l'autre sens (impossible de passer une collection de public à privé)
+- si on souhaite à nouveau passer en privé, il faut alors utiliser en privé comme pour n'importe quel utilisateur (et cela dupliquera, la version publique restera et une version privée sera créée)
+```
+On abandonne l'idée de pouvoir créer des collections publiques depuis nos collections privées, le problème pourrait etre que n'importe qui pourrait utiliser une collection publique en version privée, puis après avoir quasiment rien modifier pourrait la proposer en public en s'appropriant donc facilement le travail d'un autre
 
 ### Les collections avec plusieurs formats
 Pour faciliter la création de cartes, il n'y a plus qu'un seul format possible par collection, les formats définissent en effet les collections, il n'y a donc pas beaucoup de sens à pouvoir en mettre plusieurs par collection, si l'utilisateur a néanmoins  le besoin de créer plusieurs formas au sein d'une collection, il peut en créant des sous-collections (ce qui revient du coup au meme mais simplifie grandement la base de données et le système de sessions d'apprentissage)
