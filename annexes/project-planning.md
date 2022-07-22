@@ -90,7 +90,10 @@ En conclusion on cherche à:
 + [Fonctionnement d'une session d'apprentissage](#2413-fonctionnement-général-dune-session-dapprentissage)
 + [Les paramètres de session](#2414-paramètres-de-session)
 + [Les paramètres généraux](#2415-paramètre-généraux)
-+ [Signalement et réclamation](#2416-signalement-et-réclamation)
++ [Signalement et réclamation](#2416-signalement-et-réclamation-phase-ii)
++ [Demande d'édition et auteurs secondaires](#2417-demande-dédition-et-auteurs-secondaires-phase-ii)
++ [Les comptes, rôles et autorisations](#2418-les-comptes-rôles-et-autorisations)
++ [Schéma explicatif du cheminement](#2419-schéma-explicatif-du-cheminement)
 #### 2.4.1 Fonctionnement des flashcards
 + Les flashcards possèdent un **recto** et un **verso**
 + Sur chaque côté plusieurs éléments peuvent être affichés (ex: ``traduction + prononciation <=> mot étranger``)
@@ -394,16 +397,15 @@ Créer un système de réclamation et de signalement:
 + En plus de la table signalements, on ajoute un champ **signalement** dans la table ``cards`` qui peut recevoir true/false et indique ainsi si la carte fait l'objet d'un signalement
 + On ajoute en plus un champ **avertissement** dans la table des ``cards``, qui pourra contenir le texte d'avertissement à ajouter à la carte si nécessaire (``null`` si rien à ajouter)
 
-##### Demande d'édition et auteurs secondaires ***(Phase II)***
+#### 2.4.17 Demande d'édition et auteurs secondaires ***(Phase II)***
 Il faut prévoir un système de demande pour passer éditeur, c'est à dire qu'un utilisateur peut faire une demande pour passer éditeur secondaire sur une collection,  l'éditeur principal reste seul maitre à bord, donc:
 - si la collection est passé ``inactive`` par lui, les **auteurs secondaires** sont désatribués de la collection, il ne peuvent plus la modifier
 - s'il souhaite quitter l'édition de cette collection un choix s'offre à lui pour sélectionner celui qui reprend le role d'**auteur principal**
 - s'il supprime son compte: l'**auteur secondaire** le plus ancien (donc le premier dans l'array des ids, faire attention à la manière dont j'ajoute les ids, afin que cette ordre d'ajout ne change jamais) devient automatiquement l'auteur principal
 - Rappel: une collection publique ne peut jamais disparaitre complètement
 
-### Le cheminement de l'utilisateur
 
-#### Les comptes, rôles et autorisations
+#### 2.4.18 Les comptes, rôles et autorisations
 + Si un utilisateur n'est pas connecté (**anonyme**) il peut:
   - Créer un compte
   - Observer les collections publiques
@@ -416,76 +418,93 @@ Il faut prévoir un système de demande pour passer éditeur, c'est à dire qu'u
 + L'**administrateur** peut:
 + Chaque utilisateur pourrait avoir la possibilité de créer un nombre limité (quand même assez élevé) de cartes, afin d'éviter de surcharger le serveur
 
-#### Schéma explicatif du cheminement
+#### 2.4.19 Schéma explicatif du cheminement
 - Dans le schéma suivant, les rectangles à bord arrondis représentent les capacités ou le statut de l'utilisateur, les carrés représentent les vues, les hexagones représentent les liens de navigation
 ```mermaid
-flowchart TD
-    ISLOGGED([User is connected]) -- Yes --> FIRSTTIME([First time on website ?])
-    ISLOGGED -- No --> LAND[Show landing page with introduction:]
-    LAND -- Nav --> REGISTER{{Create an account}}
-    LAND -- Nav --> E{{See public collections}}
-    LAND -- Nav --> LOGIN{{connect}}
-    REGISTER -- Nav --> LOGIN
-    FIRSTTIME -- Yes --> G[Show tutorial]
-    FIRSTTIME -- No --> DASH[Show dashboard]
-    DASH --> DASHCOLORNOT([If user has at least one collection])
-    DASHCOLORNOT -- Else --> DASHALERT([Display alert to make him create one])
-    DASHCOLORNOT -- Nav --> I{{Launch new learning session}}
-    DASH -- Nav --> J{{Private Collections}}
-    J -- Nav --> N{{See all collections}}
-    N --> NA[Private Collections List]
-    NA --> NI{{Edit one collection}}
-    NI --> NJ[Edit one collection view]
-    NJ --> NK{{Validate edition}}
-    NK --> NA
-    NA --> NB{{Show one collection}}
-    NB --> NC[One collection cards list]
-    NC --> ND{{Show one card}}
-    NC --> NE{{Edit one card}}
-    ND --> NF[Card view]
-    NF --> NE
-    NE --> NG[Edit card view]
-    NG --> NH{{Validate edition}}
-    NH --> NF
-    J -- Nav --> K{{Create new collection}}
-    K --> KA[Create collection form]
-    KA --> KB{{Validate creation}}
-    KB --> NA
-    DASH -- Nav --> E
-    DASH -- Nav --> M{{Settings}}
-    M --> SETT[General settings page]
-    G --> DASH
-    LOGIN --> FIRSTTIME
-    E --> L[Public collections List]
-    L --> LA{{Show one public collection}}
-    LA --> LB[One public collection view]
-    LB --> LBA{{Return to public collections}}
-    LBA --> L
-    LB --> LC([User already use this collection ?])
-    LC --> LCYES([Yes])
-    LC --> LCNO([No])
-    LCYES --> LD{{Rate this collection}}
-    LCNO --> LE{{Add collection to private list}}
-    I --> O[Session settings page]
-    O --> P{{Start}}
-    P --> PA[Card question side]
-    PA --> PB{{Reveal answer}}
-    PB --> PC[Card answer side]
-    PC --> PD{{Edit card}}
-    PD --> PG[Simple edit card view]
-    PG --> PC
-    PC --> PE{{Validate card as success}}
-    PE --> PH([User has validated])
-    PC --> PF{{Validate card as failure}}
-    PF --> PH
-    PH -- Show next card/Repeat loop until over --> PA
-    PH -- If last card: session is over --> PI[Session statistics]
-    PI --> PJ{{Return to dashboard}}
-    PI --> PK{{Next learning session}}
-    PK --> O
-    PJ --> DASH
+flowchart TB
+    subgraph front [Core system]
+      ISLOGGED([User is connected]) -- Yes --> FIRSTTIME([First time on website ?])
+      ISLOGGED -- No --> LAND[Show landing page with introduction:]
 
+        subgraph landing [Landing page]
+          LAND -. Nav .-> REGISTER{{Create an account}}
+          LAND -. Nav .-> LOGIN{{connect}}
+        end
 
+      REGISTER -. Nav .-> LOGIN
+      FIRSTTIME -- Yes --> TUTO[Show tutorial]
+      FIRSTTIME -- No --> DASH[Show dashboard]
+      NAVSETT --> SETT[General settings page]
+      TUTO --> DASH
+      LOGIN --> FIRSTTIME
+
+      subgraph navigation [Navigation]
+        LAND -. Nav .-> NAVPUBCOLL{{See public collections}}
+        DASH -. Nav .-> NAVPUBCOLL
+        DASH -. Nav .-> NAVSETT{{Settings}}
+        DASH -. Nav .-> NAVPRIV{{Private Collections}}
+        NAVPRIV -. Nav .-> NAVPRIVCREATE{{Create new collection}}
+        NAVPRIV -. Nav .-> ALLPRIVCOLL{{See all collections}}
+      end
+    end
+
+    subgraph privates [Private collections]
+      ALLPRIVCOLL ==> PRIVCOLLLIST[Private Collections List]
+      PRIVCOLLLIST -...-> NAVEDITONECOLL{{Edit one collection}}
+      NAVEDITONECOLL --> EDITONECOLL[Edit one collection view]
+      EDITONECOLL -...-> NAVVALIDEDIT{{Validate edition}}
+      NAVVALIDEDIT --> PRIVCOLLLIST
+      PRIVCOLLLIST -...-> NAVSHOWONECOLL{{Show one collection}}
+      NAVSHOWONECOLL --> ONECOLLCARDLIST[One collection cards list]
+      ONECOLLCARDLIST -...-> NAVSHOWCARD{{Show one card}}
+      ONECOLLCARDLIST -...-> NAVEDITPRIVCARD{{Edit one card}}
+      NAVSHOWCARD --> PRIVCARD[Card view]
+      PRIVCARD --> NAVEDITPRIVCARD
+      NAVEDITPRIVCARD --> EDITPRIVCARD[Edit card view]
+      EDITPRIVCARD -...-> NAVVALIDEDITPRIVCARD{{Validate edition}}
+      NAVVALIDEDITPRIVCARD --> PRIVCARD
+      NAVPRIVCREATE ==> CRECOLLFORM[Create collection form]
+      CRECOLLFORM -...-> NAVVALIDCRECOLL{{Validate creation}}
+      NAVVALIDCRECOLL --> PRIVCOLLLIST
+    end
+
+    subgraph publics [Public collections]
+      NAVPUBCOLL ==> PUBCOLLIST[Public collections List]
+      PUBCOLLIST -...-> SHOWONE{{Show one public collection}}
+      SHOWONE --> ONEPUBCOLL[One public collection view]
+      ONEPUBCOLL -...-> RETURNLIST{{Return to public collections}}
+      RETURNLIST --> PUBCOLLIST
+      ONEPUBCOLL --> USERUSEIT([User already use this collection ?])
+      USERUSEIT --> USERUSEITYES([Yes])
+      USERUSEIT --> USERUSEITNO([No])
+      USERUSEITYES -...-> RATECOLL{{Rate this collection}}
+      USERUSEITNO -...-> MAKEPRIVATE{{Add collection to private list}}
+      RATECOLL --> RATECOLLFORM[Rate collection form]
+    end
+
+    subgraph session [Learning session]
+      DASH ====> IFUSERHASCOLL([If user has at least one collection])
+      IFUSERHASCOLL -- Else --> DASHALERT([Display alert to make him create one])
+      IFUSERHASCOLL -. Nav .-> I{{Launch new learning session}}
+      I --> O[Session settings page]
+      O -...-> P{{Start}}
+      P --> PA[Card question side]
+      PA -...-> PB{{Reveal answer}}
+      PB --> PC[Card answer side]
+      PC -...-> PD{{Edit card}}
+      PD --> PG[Simple edit card view]
+      PG --> PC
+      PC -...-> PE{{Validate card as success}}
+      PE --> PH([User has validated])
+      PC -...-> PF{{Validate card as failure}}
+      PF --> PH
+      PH -- Show next card/Repeat loop until over --> PA
+      PH -- If last card: session is over --> PI[Session statistics]
+      PI -...-> PJ{{Return to dashboard}}
+      PI -...-> PK{{Next learning session}}
+      PK --> O
+      PJ ====> DASH
+    end
 ```
 + La vue de connection est la landing page, il y a:
   - la page d'explication du concept
@@ -497,7 +516,7 @@ flowchart TD
 + Sommaire:
   - [2.5.1 Charte graphique](#251-charte-graphique)
   - [2.5.2 Liste des termes pour internationalisation](#252-liste-des-termes-en-anglais-et-français)
-  - [2.5.3 Tutoriels et conseils d'utilisation](#253-tutoriels-et-conseils-dutilisation)
+  - [2.5.3 Tutoriels et conseils d'utilisation](#253-tutoriels-et-conseils-dutilisation-phase-ii)
   - [2.5.4 Affichage d'une carte](#254-affichage-dune-carte)
 #### 2.5.1 Charte graphique
 + Définir la charte graphique et l'identité du site:
@@ -641,13 +660,24 @@ flowchart TD
 ## 3. Propositions de tests
 
 ## 4. Fonctionnement de la BDD
-Pour les cartes et les collections il y a deux tables pour chacune de ces deux entités:
++ Pour les cartes et les collections il y a deux tables pour chacune de ces deux entités:
   - Une table pour les éléments génériques (une pour les collections génériques, et une pour le contenu des cartes), qui sert à stocker les infos communes pour ces entités, dans le cas d'une collection publique ces infos sont celles qui ne peuvent être modifiés que par les auteurs de la collection.
   - Une table pour les éléments personnels (une pour les noms de rangs pour les collections, et une pour les statistiques des cartes), qui sert à stocker les informations individuelles qui changent ou peuvent être modifiés par chaque utilisateur (par exemple les statistiques liées à une carte dépendent de chaque personne et les rangs sont privés)
   - Une carte privée contient une entrée dans la table générique qui a une relation unique avec une seule entrée de la table des cartes personnelles, 
   - une carte publique contient une entrée dans la table générique qui peut avoir une relation multiple avec les cartes personnelles
++ Sommaire:
+  - [4.1 Les collections](#41-stockage-des-collections)
+  - [4.2 Les cartes](#42-stockage-des-cartes)
+  - [4.3 Les utilisateurs](#43-informations-de-lutilisateur)
+  - [4.4 Schéma relationnel de la BDD](#44-schémas-des-relations-entre-les-tables)
 
 ### 4.1 Stockage des collections
++ Sommaire:
+  - [4.1.1](#411-les-informations-génériques-des-collections)
+  - [4.1.2](#412-les-informations-personnelles-des-collections)
+  - [4.1.3](#413-stockage-des-notes-des-collections)
+  - [4.1.4](#414-stockage-des-catégories)
+  - [4.1.5](#415-utilisation-dune-collection-publique-en-version-privée)
 #### 4.1.1 Les informations génériques des collections
 La version générique des collections détient les informations qui dans le cas d'une collection publique ne peuvent être modifiées que par les auteurs, la table ``collections`` contient donc:
 + Id de la collection: ``id``
@@ -739,6 +769,12 @@ Quand on souhaite utiliser une collection publique on a deux choix principaux:
   + Note quand on crée une collection publique, on possède automatiquement une version privée de notre collection également
   
 ### 4.2 Stockage des cartes
++ Sommaire:
+  - [4.2.1](#421-les-informations-génériques-des-cartes)
+  - [4.2.2](#422-les-informations-personnelles-des-cartes)
+  - [4.2.3](#423-le-fonctionnement-de-lalgorithme-de-priorité)
+  - [4.2.4](#424-stockage-des-fichiers-multimédias)
+  - [4.2.5](#425-les-signalements)
 #### 4.2.1 Les informations génériques des cartes
 + On peut stocker maximum 4 éléments par carte
 + La version générique des cartes (utilisable par plusieurs personnes) est stockée dans la table ``cards``, elle contient les éléments modifiables uniquement par le/les auteur(s) d'une carte, et qui sont donc commun à tous ceux qui l'utilise:
@@ -822,18 +858,25 @@ Les signalements sont stockés dans une table ``reports``, ils contiennent:
 - l'id de l'utilisateur qui a fait le signalement (doit être connecté) ``user_id``
 - le contenu de son signalement ``content``
 
-#### 4.3 Informations de l'utilisateur
-##### 4.3.1 Table des utilisateurs
+### 4.3 Informations de l'utilisateur
++ Sommaire:
+  - [4.3.1](#431-table-des-utilisateurs)
+  - [4.3.2](#432-table-des-paramètres-généraux-et-de-session)
+  - [4.3.3](#433-table-des-succès)
+#### 4.3.1 Table des utilisateurs
 + La table ``users`` stocke:
   - Id de l'utilisateur: ``id``
   - son email: ``email``
   - son mot de passe crypté: ``password``
   - son nom d'utilisateur: ``username``
+  - la liste de ses succès (ou bien faire carrément une table ``self_achievement`` ``??``): ``achievements``
+    - sous forme d'array
+    - peut être null
   - son role: ``role``
     - ``100`` (admin)
     - ``10`` (moderator) 
     - ou ``1`` (defaut: standard)
-##### 4.3.2 Table des paramètres généraux et de session
+#### 4.3.2 Table des paramètres généraux et de session
 + La table ``settings`` stocke toutes les données relatifs au paramètres globaux du site, ou les paramètres de session qui ne sont pas propre à une collection en particulier:
   - Id de la configuration de paramètres: ``id``
   - Id de l'utilisateur à qui appartient cette configuration: ``user_id``
@@ -898,7 +941,14 @@ Les signalements sont stockés dans une table ``reports``, ils contiennent:
     }
     ```
 
-#### 4.4 Schémas des relations entre les tables
+#### 4.3.3 Table des succès
+La table ``achievements`` stocke les différents succès disponible dans l'application:
+- L'id du succès: ``id``
+- Le nom du succès: ``name``
+- La description du succès: ``description``
+- Le lien vers l'icone du succès: ``icon``
+- Le pourcentage d'utilisateur ayant remporté ce succès: ``frequency``
+### 4.4 Schémas des relations entre les tables
 <style>
 .er.entityLabel {
   fill: rgb(230,54,28);
@@ -913,6 +963,7 @@ USER {
   string email
   string password
   string username
+  array achievements "nullable"
   int role
 }
 COLLECTION {
@@ -980,6 +1031,15 @@ USER ||--o{ SELFCARD : "has a version of"
 
 USER ||--o{ REPORT : "can write"
 
+USER }o..o{ ACHIEVEMENT : "can get"
+ACHIEVEMENT {
+  int id
+  string name
+  string description
+  string icon "url"
+  int frequency
+}
+
 COLLECTION ||--|{  SELFCOLLECTION : "is origin of"
 
 COLLECTION }o--o{ CATEGORY : "can belong to"
@@ -1038,7 +1098,8 @@ REPORT {
 ```
 
 ## 5. Technologies et outils utilisés
-- ***Figma*** pour le wireframe, et la maquette
+- ***Figma*** pour le wireframe, et la maquette:
+  - [Lien vers le wireframe/maquette figma](https://www.figma.com/file/diVTjfEpjZD25WXuQ1y6Zn/Flascards?node-id=0%3A1)
 - ***Gimp*** et ***Inkscape*** pour le logo et la retouche d'images
 - ***Docker*** pour la conteneurisation
 - ***i18next*** pour l'internationalisation ``??``
@@ -1050,29 +1111,37 @@ REPORT {
   - ``??`` pour la base de donnée
 
 ## 5.1 Phases du projet
+#### Préphase Préparation du projet
+1. ✔️ Brainstorming de début (sans compter les réflexions nécessaires à mi-chemin)
+2. Plannification du projet
+3. Réalisation du wireframe
+4. Réalisation de la maquette
+5. Préparation et outillage du projet
+6. Définition des tests
+7. Développement en 3 grandes phases avec tests réguliers
 #### Phase I. Minimum requis
-- Création/modification de collections publiques
-- Création/modification de collections privées
-- Création/modification de cartes au sein des collections
-- Utilisation des collections publiques
-- Création d'utilisateur
-- Modifications des paramètres
-- Calcul de priorité de présentation des cartes
+1. Création d'utilisateur
+2. Création/modification de collections privées
+3. Création/modification de cartes au sein des collections
+4. Utilisation des cartes
+5. Création/modification de collections publiques
+6. Modifications des paramètres
+7. Calcul de priorité de présentation des cartes
+8. Possibilité de transformer une collection publique en collection privée
 #### Phase II. Éléments intéressants à ajouter mais non indispensables au fonctionnement de base
-- Système de signalement/réclamation
-- Role modérateur
-- Capacité de nommer des auteurs secondaires
-- Possibilité de transformer une collection publique en collection privée
-- succès
-- Possibilité d'ajouter des images dans les éléments
-- Customisation de l'interface visuel
-- Sytème de notes
-- Requetes d'ajout de catégories
-- Filtres de recherche dans la liste des collections publiques
-- Graphiques de progression sur les pages des collections et des cartes
+1. Graphiques de progression sur les pages des collections et des cartes
+2. Succès
+3. Sytème de notes
+4. Role modérateur
+5. Système de signalement/réclamation
+6. Capacité de nommer des auteurs secondaires/demander pour le devenir
+7. Filtres de recherche dans la liste des collections publiques
+8. Possibilité d'ajouter des images dans les éléments
+9. Customisation de l'interface visuel
+10. Requetes d'ajout de catégories
 
 #### Phase III. Options avancées de l'application
-Certaines options ne verront le jour qu'après qu'une version déjà pleinement fonctionnelle de l'application soit en état, c'est le cas de:
+Certaines options ne verront le jour qu'après qu'une version déjà pleinement fonctionnelle de l'application soit en état, elles pourraient aussi être abandonnées en fonction de leur faisabilité/intérêt c'est le cas de:
 + la possibilité de planifier des sessions d'apprentissage (exemple tous les mercredis à 13h avoir une notif de rappel pour une séance de cartes)
 + La possibilité de dessiner directement dans l'application pour la création des cartes, ce qui permettrait de réaliser soi même ses propres schémas, dessins, lettres,...; au lieu de les importer directement en format d'images
 + La possibilité de faire des dessins libres pendant les sessions d'apprentissage, ce afin de pouvoir par exemple, écrire des mots dans n'importe quel alphabet et testé notre connaissance de cette écriture, vérifier qu'on est capable de reproduire un schéma un peu complexe (car simplement essayer de le visualiser peut être trop compliqué pour des schémas trop complexes ou des alphabets difficiles):
