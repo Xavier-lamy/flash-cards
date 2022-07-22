@@ -208,17 +208,6 @@ BDD:
 - ~~la note moyenne de la collection (vide si non publique)-> non passe dans la table note~~
 - ~~un statut privé/public~~
 
-+ Nom: Flexcards ? sans doute que non, c'est déjà le nom d'une société portuguaise qui n'a pas vraiment de rapport, ils impriment juste des cartes genre cartes de visite
-
-- penser à l'internationalisation: faire site en anglais, mettre une version francaise au moins ?
-  - i18next ?
-
-
-
-penser à attribuer les phases aux taches
-
-nosql pour la bdd ?
-
 
 ~~les cartes doivent avoir:~~
 - ~~l'id de la collection à laquelle elles appartiennent~~
@@ -469,3 +458,106 @@ nosql pour la bdd ?
   - ~~impresssion au format papier~~
 
 
+
+~~Pour les demandes de modération ? -> non plutot un champ en plus (moderating ? true:false)~~
+  - ~~Ce champs devrait être un champ integer plutôt que boolean, car plus tard d'autres statuts pourraient être ajoutés ``??``, par exemple le statut ``pending``, attribué à une collection qui est en attente de modération~~
+
++ Nom: Flexcards ? sans doute que non, c'est déjà le nom d'une société portuguaise qui n'a pas vraiment de rapport, ils impriment juste des cartes genre cartes de visite
+
+- penser à l'internationalisation: faire site en anglais, mettre une version francaise au moins ?
+  - i18next ?
+
+
+
+penser à attribuer les phases aux taches
+
+~~penser à modifier les éléments qui le peuvent par des integers en bdd !~~
+
+nosql pour la bdd ?
+
+
+
+Pour les langages ?:
+1. on stocke l'id et on fait un appel vers une api quand on a besoin des infos du langage ? -> problème on est dépendant de l'api, en plus s'il faut faire un appel à l'api à chaque fois qu'un utilisateur fait une sélection de collections par langue ça va faire beaucoup de requetes
+2. on crée une constante ou un enum qui contient les langues avec leur nom, slug (et drapeau ? -> à voir c'est compliqué de faire un truc totalement neutre quand on ajoute les drapeaux pour une langue)
+3. On stocke plutot une string, les langues suportées dans l'application peuvent etre choisies depuis un select, et on laisse un champ libre pour que l'utilisateur puisse entrer la langue de son choix (cette langue sera référencé dans autres, lors des recherches par langue)
+
+
+```mermaid
+flowchart TD
+    subgraph front [core system]
+    ISLOGGED([User is connected]) -- Yes --> FIRSTTIME([First time on website ?])
+    ISLOGGED -- No --> LAND[Show landing page with introduction:]
+    LAND -- Nav --> REGISTER{{Create an account}}
+    LAND -- Nav --> NAVPUBCOLL{{See public collections}}
+    LAND -- Nav --> LOGIN{{connect}}
+    REGISTER -- Nav --> LOGIN
+    FIRSTTIME -- Yes --> G[Show tutorial]
+    FIRSTTIME -- No --> DASH[Show dashboard]
+    DASH -- Nav --> J{{Private Collections}}
+    J -- Nav --> K{{Create new collection}}
+    J -- Nav --> N{{See all collections}}
+    DASH -- Nav --> NAVPUBCOLL
+    DASH -- Nav --> M{{Settings}}
+    M --> SETT[General settings page]
+    G --> DASH
+    LOGIN --> FIRSTTIME
+    NAVPUBCOLL --> PUBCOLLIST[Public collections List]
+    end
+
+    subgraph privates [private collections]
+    N --> NA[Private Collections List]
+    NA --> NI{{Edit one collection}}
+    NI --> NJ[Edit one collection view]
+    NJ --> NK{{Validate edition}}
+    NK --> NA
+    NA --> NB{{Show one collection}}
+    NB --> NC[One collection cards list]
+    NC --> ND{{Show one card}}
+    NC --> NE{{Edit one card}}
+    ND --> NF[Card view]
+    NF --> NE
+    NE --> NG[Edit card view]
+    NG --> NH{{Validate edition}}
+    NH --> NF
+    K --> KA[Create collection form]
+    KA --> KB{{Validate creation}}
+    KB --> NA
+    end
+
+    subgraph publics [public collections]
+    PUBCOLLIST --> SHOWONE{{Show one public collection}}
+    SHOWONE --> ONEPUBCOLL[One public collection view]
+    ONEPUBCOLL --> RETURNLIST{{Return to public collections}}
+    RETURNLIST --> PUBCOLLIST
+    ONEPUBCOLL --> USERUSEIT([User already use this collection ?])
+    USERUSEIT --> USERUSEITYES([Yes])
+    USERUSEIT --> USERUSEITNO([No])
+    USERUSEITYES --> RATECOLL{{Rate this collection}}
+    USERUSEITNO --> MAKEPRIVATE{{Add collection to private list}}
+    end
+
+    subgraph session [learning session]
+    DASH ====> IFUSERHASCOLL([If user has at least one collection])
+    IFUSERHASCOLL -- Else --> DASHALERT([Display alert to make him create one])
+    IFUSERHASCOLL -- Nav --> I{{Launch new learning session}}
+    I --> O[Session settings page]
+    O --> P{{Start}}
+    P --> PA[Card question side]
+    PA --> PB{{Reveal answer}}
+    PB --> PC[Card answer side]
+    PC --> PD{{Edit card}}
+    PD --> PG[Simple edit card view]
+    PG --> PC
+    PC --> PE{{Validate card as success}}
+    PE --> PH([User has validated])
+    PC --> PF{{Validate card as failure}}
+    PF --> PH
+    PH -- Show next card/Repeat loop until over --> PA
+    PH -- If last card: session is over --> PI[Session statistics]
+    PI --> PJ{{Return to dashboard}}
+    PI --> PK{{Next learning session}}
+    PK --> O
+    PJ ====> DASH
+    end
+```

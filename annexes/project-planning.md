@@ -380,7 +380,7 @@ Pour les paramètres de lancement d'une session:
   - On peut cocher une option pour définir si le rang des cartes influe sur la fréquence à laquelle elles sont proposées:
     - si cette option est cochée, alors les valeurs de poids des 5 rangs passent toutes à 1 en BDD (ainsi puisqu'il s'agit d'un multiplicateur, il n'influe plus sur la priorité des cartes)
 
-#### 2.4.16 Signalement et réclamation
+#### 2.4.16 Signalement et réclamation ***(Phase II)***
 Créer un système de réclamation et de signalement:
 + si on s'aperçoit que des cartes ont un problème:
   - infos erronées, 
@@ -390,6 +390,9 @@ Créer un système de réclamation et de signalement:
   - en premier lieu contacter l'auteur de la carte s'il est toujours présent sur le site, pour signaler l'erreur
   - si ce n'est plus possible on peut alors les signaler, les cartes signalées seront traités par les modérateurs
   - Si les modérateurs estiment que le signalement est en partie valide, mais qu'il n'est pas du ressort du site de juger, alors la carte sera conservée, mais un avertissement sera ajouté (par exemple une affirmation scientifique controversée si elle est signalée, devra avoir un avertissement prévenant de la controverse)
++ Dans le cas où une carte a reçu un signalement, on l'ajoutera à une table signalements (``reports``) 
++ En plus de la table signalements, on ajoute un champ **signalement** dans la table ``cards`` qui peut recevoir true/false et indique ainsi si la carte fait l'objet d'un signalement
++ On ajoute en plus un champ **avertissement** dans la table des ``cards``, qui pourra contenir le texte d'avertissement à ajouter à la carte si nécessaire (``null`` si rien à ajouter)
 
 ##### Demande d'édition et auteurs secondaires ***(Phase II)***
 Il faut prévoir un système de demande pour passer éditeur, c'est à dire qu'un utilisateur peut faire une demande pour passer éditeur secondaire sur une collection,  l'éditeur principal reste seul maitre à bord, donc:
@@ -417,13 +420,14 @@ Il faut prévoir un système de demande pour passer éditeur, c'est à dire qu'u
 - Dans le schéma suivant, les rectangles à bord arrondis représentent les capacités ou le statut de l'utilisateur, les carrés représentent les vues, les hexagones représentent les liens de navigation
 ```mermaid
 flowchart TD
-    START([User is connected]) -- Yes --> B([First time on website ?])
-    START -- No --> LAND[Show landing page with introduction:]
-    LAND -- Nav --> D{{Create an account}}
+    ISLOGGED([User is connected]) -- Yes --> FIRSTTIME([First time on website ?])
+    ISLOGGED -- No --> LAND[Show landing page with introduction:]
+    LAND -- Nav --> REGISTER{{Create an account}}
     LAND -- Nav --> E{{See public collections}}
-    LAND -- Nav --> F{{connect}}
-    B -- Yes --> G[Show tutorial]
-    B -- No --> DASH[Show dashboard]
+    LAND -- Nav --> LOGIN{{connect}}
+    REGISTER -- Nav --> LOGIN
+    FIRSTTIME -- Yes --> G[Show tutorial]
+    FIRSTTIME -- No --> DASH[Show dashboard]
     DASH --> DASHCOLORNOT([If user has at least one collection])
     DASHCOLORNOT -- Else --> DASHALERT([Display alert to make him create one])
     DASHCOLORNOT -- Nav --> I{{Launch new learning session}}
@@ -451,8 +455,7 @@ flowchart TD
     DASH -- Nav --> M{{Settings}}
     M --> SETT[General settings page]
     G --> DASH
-    D -- Nav --> F
-    F --> B
+    LOGIN --> FIRSTTIME
     E --> L[Public collections List]
     L --> LA{{Show one public collection}}
     LA --> LB[One public collection view]
@@ -610,10 +613,10 @@ flowchart TD
 - administrator -> administrateur: administrator
 
 
-#### 2.5.3 Tutoriels et conseils d'utilisation
+#### 2.5.3 Tutoriels et conseils d'utilisation ***(Phase II)***
 + Tâcher d'être le plus efficace possible, l'utilsateur ne doit pas être submergé de pavé de textes explicatifs:
   - Les boutons doivent être suffisamment explicite d'eux même
-  - Les éléments de l'interface comme la jauge doivent être visuellment explicite sans prendre toute la place
+  - Les éléments de l'interface comme la jauge doivent être visuellement explicite sans prendre toute la place
   - S'il y a besoin d'une explication textuelle, en faire une version courte, avec éventuellement un lien vers un bloc d'aide plus long (si besoin)
 
 #### 2.5.4 Affichage d'une carte
@@ -665,6 +668,7 @@ La version générique des collections détient les informations qui dans le cas
   - relation avec la table des catégories
   - Sous forme d'array des ids
 + Langue des labels de la collection: ``language``
+  - ``??`` Voir brainstorming: hésitation entre trois méthodes pour le stockage des langues
 + Collection parente: ``parent``
   - Id ou null/0
   - on se sert de ce champ pour faire une relation interne: ``children hasOne parent``
@@ -672,13 +676,14 @@ La version générique des collections détient les informations qui dans le cas
 + Tag de la collection: ``is_public``
   - ``true``/``false``
 + Statut de la collection: ``status``
-  - ``active``/``inactive``, 
-  - ``active`` par défaut 
+  - ``1`` (active) par défaut 
+  - valeurs possibles: ``1`` (active) | ``0`` (inactive), 
   - ne peut etre changé que pour les collections publiques, car les collections privées peuvent etre supprimées
 + Intitulé du label 1 ``label_1``
 + Intitulé du label 2 ``label_2``
 + Intitulé du label 3 ``label_3``
 + Intitulé du label 4 ``label_4``
+  - notes les intitulés de label peuvent être nuls en BDD, mais à la validation, deux minimum ne peuvent pas être nuls
 + Disposition par défaut des éléments: ``default_display`` 
   - chaine binaire format ``0001 0010``
   - le premier paquet de 4 représente le recto,
@@ -686,6 +691,7 @@ La version générique des collections détient les informations qui dans le cas
   - le premier chiffre de chaque paquet représente l'élément 1 et ainsi de suite jusqu'à 4 
 + La note globale de la collection: ``global_rating``:
   - calculé avec la moyenne des notes pour cette collection
+  - elle est notée sur 5 étoiles (puisqu'il s'agit de la moyenne des notes)
 + Checksum: ``checksum``
   - il s'agit des slug de labels de ses différents éléments dans l'ordre alphabétique,
   - ainsi, dans le cas d'une utilisation de plusieurs collections en même temps, on peut comparer deux collections différentes pour vérifier qu'elles aient les même libellés pour les éléments de cartes, et ainsi savoir si l'utilisateur peut choisir l'affichage des libellés sur les cartes, ou devra se contenter de recto/verso
@@ -702,7 +708,8 @@ La version générique des collections détient les informations qui dans le cas
 
 #### 4.1.3 Stockage des notes des collections
 + La table ``ratings`` contient: 
-  - L'**Id de la collection** (générique) notée: ``id``
+  - L'**Id de cette note**: ``id``
+  - L'**Id de la collection** (générique) notée: ``collection_id``
   - L'**Id de l'utilisateur** qui a noté: ``user_id``
   - sa note pour la première question: ``first_rating``
   - sa note pour la deuxième question: ``second_rating`` 
@@ -711,9 +718,10 @@ La version générique des collections détient les informations qui dans le cas
 
 #### 4.1.4 Stockage des catégories
 + La table ``categories`` contient:
-  - Id de la catégorie
-  - Nom de la catégorie
-  - Catégorie parente (1 Id): permet de faire une relation interne: les sous-catégorie hasOne catégorie et les catégories hasMany catégories
+  - ``Id de la catégorie``: ``id``
+  - ``Nom de la catégorie``: ``name``
+  - ``Catégorie parente`` (1 Id): ``parent``
+    - permet de faire une relation interne: les sous-catégorie hasOne catégorie et les catégories hasMany catégories
 #### 4.1.5 Utilisation d'une collection publique en version privée
 Quand on souhaite utiliser une collection publique on a deux choix principaux:
 + Utiliser la collection en version publique
@@ -740,6 +748,11 @@ Quand on souhaite utiliser une collection publique on a deux choix principaux:
   - Contenu du label 2: ``content_2``
   - Contenu du label 3: ``content_3``
   - Contenu du label 4: ``content_4``
+  - Un champ qui indique si la carte fait l'objet d'un signalement: ``is_reported``
+    - défaut: ``false``
+    - valeurs: ``false``/``true``
+  - Un champ d'**avertissement**: ``warning``
+    - pourra contenir le texte d'avertissement à ajouter à la carte si nécessaire (``null`` si rien à ajouter)
 
 #### 4.2.2 Les informations personnelles des cartes
 + Il s'agit des informations propre à chaque utilisateur pour une carte donnée
@@ -758,6 +771,7 @@ Quand on souhaite utiliser une collection publique on a deux choix principaux:
     - calculée par les différents poids et recalculée à chaque fois qu'on valide une carte
   - Le **niveau de difficulté**: ``difficulty_level``
     - bien qu'il puisse être calculé facilement, il est utile de le stocker car on aura parfois besoin de le récupérer sans récupérer d'abord toutes les autres infos: par exemple le niveau de difficulté servira notamment pour les filtres quand on récupère les collections publiques, donc il faut qu'il soit disponible facilement
+    - 3 valeurs possibles: 1 (easy), 2 (défaut:moyen), 3(difficile)
   - Le **nombre de passage**: ``view_count``: 
     - créer une fonction pour compter la taille de la chaine dans ``results``
   - Le **taux de réussite moyen**: ``average_success_rate``
@@ -801,6 +815,13 @@ On a donc pour éléments influents:
   - Le type de média dont il s'agit (afin de savoir quel élément HTML retourner à l'affichage): ``img``, ``audio``,...
   - L'url du media, soit vers une banque d'image en ligne, ou dans le dossier ``uploads`` par exemple
 
+#### 4.2.5 Les signalements
+Les signalements sont stockés dans une table ``reports``, ils contiennent:
+- l'id du signalement: ``id``
+- l'id de la carte qui fait l'objet d'un signalement: ``card_id``
+- l'id de l'utilisateur qui a fait le signalement (doit être connecté) ``user_id``
+- le contenu de son signalement ``content``
+
 #### 4.3 Informations de l'utilisateur
 ##### 4.3.1 Table des utilisateurs
 + La table ``users`` stocke:
@@ -809,7 +830,9 @@ On a donc pour éléments influents:
   - son mot de passe crypté: ``password``
   - son nom d'utilisateur: ``username``
   - son role: ``role``
-    - ``admin``, ``moderator`` ou ``standard``
+    - ``100`` (admin)
+    - ``10`` (moderator) 
+    - ou ``1`` (defaut: standard)
 ##### 4.3.2 Table des paramètres généraux et de session
 + La table ``settings`` stocke toutes les données relatifs au paramètres globaux du site, ou les paramètres de session qui ne sont pas propre à une collection en particulier:
   - Id de la configuration de paramètres: ``id``
@@ -817,19 +840,21 @@ On a donc pour éléments influents:
 
   - Liste des collections utilisées par défaut au lancement d'une session: ``session_default_collections``
     - type: ``array('')``
-    - par défaut sa première collection créée est ajouté à l'array
+    - par défaut l'id de sa première collection créée est ajouté à l'array
     - à chaque fois qu'il lance une nouvelle session, ce paramètre est mis à jour avec les nouvelles collections à utiliser
   - Niveau de difficulté des cartes choisies: ``session_default_difficulty``:
-    - defaut:``all``
+    - defaut:``-1`` (all)
+    - autres valeurs: ``1`` (easy), ``2`` (medium), ``3`` (hard)
     - est changé à chaque session en fonction du dernier choix réalisé
   - Rang des cartes: ``session_default_rank``
-    - defaut: ``all``
+    - defaut: ``-1`` (all)
+    - autres valeurs: ``1``,``2``,``3``,``4``,``5``
     - est changé à chaque session en fonction du dernier choix réalisé
   - Nombre de cartes par session: ``session_default_number``
     - defaut: ``10``
     - est changé à chaque session en fonction du dernier choix réalisé
   - Côté à afficher en guise de question: ``session_default_side``
-    - defaut: ``recto``
+    - defaut: ``1`` (recto), autre valeur ``0``(verso)
     - est changé à chaque session en fonction du dernier choix réalisé
     - note: les éléments à afficher sur ce recto/verso sont défini à l'échelle d'une collection, par son affichage par défaut
 
@@ -855,10 +880,10 @@ On a donc pour éléments influents:
   - classement automatique des rangs est activé: ``auto_ranking``
     - defaut: ``true``
   - valeur pour passage au rang supérieur: ``raise_rank_limiter``
-    - defaut: ``100%``
+    - defaut: ``100`` (en pourcentage, mais on stock juste le nombre)
     - rappel: il s'agit d'une borne, les éléments ``>=`` à cette valeur passeront au rang supérieur, il n'est pas possible de dépasser 100%, le ``>`` n'a donc de sens que quand l'utilisateur choisit un nombre inférieur à 100%, mais il est plus simple d'avoir une règle de comparaison unique, qui ne dépend pas de la valeur entrée
   - valeur pour passage au rang inférieur: ``lower_rank_limiter``
-    - defaut: ``25%``
+    - defaut: ``25`` (en pourcentage)
     - rappel: il s'agit d'une borne, on utilise ``<`` et pas ``<=``, afin d'éviter un conflit avec l'option ci-dessus
     - cette option ne peut pas être supérieur ou égale à l'option ci-dessus ceci est géré au niveau du formulaire de changents de paramètres
   - Aspect visuel des cartes: ``card_style``
@@ -888,35 +913,128 @@ USER {
   string email
   string password
   string username
-  string role
+  int role
 }
 COLLECTION {
   int id PK
   int user_id FK "The creator id"
-  int authors_id FK "auxiliaries user id list"
+  arr authors_id FK "auxiliaries user id list, nullable"
+  string name
+  string description
+  string difficulty
+  int popularity
+  arr categories FK "refer to categories ids, nullable"
+  int language
+  int parent FK "refer to id in same table, nullable"
+  bool is_public
+  int status
+  string label_1 "nullable"
+  string label_2 "nullable"
+  string label_3 "nullable"
+  string label_4 "nullable"
+  int default_display "ex: 1100 0011"
+  int global_rating "nullable"
+  string checksum 
 }
 
 USER }o--o{ COLLECTION : "auxiliaries"
 
 USER ||--|| SETTING : "has one configuration"
+SETTING {
+  int id PK
+  int user_id FK
+  array session_default_collections
+  int session_default_difficulty "(can be negative)"
+  int session_default_rank "(can be negative)"
+  int session_default_number
+  int session_default_side
+  int view_count_weight
+  int average_success_rate_weight
+  int recent_success_rate_weight
+  int rank_one_weight
+  int rank_two_weight
+  int rank_three_weight
+  int rank_four_weight
+  int rank_five_weight
+  int recent_success_rate_range
+  bool auto_ranking
+  int raise_rank_limiter
+  int lower_rank_limiter
+  json card_style
+}
 
 USER ||--o{ RATING : "can rate"
 
 USER ||--o{ SELFCOLLECTION : "has a version of"
+SELFCOLLECTION {
+  int id PK "id of this version"
+  int collection_id FK "id of original collection"
+  string rank_label_1
+  string rank_label_2
+  string rank_label_3
+  string rank_label_4
+  string rank_label_5
+}
 
 USER ||--o{ SELFCARD : "has a version of"
+
+USER ||--o{ REPORT : "can write"
 
 COLLECTION ||--|{  SELFCOLLECTION : "is origin of"
 
 COLLECTION }o--o{ CATEGORY : "can belong to"
 
 CATEGORY ||--o{ CATEGORY : "can have subcategories"
+CATEGORY {
+  int id PK
+  string name
+  int category_id FK "can refer to another category in same table, nullable"
+}
 
 COLLECTION ||--o{ RATING : "can be rated"
+RATING {
+  int id PK
+  int collection_id FK "rated collection"
+  int user_id FK "which user give rate"
+  int first_rating
+  int second_rating
+  int third_rating
+  int average_rating
+}
 
 COLLECTION ||--|{ CARD : "contains"
+CARD {
+  int id PK
+  int collection_id FK "refer to collection where this card come from"
+  string content_1 "nullable"
+  string content_2 "nullable"
+  string content_3 "nullable"
+  string content_4 "nullable"
+  bool is_reported
+  string warning "nullable"
+}
 
 CARD ||--|{ SELFCARD : "is origin of"
+SELFCARD {
+  int id PK
+  int card_id FK "refer to origin card"
+  int user_id FK "refer to user owning this version of the card"
+  string results "format: 001111100101111"
+  int rank
+  int priority "can be negative"
+  int difficulty_level
+  int view_count
+  int average_success_rate
+  int recent_success_rate
+}
+
+CARD ||--o{ REPORT : "can have"
+REPORT {
+  int id PK
+  int card_id FK
+  int user_id FK
+  string content
+}
 ```
 
 ## 5. Technologies et outils utilisés
